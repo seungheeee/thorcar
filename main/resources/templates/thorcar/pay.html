@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<!-- 아래 제이쿼리는 1.0이상이면 원하는 버전을 사용하셔도 무방합니다. -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+
+<title>ThorCar</title>
+
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+
+</head>
+
+<body>
+<header th:replace="thorcar/header::headerFragment"></header>
+	<!--  상단 결제정보 -->
+	<div class="pc-mobile-header-container" id="page-reservation">
+		<div class="pc-header space-2 text-center dc-none dc-lg-block">
+			<div class="container">
+				<h2 class="text-grey-3 underline-bg dc-inline-block">결제정보</h2>
+			</div>
+		</div>
+	</div>
+	<div class="container p-0">
+		<div class="row my-lg-5 reservation-row">
+			<!-- 오른쪽 박스 -->
+			<div class="col-lg-7 cm-lg-rounded">
+				<div class="mx-n15px mx-lg-0">
+					<section class="carmore-section px-3 pb-0 mt-lg-3">
+					<div class="col-8 offset-2 col-xl-6 offset-xl-3 px-5" style="margin-left:6% !important;">
+						<div class="mt-3 mb-xl-0">
+							<img th:src="'https://i.ibb.co/' + @{${session.ThorCarDTO.car_fileurl}} + 
+							'/' + @{${session.ThorCarDTO.car_name}}+ '.png'" style="width: 500px !important;">
+						</div> 
+					</div>
+					<div class="col-12 text-center">
+										<div class="text-10 color-grey-5 mt-2 mb-3">
+										차량 이미지는 이해를 돕기 위한 예시로, 배차 차량과 다를 수 있습니다.
+										</div>
+									</div>
+						<div id="js_vreserv_container_car_period">
+							<a class="js-cpi-container-car-type-badge badge badge-pill badge-bluegreylight color-light-purple">
+								<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+								<span class="js-cpi-txt-car-type ml-1">
+									[[${session.ThorCarDTO.car_make}]]
+								</span>
+							</a>
+						<div class="js-cpi-txt-car-model text-20 font-weight-bold color-grey-3 mb-0">[[${session.ThorCarDTO.car_name }]]</div>
+							<div class="js-cpi-container-branch-info pt-1"><div class="dc-flex align-items-center">
+							</div>
+						</div>
+						<hr class="mb-2">
+							<div class="js-cpi-container-rent-period">
+								<div class="dc-flex justify-content-around align-items-center">
+									<div class="text-center">
+										<div class="text-12 color-grey-5">대여일</div>
+										<div class="text-16-b color-grey-3">
+											<span class="txt-rent-start-date" th:text="${session.MainDateDTO.inDate}"></span>
+										</div>
+									</div>
+									<span class="badge badge-pill badge-bluegreylight color-light-purple text-12 font-weight-normal">
+																<span class="txt-rent-period-time" th:text="${session.MainDateDTO.staydate}"></span>
+																<span class="txt-rent-period-day-unit">일</span>
+															</span>
+									<div class="text-center">
+																<div class="text-12 color-grey-5">반납일</div>
+															<div class="text-16-b color-grey-3">
+																<span class="txt-rent-end-date" th:text="${session.MainDateDTO.outDate}"></span>
+															</div>
+															</div>
+									</div>
+								</div>
+							</div>
+	 					
+	 					</section>	
+	 				</div>
+	 				
+	 				
+	 				<div class="js-show-devide-elmt" data-sde-s="1" data-sde-m="1" data-sde-g="0" style="display: block;">
+	 					<section class="carmore-section px-3 is-only-reservation is-label-form">
+	 						<h3>운전자 정보</h3>
+	 					
+ 									<div class="form-group my-2">
+ 										<label class="text-12 color-grey-3" for="vreserv_input_driver_name" >이름</label>
+											<div class="position-relative">
+												<input class="js-input-deletable js-vreserv-input-driver-name js-require-pay border-radius-none form-control form-control-sm vreserv-save-last-booking mb-0" id="name" th:value="${session.loginDTO.name}">
+												<div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_name">
+													<div class="wrapper">
+														<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+													</div>
+												</div>
+												<div class="invalid-feedback">이름을 입력해 주세요</div>
+											</div>
+ 									</div>
+ 									<div class="form-group my-2">
+ 										<label class="text-12 color-grey-3" for="vreserv_input_driver_birth_f">생년월일</label>
+ 									<div class="dc-flex align-items-center">
+ 										<div class="position-relative w-60">
+ 											<input class="js-input-deletable js-require-pay border-radius-none form-control form-control-sm vreserv-save-last-booking mb-0" id="birth" th:value="${session.loginDTO.birth}">
+												<div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_birth_f">
+													<div class="wrapper">
+														<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+													</div>
+												</div>
+ 										</div>
+ 										
+ 									</div>
+ 									<div class="invalid-feedback">생년월일이 형식에 맞지 않습니다</div>
+ 									</div>
+ 									<div class="form-group my-2">
+	 									<label class="text-12 color-grey-3" for="vreserv_input_driver_contact">휴대폰 번호</label>
+	 									<div class="dc-flex">
+	 										<div class="position-relative w-70">
+	 											<input class="js-input-deletable js-require-pay border-radius-none form-control form-control-sm mb-0" id="tel" th:value="${session.loginDTO.tel}">
+	 											<div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_contact">
+	 												<div class="wrapper">
+	 													<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+	 												</div>
+	 											</div>
+	 										</div>
+	 									</div>
+ 									</div>
+ 									
+ 									<div class="form-group my-2">
+ 									<label class="text-12 color-grey-3" for="vreserv_input_driver_email">운전면허 번호</label>
+ 									<div class="position-relative">
+ 										<input class="js-input-deletable js-require-pay js-input-auto-complete-email border-radius-none form-control form-control-sm vreserv-save-last-booking mb-0" id="vreserv_input_driver_email" th:value="${session.loginDTO.li_num}">
+ 											<div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_email">
+ 												<div class="wrapper">
+ 													<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+ 												</div>
+ 											</div>
+ 										<div class="dropdown-menu" id="vreserv_dropdown_driver_email_auto"></div>
+ 									</div>
+ 									</div>
+ 									
+ 									<div class="box-round-grey-7-border dc-flex flex-column justify-content-center align-items-center mt-3 py-4 px-3">
+ 										<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NyIgaGVpZ2h0PSIzNSIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDk3IDM1Ij4KICAgIDxyZWN0IHdpZHRoPSI2IiBoZWlnaHQ9IjgiIHg9IjY3LjM3NSIgeT0iMTEiIGZpbGw9IiMwRDZGRkMiIHJ4PSIxIi8+CiAgICA8cmVjdCB3aWR0aD0iMTAiIGhlaWdodD0iMyIgeD0iNzUuMzc1IiB5PSIxMSIgZmlsbD0iIzQ5NDk0OSIgcng9IjEiLz4KICAgIDxyZWN0IHdpZHRoPSIxNSIgaGVpZ2h0PSIzIiB4PSI3NS4zNzUiIHk9IjE2IiBmaWxsPSIjNDk0OTQ5IiByeD0iMSIvPgogICAgPHJlY3Qgd2lkdGg9IjMwIiBoZWlnaHQ9IjIxIiB4PSI2NCIgeT0iNi41IiBzdHJva2U9IiM0OTQ5NDkiIHN0cm9rZS13aWR0aD0iMyIgcng9IjEuNSIvPgogICAgPHBhdGggZmlsbD0iIzQ5NDk0OSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTIuNDMgOC40NTVjMCA0LjExNyAzLjMzOCA3LjQ1NSA3LjQ1NiA3LjQ1NSA0LjExNyAwIDcuNDU0LTMuMzM4IDcuNDU0LTcuNDU1UzI0LjAwMyAxIDE5Ljg4NiAxYy00LjExOCAwLTcuNDU1IDMuMzM4LTcuNDU1IDcuNDU1em0xMS45MjggMGMwIDIuNDctMi4wMDIgNC40NzMtNC40NzMgNC40NzMtMi40NyAwLTQuNDcyLTIuMDAzLTQuNDcyLTQuNDczIDAtMi40NyAyLjAwMi00LjQ3MyA0LjQ3My00LjQ3MyAyLjQ3IDAgNC40NzMgMi4wMDMgNC40NzMgNC40NzN6TTE1LjQxNiAxNy40YzEuMDg4Ljc2NiAxLjk4MSAxLjc5IDIuNTkgMi45ODJoOS44NDdjMS42NDcgMCAyLjk4MiAxLjMzNSAyLjk4MiAyLjk4MnY1Ljk2M2MwIC44MjQuNjY4IDEuNDkyIDEuNDkxIDEuNDkyLjgyNCAwIDEuNDkxLS42NjggMS40OTEtMS40OTJ2LTUuOTYzYzAtMy4yOTQtMi42Ny01Ljk2NC01Ljk2NC01Ljk2NEgxNS40MTZ6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KICAgIDxjaXJjbGUgY3g9IjEwLjciIGN5PSIyNC4xMSIgcj0iOC4yIiBzdHJva2U9IiMwRDZGRkMiIHN0cm9rZS13aWR0aD0iMi45ODIiLz4KICAgIDxwYXRoIHN0cm9rZT0iIzBENkZGQyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIyLjk4MiIgZD0iTTE0LjgwMSAyMi43NDRjLTIuNTM0IDMuMDkyLTMuNDY5IDQuODgzLTQuMSA4LjItLjcwNi0zLjY3MS0xLjYwNi01LjQ2Ni00LjEtOC4yTTIuNSAyNC4xMDljNi40ODQtMS45MzIgMTAuMDcyLTEuOTkgMTYuNCAwIi8+CiAgICA8cmVjdCB3aWR0aD0iMyIgaGVpZ2h0PSIxMSIgeD0iNTMuNSIgeT0iMTUiIGZpbGw9IiM0OTQ5NDkiIHJ4PSIxLjUiIHRyYW5zZm9ybT0icm90YXRlKDkwIDUzLjUgMTUpIi8+CiAgICA8cmVjdCB3aWR0aD0iMyIgaGVpZ2h0PSIxMSIgeD0iNDYuNSIgeT0iMTEiIGZpbGw9IiMwRDZGRkMiIHJ4PSIxLjUiLz4KPC9zdmc+Cg==">
+ 										<div class="text-14 color-grey-4 font-weight-bold mt-1">
+ 											차량 대여 시, 운전자는 운전면허증을 꼭 지참해주세요.
+ 										</div>
+ 										<div class="text-12 color-grey-4 mt-1">
+ 											면허증 확인 및 계약서 작성이 꼭 필요합니다.
+ 										</div>
+ 									</div>
+	 					</section>
+	 				</div>
+	 			
+	 					
+								
+			</div>
+	 			
+	 		<!-- 왼쪽 박스 -->
+	 		<div class="col-lg-5 dc-none dc-lg-block">
+	 			<div class="cm-rounded bg-shadow bg-white sticky mx-n15px mx-lg-0 sticky-pc-menu-top">
+	 				<section class="mt-3 p-3">
+	 					<div class="container">
+	 						<div class="row section-title">
+	 							<div class="col">
+	 								<h3 class="h6 mb-4 border-bottom-thick pb-2">결제 정보</h3>
+	 							</div>
+	 						</div>
+							<form method="post" action="/onePay">
+	 						
+	 						<div class="row">
+	 							<div class="col">
+	 								<ul class="list-group list-group-flush" id="vreserv_container_pay_info_desc">
+	 									<li class="bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall bg-lg-none">
+	 										<span class="js-vreserv-txt-rent-price-label">대여요금</span>
+	 										<div class="text-right">
+	 											<span class="js-vcd-txt-rent-price" th:text="${#numbers.formatInteger(session.ThorCarDTO.car_shortp,3, 'COMMA')}"></span>
+													<span class="js-vcd-txt-rent-price">원</span>
+	 										</div>
+	 									</li>
+	 									
+	 								
+	 							
+	 									<li class="bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall text-14">
+	 										총 결제금액
+	 										<div class="text-right text-20">
+	 											<span class="js-vcd-txt-rent-price" th:text="${#numbers.formatInteger(session.ThorCarDTO.car_shortp,3, 'COMMA')}"></span>
+													<span class="js-vcd-txt-rent-price">원</span>
+	 										</div>
+	 									</li>
+	 									<li class="bg-white list-group-item text-14 color-grey-3 text-center mt-3">
+	 										위 내용을 모두 확인하였으며, 결제에 동의합니다
+	 									</li>
+	 									
+	 									<button class="js-vcd-btn-go-reservation btn btn-primary btn-block btn-lg mb-2 btn-border-10 mt-3" onclick="/onepay">
+												<div class="text-18 font-weight-bold text-white line-height-1">
+													<span id="shortprice" class="js-vcd-txt-rent-price" th:text="${#numbers.formatInteger(session.ThorCarDTO.car_shortp,3, 'COMMA')}"></span>
+													<span class="js-vcd-txt-rent-price">원</span>
+													&nbsp;바로 결제하기
+												</div>
+												<div class="js-vcd-txt-price-desc text-12 text-white">
+													일반자차 포함
+												</div>
+										</button>
+	 								</ul>
+	 							</div>
+	 						</div>
+	 						</form>
+	 					</div>
+	 				</section>
+	 			</div>
+	 		</div>
+ 		</div>
+ 	</div>
+ 	
+</body>
+
+</html>

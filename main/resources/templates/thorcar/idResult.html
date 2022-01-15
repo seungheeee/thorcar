@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>아이디 찾기 결과</title>
+    
+    <link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/common.css?202109021605">
+    <link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/login.css?202109021605">
+    <style>
+
+.fuSBOR {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 50
+px
+;
+    position: relative;
+    font-size: 16px;
+}
+
+</style>
+	
+	</head>
+	<body class="vsc-initialized">
+	
+    <!-- WRAPPER -->
+    <div class="musinsa-wrapper wrapper-member devicePC">
+        <div id="commonLayoutHeader">
+        	<div class="common-layout__sc-1q47zu5-1 fhWAHi">
+        		<h2 class="common-layout__sc-wllrag-0 fuSBOR">아이디 찾기 결과</h2>
+        	</div>
+        </div>	
+        
+        <!-- Member -->
+        <div class="n-member-area">
+            <div class="layer-certify find-id-multi">
+                <div class="txt-certify-alert">
+	                <p class="alert" th:text="${head_message}"></p>
+	                <ul class="find-block multi">
+	                        <li>
+	                            <em id="memberId" class="find-id" th:text="${message}"></em>
+	                        </li>
+	                </ul>
+                </div>
+            </div>
+            <div class="member-btn">
+                <a href="searchPwd.action" class="link">비밀번호가 기억나지 않으세요?</a>
+                <a href="login.action" class="n-btn btn-primary">로그인</a>
+            </div>
+        </div>
+    </div>
+   
+    
+
+	
+	</body>
+	</html>

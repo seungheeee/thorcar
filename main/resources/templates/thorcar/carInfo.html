@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Thor vehicle</title>
+
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+
+</head>
+<body>
+
+<header th:replace="thorcar/header::headerFragment"></header>
+   
+   <div class="pc-mobile-header-container">
+      <div class="container p-0">
+         <div class="row my-lg-5 reservation-row">
+         
+            <!-- 왼쪽 -->
+            <div class="col-lg-7 cm-lg-rounded">
+               <div class="mx-n15px mx-lg-0">
+                  <section class="carmore-section" id="js_vcd_section_top">
+                     <div class="container">
+                        <div class="row align-items-center py-lg-3">
+                           <div class="col-8 offset-2 col-xl-6 offset-xl-3 px-5" style="margin-left:6% !important;">
+                              <div class="mt-3 mb-xl-0">
+                              	<img th:src="'https://i.ibb.co/' + @{${session.ThorCarDTO.car_fileurl}} + '/' + @{${session.ThorCarDTO.car_name}}+ '.png'" style="width:500px;">
+                              </div>
+                           </div>
+                           <div class="col-12 text-center">
+                              <div class="text-10 color-grey-5 mt-2 mb-3">
+                              차량 이미지는 이해를 돕기 위한 예시로, 배차 차량과 다를 수 있습니다.
+                              </div>
+                           </div>
+                           <div class="col-12">
+                              <div id="js_vcd_car_period_info">
+                                    <a class="js-cpi-container-car-type-badge badge badge-pill badge-bluegreylight color-light-purple" style="font-size:90% !important; letter-spacing:0.01em !important;"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+                                       <span class="js-cpi-txt-car-type ml-1" >[[${session.ThorCarDTO.car_make}]]</span>
+                                    </a>
+                                       <div class="js-cpi-txt-car-model text-20 font-weight-bold color-grey-3 mb-0">[[${session.ThorCarDTO.car_name }]]</div>
+                                       <div class="js-cpi-txt-similar-car text-12 color-grey-4 dc-none" style="display: none;">혹은 동급 차종</div>
+                                       <div class="js-cpi-container-branch-info pt-1 dc-none" style="display: none;">
+                                          <div class="dc-flex align-items-center">
+                                             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGQ9Ik03LjY0OCAyLjE0NmMuMTk2LS4xOTUuNTEyLS4xOTUuNzA3IDBsNS43OTMgNS43OTNjLjMxNS4zMTUuMDkyLjg1NC0uMzUzLjg1NEgyLjIwOWMtLjQ0NSAwLS42NjktLjUzOS0uMzU0LS44NTRsNS43OTMtNS43OTN6TTEzLjAwMiA4Ljc5M2gtMTB2NS41YzAgLjI3Ni4yMjQuNS41LjVoOWMuMjc2IDAgLjUtLjIyNC41LS41di01LjV6Ii8+CiAgICA8cmVjdCB3aWR0aD0iMiIgaGVpZ2h0PSI0IiB4PSI3LjAwMiIgeT0iMTEuNzkzIiBmaWxsPSIjRkFGQUZBIiByeD0iMSIvPgo8L3N2Zz4K">
+                                             <div class="js-cpi-txt-branch-info text-12 color-grey-4 ml-1">
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <hr class="mb-2">
+                                       <div class="js-cpi-container-rent-period">
+                                          <div class="dc-flex justify-content-around align-items-center">
+                                             <div class="text-center">
+                                                <div class="text-12 color-grey-5">대여일</div>
+                                                <div class="text-16-b color-grey-3">
+                                                   <span class="txt-rent-start-date" th:text="${session.MainDateDTO.inDate}"></span>
+                                                </div>
+                                             </div>
+                                                       <span class="badge badge-pill badge-bluegreylight color-light-purple text-12 font-weight-normal">
+                                                <span class="txt-rent-period-time" th:text="${session.MainDateDTO.staydate}"></span>
+                                                <span class="txt-rent-period-day-unit">일</span>
+                                             </span>
+                                             
+                                             <div class="text-center">
+                                                <div class="text-12 color-grey-5">반납일</div>
+                                             <div class="text-16-b color-grey-3">
+                                                <span class="txt-rent-end-date" th:text="${session.MainDateDTO.outDate}"></span>
+                                             </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                              </div>
+                              <div class="js-vcd-not-soldout-elmt">
+                                 <hr class="mt-2">
+                                    <div class="dc-flex justify-content-between align-items-center py-1">
+                                       
+                                    </div>   
+                              
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+               
+               <section class="js-vcd-soldout-elmt carmore-section dc-none" style="display: none;">
+               <div class="container">
+                  <div class="text-center">
+                     <img class="w-100" src="/home/images/image-searchcar-again.png">
+                     <div class="mt-3 text-20 font-weight-bold">아이쿠, 해당 차량은 마감되었어요 T^T</div>
+                     <div class="mt-1 text-14 color-grey-3">아래 버튼을 눌러 다른 차량을 검색해보세요!</div>
+                     <div class="mt-4">
+                        <button class="btn btn-primary py-3 px-5 btn-pill mx-auto" id="vcd_btn_other_car_search">
+                           차량 검색하기
+                        </button>
+                     </div>
+                  </div>
+               </div>
+               </section>
+               
+               <div class="js-vcd-not-soldout-elmt">
+                  <div class="sticky" id="vcd_container_tabs" style="top: 80px;">
+                     <nav class="common-nav-tabs nav nav-classic nav-borderless nav-fill">
+                        <li class="nav-item text-center">
+                           <div class="nav-link js-vcd-nav-link clickable active" id="vcd_car_info_tab">
+                              예약정보
+                           </div>
+                        </li>
+                        <li class="nav-item text-center">
+                           <div class="nav-link js-vcd-nav-link clickable" id="vcd_review_tab">
+                              리뷰 (969)
+                           </div>
+                        </li>
+                     
+                     </nav>
+                  </div>
+                  <div class="flicking-root" id="vcd_car_info_tab_contents">
+                     <div class="w-100 h-auto mb-5" id="vcd_car_info_tab_contents_info" style="display: block;">
+                        <section class="carmore-section">
+                           <div class="container">
+                              <div class="no-gutters" id="vcd_container_car_info">
+                                 <div class="text-14 font-weight-bold color-grey-3">
+                                    차량정보
+                                 </div>
+                                 <div class="dc-flex justify-content-between align-items-center clickable" id="vcd_btn_car_info">
+                                    <div class="text-14">
+                                       <div class="d-flex flex-wrap align-items-center wordbreak-breakword">
+                                          
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFpNOC41OTMwNCAxMS41Nzc3VjguODA0NDhMMTEuMTE2OCA0LjgxMDYxSDkuODI5ODJMNy45NDI1MyA3LjgxMjZMNi4yNzIwOCA0LjgxMDYxSDQuOTQ3MDJMNy4zNTYyNiA4LjgwNDQ4VjExLjU3NzdIOC41OTMwNFoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+                                                <span class="js-car-info-txt-car-year ml-1">
+                                                   [[${session.ThorCarDTO.car_year }]]년
+                                                </span>
+                                             </div>
+                                          </div>
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik03Ljk3IDIuMTc0QzcuODQgMi4wNTkgNy42NzggMiA3LjUxNiAyYy0uMTYzIDAtLjMyNi4wNTktLjQ1OC4xNzQtLjE2NS4xNDYtNC4wNDIgMy42NDYtNC4wNDIgNy4yNzMgMCAyLjUxMyAyLjAxNiA0LjU1MyA0LjUgNC41NTMgMi40OCAwIDQuNS0yLjA0MyA0LjUtNC41NTMgMC0zLjYyNy0zLjg4LTcuMTI3LTQuMDQ2LTcuMjczeiIvPgo8L3N2Zz4K">
+                                                <span class="js-car-info-txt-fuel ml-1">
+                                                   [[${session.ThorCarDTO.car_fuel }]]
+                                                </span>
+                                             </div>
+                                          </div>
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik0xMi41IDEzLjA2MXYtMS40OTVjMC0xLjg1MS0xLjE2NC0zLjQyNC0yLjc2Ni0zLjk2Ny43Ny0uNDUyIDEuMjkzLTEuMzEzIDEuMjkzLTIuMjk5IDAtMS40NTEtMS4xMzQtMi42MzQtMi41MjctMi42MzQtMS4zOTMgMC0yLjUyNyAxLjE4My0yLjUyNyAyLjYzNCAwIC45ODYuNTIzIDEuODQ3IDEuMjkzIDIuMjk5QzUuNjYyIDguMTQyIDQuNSA5LjcxNSA0LjUgMTEuNTY2djEuNDk1YzAgLjE1LjExNi4yNzIuMjYuMjcyaDcuNDg0Yy4xNC0uMDAyLjI1Ni0uMTIyLjI1Ni0uMjcyeiIvPgo8L3N2Zz4K">
+                                                <span class="js-car-info-txt-passenger ml-1">
+                                                   [[${session.ThorCarDTO.car_inwon }]]
+                                                </span>
+                                             </div>
+                                          </div>
+                                    
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNS4wNTFDMiA0LjE5NSAyLjY5NSAzLjUgMy41NTEgMy41aDQuNzUxYy40NzcgMCAuOTI4LjIyIDEuMjIyLjU5NWwxLjMxNCAxLjY4IDEuODEzIDIuMjIzYy4yMjYuMjc3LjM0OS42MjMuMzQ5Ljk4djMuOTdjMCAuODU3LS42OTQgMS41NTItMS41NTEgMS41NTJIMy41NUMyLjY5NSAxNC41IDIgMTMuODA2IDIgMTIuOTQ5VjUuMDV6bTEuNTUxLjM5NWMwLS4yMTguMTc3LS4zOTUuMzk1LS4zOTVoMy42OThjLjEyNiAwIC4yNDQuMDYuMzE4LjE2MUw4Ljk4MiA2LjYgOS45IDcuODAxYy4wOTEuMTIuMTA3LjI4LjA0LjQxNS0uMDY2LjEzNS0uMjA0LjIyLS4zNTQuMjJoLTUuNjRjLS4yMTkgMC0uMzk2LS4xNzctLjM5Ni0uMzk1VjUuNDQ2em0uNTY0IDQuMTE4Yy0uMzExIDAtLjU2NC4yNTMtLjU2NC41NjQgMCAuMzEyLjI1My41NjQuNTY0LjU2NGgxLjEyOWMuMzExIDAgLjU2NC0uMjUyLjU2NC0uNTY0IDAtLjMxMS0uMjUzLS41NjQtLjU2NC0uNTY0SDQuMTE1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+                                                <span class="js-car-info-txt-door ml-1">[[${session.ThorCarDTO.car_make}]]</span>
+                                             </div>
+                                          </div>
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcuOTggMi41Yy40NDQgMCAuODA0LjM2LjgwNC44MDR2LjM3OGwuMjA3LS4xNGMuMzY4LS4yNS44NjgtLjE1NCAxLjExNy4yMTQuMjQ5LjM2Ny4xNTMuODY3LS4yMTQgMS4xMTZsLTEuMTEuNzUzdjEuOTA3bDEuNjkyLS45NzQuMTA3LTEuM2MuMDM2LS40NDIuNDI0LS43NzIuODY3LS43MzUuNDQyLjAzNi43NzEuNDI0LjczNS44NjdsLS4wMTYuMTk0LjMxMy0uMThjLjM4NC0uMjIxLjg3Ni0uMDg5IDEuMDk3LjI5Ni4yMjEuMzg1LjA5Ljg3Ni0uMjk2IDEuMDk4bC0uMzI1LjE4Ny4yMTcuMTA0Yy40LjE5My41NjguNjczLjM3NiAxLjA3My0uMTkzLjQtLjY3My41NjktMS4wNzMuMzc2bC0xLjIwOS0uNTgxLTEuNjU3Ljk1MyAxLjY4NS45NyAxLjE4Ni0uNTZjLjQwMi0uMTg5Ljg4LS4wMTcgMS4wNy4zODUuMTkuNDAxLjAxOC44OC0uMzg0IDEuMDdsLS4xNzQuMDgyLjMwNi4xNzZjLjM4NS4yMjEuNTE3LjcxMy4yOTYgMS4wOTctLjIyMS4zODUtLjcxMy41MTgtMS4wOTguMjk2bC0uMzMyLS4xOTEuMDE4LjI0M2MuMDMzLjQ0My0uMy44MjgtLjc0Mi44NjEtLjQ0My4wMzMtLjgyOC0uMy0uODYxLS43NDJsLS4wOTktMS4zMy0xLjctLjk3OXYyLjA2bDEuMTEuNzUyYy4zNjguMjQ5LjQ2NC43NDkuMjE1IDEuMTE2LS4yNS4zNjgtLjc1LjQ2NC0xLjExNy4yMTRsLS4yMDctLjE0di4yNjdjMCAuNDQ0LS4zNi44MDQtLjgwNC44MDQtLjQ0NCAwLS44MDQtLjM2LS44MDQtLjgwNHYtLjI0MmwtLjE2Mi4xMTJjLS4zNjYuMjUyLS44NjYuMTYtMS4xMTgtLjIwNi0uMjUyLS4zNjUtLjE2LS44NjYuMjA1LTEuMTE4bDEuMDc1LS43NDF2LTIuMDVsLTEuNzU1IDEuMDEtLjA5OSAxLjMzYy0uMDMzLjQ0My0uNDE4Ljc3NS0uODYxLjc0My0uNDQzLS4wMzMtLjc3NS0uNDE5LS43NDItLjg2MmwuMDE4LS4yNDMtLjIzNy4xMzZjLS4zODQuMjIyLS44NzYuMDktMS4wOTctLjI5Ni0uMjIyLS4zODQtLjA5LS44NzYuMjk2LTEuMDk3bC4yMS0uMTIxLS4xNzQtLjA4MmMtLjQwMS0uMTktLjU3My0uNjY4LS4zODQtMS4wNy4xOS0uNDAxLjY2OC0uNTczIDEuMDctLjM4NGwxLjE4Ni41Nkw2LjM4OCA4LjkxIDQuNjM1IDcuOTAxbC0xLjIxLjU4MmMtLjQuMTkyLS44OC4wMjQtMS4wNzItLjM3Ni0uMTkyLS40LS4wMjQtLjg4LjM3Ni0xLjA3M2wuMjE3LS4xMDQtLjIzLS4xMzNjLS4zODQtLjIyMS0uNTE3LS43MTItLjI5NS0xLjA5Ny4yMjEtLjM4NS43MTMtLjUxNyAxLjA5Ny0uMjk2bC4yMTcuMTI1LS4wMTYtLjE5NWMtLjAzNi0uNDQyLjI5My0uODMuNzM1LS44NjcuNDQzLS4wMzYuODMuMjkzLjg2Ny43MzZsLjEwNyAxLjMgMS43NDggMS4wMDZ2LTEuOWwtMS4wNzUtLjc0Yy0uMzY1LS4yNTItLjQ1Ny0uNzUzLS4yMDUtMS4xMTguMjUyLS4zNjYuNzUyLS40NTggMS4xMTgtLjIwNmwuMTYyLjExMnYtLjM1M2MwLS40NDQuMzYtLjgwNC44MDQtLjgwNHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                                <span class="js-car-info-txt-air-condition ml-1">에어컨</span>
+                                             </div>
+                                          </div>
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                             </div>
+                                          </div>
+                                          
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSI5LjQ5OSIgcj0iMS4xNjciIGZpbGw9IiM3ODhBQUMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDggOS40OTkpIi8+CiAgICA8cGF0aCBmaWxsPSIjNzg4QUFDIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yMzkgMTQuMTQxbC0zLjQ5My0zLjA5NWMuMzY1LS40MTIuNTg3LS45NTQuNTg3LTEuNTQ4IDAtMS4yODktMS4wNDQtMi4zMzMtMi4zMzMtMi4zMzMtLjI3OCAwLS41NDUuMDQ4LS43OTMuMTM4TDYuMTMzIDUuODdjLS4xOTMtLjI1OC0uNTU5LS4zMS0uODE2LS4xMTctLjI1OC4xOTQtLjMxLjU2LS4xMTcuODE3bDEuMDQzIDEuMzljLS4zNTkuNDExLS41NzcuOTQ5LS41NzcgMS41MzcgMCAuNi4yMjcgMS4xNDguNiAxLjU2MWwtMy40NyAzLjEyMkMxLjY4IDEyLjk0IDEgMTEuMjk5IDEgOS40OThjMC0zLjg2NiAzLjEzNC03IDctN3M3IDMuMTM0IDcgN2MwIDEuNzgyLS42NjUgMy40MDgtMS43NjEgNC42NDN6TTcuNDk1IDMuNjY1di41ODNjMCAuMzIyLjI2Mi41ODMuNTg0LjU4My4zMjIgMCAuNTgzLS4yNi41ODMtLjU4M3YtLjU4M2MwLS4zMjItLjI2MS0uNTg0LS41ODMtLjU4NC0uMzIyIDAtLjU4NC4yNjItLjU4NC41ODR6bTUuODU1IDYuMDk0Yy4zMjIgMCAuNTgzLS4yNjIuNTgzLS41ODQgMC0uMzIyLS4yNjEtLjU4My0uNTgzLS41ODNoLS42MjhjLS4zMjIgMC0uNTgzLjI2MS0uNTgzLjU4MyAwIC4zMjIuMjYuNTg0LjU4My41ODRoLjYyOHptLTkuOTcyIDBjLjMyMiAwIC41ODMtLjI2Mi41ODMtLjU4NCAwLS4zMjItLjI2MS0uNTgzLS41ODMtLjU4M0gyLjc1Yy0uMzIyIDAtLjU4My4yNjEtLjU4My41ODMgMCAuMzIyLjI2LjU4NC41ODMuNTg0aC42Mjh6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+                                                <span class="js-car-info-txt-fuel-ratio ml-1">[[${session.ThorCarDTO.car_mileage}]]</span>
+                                             </div>
+                                          </div>
+                                          
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxyZWN0IHdpZHRoPSIxMS41MzciIGhlaWdodD0iMS4zNTIiIHg9IjIuMjMxIiB5PSIxMS4wNDMiIGZpbGw9IiM4NTkyQUIiIHJ4PSIuNjc2Ii8+CiAgICA8cGF0aCBmaWxsPSIjODU5MkFCIiBkPSJNNC4wODIgMTMuNjk2YzAtLjM3NC4zMDItLjY3Ni42NzYtLjY3Nmg2LjUxMmMuMzczIDAgLjY3Ni4zMDIuNjc2LjY3NiAwIC4zNzMtLjMwMy42NzYtLjY3Ni42NzZINC43NThjLS4zNzQgMC0uNjc2LS4zMDMtLjY3Ni0uNjc2eiIvPgogICAgPHBhdGggZmlsbD0iIzg1OTJBQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTQuMjcxIDUuNDZsLTEuMTI0LS41MTQtLjk5My0xLjU4NGMtLjI4Ny0uNDU5LS43OTItLjczNy0xLjMzNC0uNzM0SDYuNTkxYy0uNDkgMC0uOTU1LjIyNy0xLjI1My42MTdMNC4wNTUgNC45MjNsLTIuMTM3LjU4NUMxLjM3NiA1LjY1OCAxIDYuMTU0IDEgNi43MTZ2LjgxOGMwIC42OTEuNTUgMS4yNjIgMS4yNDIgMS4yNjJoMS4yNTljMCAuODI4LjY3MiAxLjUgMS41IDEuNS44MjkgMCAxLjUtLjY3MiAxLjUtMS41aDMuNzVjMCAuODI4LjY3MSAxLjUgMS41IDEuNS44MjggMCAxLjUtLjY3MiAxLjUtMS41aC41MDdjLjY5MSAwIDEuMjQyLS41NyAxLjI0Mi0xLjI2MlY2LjZjLjAwMy0uNDktLjI4NC0uOTM4LS43MjktMS4xNDF6bS0zLjUxOS0xLjIyMmMtLjE3My0uMzA3LS40NzktLjQ5NC0uODA3LS40OTJoLTIuNTZjLS4yOTcgMC0uNTc5LjE1Mi0uNzYuNDEzbC0uNDA0LjU3Yy0uMDIuMDU0LS4wMTUuMTYxLjE3Mi4xNTUuMTktLjAwNiAyLjkxOC0uMDAyIDQuMDMgMGguNDUzYy4xNzQgMCAuMTctLjE0NC4xMzItLjIwNGwtLjI1NS0uNDQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+                                                <span class="js-car-info-txt-drive-km ml-1">[[${session.ThorCarDTO.car_km }]]</span>
+                                             </div>
+                                          </div>
+                                          <div class="js-container-car-info-icon pr-4 pt-2">
+                                             <div class="d-flex align-items-center">
+                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjE2IDUuMzA5Yy42OTQgMS4xMjQgMS4wNyAyLjQyOCAxLjA3IDMuODYxIDAgMy4wOS0xLjk4NCA1LjMzLTQuNTA4IDUuMzMtMS44NDEgMC0zLjM3Ni0xLjE1Ny00LjEtMy4wNzctLjE3Mi0uNDU4LS40NjItLjgyMy0xLjE1MS0uODc3LTEuNzU3LS4xNC0yLjcwMS0xLjQxMi0yLjcwMS0zLjE1MyAwLS42MTYuMTUzLTEuMTg5LjQxNS0xLjY3NCAwIDAgLjQ1My0uOTY3IDEuNDg2LTEuODIuODk1LS44NDQgMi40Mi0xLjM5OSA0LjE1MS0xLjM5OSAyLjUyIDAgNC40NzQgMS40MSA1LjMzOCAyLjgwOXptLTQuNDk5IDUuNzZjMCAuNzQ0LjYwNCAxLjM0OCAxLjM0OCAxLjM0OC43NDUgMCAxLjM0OS0uNjA0IDEuMzQ5LTEuMzQ4IDAtLjc0NS0uNjA0LTEuMzQ5LTEuMzQ5LTEuMzQ5LS43NDQgMC0xLjM0OC42MDQtMS4zNDggMS4zNDl6bTIuNDk3LTIuNzk2Yy41MjYgMCAuOTUyLS40MjYuOTUyLS45NTJzLS40MjYtLjk1Mi0uOTUyLS45NTJjLS41MjUgMC0uOTUxLjQyNi0uOTUxLjk1MnMuNDI1Ljk1Mi45NTEuOTUyek05LjkwMyA1LjE5YzAgLjUyNS0uNDI2Ljk1MS0uOTUxLjk1MS0uNTI2IDAtLjk1Mi0uNDI2LS45NTItLjk1MSAwLS41MjYuNDI2LS45NTIuOTUyLS45NTIuNTI1IDAgLjk1MS40MjYuOTUxLjk1MnptLTQuMDU0LjU2Yy4zNjggMCAuNjY3LS4zLjY2Ny0uNjY4IDAtLjM2OS0uMjk5LS42NjgtLjY2Ny0uNjY4LS4zNjkgMC0uNjY4LjMtLjY2OC42NjggMCAuMzY4LjMuNjY3LjY2OC42Njd6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+                                                <span class="js-car-info-txt-color ml-1">[[${session.ThorCarDTO.car_col}]]</span>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 
+                                 </div>
+                              </div>
+                              <div class="no-gutters mt-4" id="vcd_section_car_option" style="display: block;">
+                                 <div class="text-14 font-weight-bold color-grey-3">차량옵션</div>
+                                 <div class="mt-2" id="vcd_container_car_options">
+                                    <div class="container-car-option js-vcd-radio-car-option p-3 mb-2 dc-block active" id="template_car_option">
+                                       <label class="checkbox-container inline-radio mb-0" id="template_container_car_option_item">
+                                          
+                                             네비게이션 · 후방카메라 · 후방센서 · 선루프 · 열선시트 · 블랙박스 · 블루투스 · AUX · USB · 금연 · 국제운전면허증가능 · 충전기제공 · 카시트무료 · 스마트키 · 핸들열선 · 리모컨키 · 통풍시트 · 하이패스 · 버튼시동 · HUD · 핸들 리모컨 · 에어백 · 차선이탈 경보 시스템(LDWS) · 4륜 구동 · 크루즈 컨트롤 · 오토 라이트 · 안드로이드 오토 · 애플 카플레이
+                                                
+                                       </label>
+                                    </div>
+                                 </div>
+                                 <div class="container-car-option dc-none js-vcd-radio-car-option p-3 mb-2" id="template_car_option">
+                                    <label class="checkbox-container inline-radio mb-0" id="template_container_car_option_item">
+                                       <div class="checkbox-label ml-3" id="template_txt_car_option_item"></div>
+                                    <input id="template_radio_car_option" type="radio" name="js_template_radio_car_option_name">
+                                       <span class="checkmark"></span>
+                                    </label>
+                                 </div>
+                              </div>
+                           
+                              <div class="mt-4 js-show-devide-elmt" id="js_vcd_container_additional_service" data-sde-s="1" data-sde-m="1" data-sde-g="0" style="display: block;">
+                              
+                              </div>
+                              <div class="no-gutters mt-4 js-show-devide-elmt" data-sde-s="1" data-sde-m="1" data-sde-g="0" style="display: block;">
+                                 <div class="text-14 font-weight-bold color-grey-3">
+                                    운전자 대여조건
+                                 </div>
+                                 <div class="text-14">
+                                    <div class="text-14 color-grey-3" id="js_vcd_rent_tab_container_rent_condition">
+                                       <div class="dc-flex align-items-start mt-2">
+                                          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTggMTRjMy4zMTQgMCA2LTIuNjg2IDYtNnMtMi42ODYtNi02LTYtNiAyLjY4Ni02IDYgMi42ODYgNiA2IDZ6bTIuODU1LTcuMTQ4Yy4xOTQtLjE5Ni4xOTMtLjUxMi0uMDAzLS43MDctLjE5Ni0uMTk0LS41MTMtLjE5My0uNzA3LjAwM0w3LjQ5NSA4LjgyIDUuODIyIDcuNDA0Yy0uMjEtLjE3OC0uNTI2LS4xNTItLjcwNS4wNTktLjE3OC4yMS0uMTUyLjUyNi4wNTkuNzA0TDcuMiA5Ljg4MmMuMTk5LjE2OC40OTQuMTU1LjY3OC0uMDNsMi45NzYtM3oiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                          <div class="ml-1">
+                                             운전자 나이 <b class="text-primary">만 26세</b> 이상
+                                          </div>
+                                       </div>
+                                       <div class="dc-flex align-items-start mt-2">
+                                          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTggMTRjMy4zMTQgMCA2LTIuNjg2IDYtNnMtMi42ODYtNi02LTYtNiAyLjY4Ni02IDYgMi42ODYgNiA2IDZ6bTIuODU1LTcuMTQ4Yy4xOTQtLjE5Ni4xOTMtLjUxMi0uMDAzLS43MDctLjE5Ni0uMTk0LS41MTMtLjE5My0uNzA3LjAwM0w3LjQ5NSA4LjgyIDUuODIyIDcuNDA0Yy0uMjEtLjE3OC0uNTI2LS4xNTItLjcwNS4wNTktLjE3OC4yMS0uMTUyLjUyNi4wNTkuNzA0TDcuMiA5Ljg4MmMuMTk5LjE2OC40OTQuMTU1LjY3OC0uMDNsMi45NzYtM3oiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                          <div class="ml-1">
+                                             <b class="text-primary">면허취득일 1년</b> 이상
+                                          </div>
+                                       </div>
+                                       <div class="dc-flex align-items-start mt-2">
+                                          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTggMTRjMy4zMTQgMCA2LTIuNjg2IDYtNnMtMi42ODYtNi02LTYtNiAyLjY4Ni02IDYgMi42ODYgNiA2IDZ6bTIuODU1LTcuMTQ4Yy4xOTQtLjE5Ni4xOTMtLjUxMi0uMDAzLS43MDctLjE5Ni0uMTk0LS41MTMtLjE5My0uNzA3LjAwM0w3LjQ5NSA4LjgyIDUuODIyIDcuNDA0Yy0uMjEtLjE3OC0uNTI2LS4xNTItLjcwNS4wNTktLjE3OC4yMS0uMTUyLjUyNi4wNTkuNzA0TDcuMiA5Ljg4MmMuMTk5LjE2OC40OTQuMTU1LjY3OC0uMDNsMi45NzYtM3oiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                          <div class="ml-1">
+                                             차량 대여 시 실물면허증 소지 
+                                          </div>
+                                       </div>
+                                       <div class="dc-flex align-items-start mt-2">
+                                          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTggMTRjMy4zMTQgMCA2LTIuNjg2IDYtNnMtMi42ODYtNi02LTYtNiAyLjY4Ni02IDYgMi42ODYgNiA2IDZ6bTIuODU1LTcuMTQ4Yy4xOTQtLjE5Ni4xOTMtLjUxMi0uMDAzLS43MDctLjE5Ni0uMTk0LS41MTMtLjE5My0uNzA3LjAwM0w3LjQ5NSA4LjgyIDUuODIyIDcuNDA0Yy0uMjEtLjE3OC0uNTI2LS4xNTItLjcwNS4wNTktLjE3OC4yMS0uMTUyLjUyNi4wNTkuNzA0TDcuMiA5Ljg4MmMuMTk5LjE2OC40OTQuMTU1LjY3OC0uMDNsMi45NzYtM3oiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                          <div class="ml-1">
+                                             업체별 <b class="text-primary">대여규정 준수</b> (외국인 대여, 낚시용품/애견 동반, 주행거리제한 규정 등)
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 
+                              </div>
+                           </div>
+                        </section>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         <!-- 오른쪽 -->
+         <div class="col-lg-5 dc-none dc-lg-block">
+            <div class="cm-rounded bg-shadow bg-white sticky mx-n15px mx-lg-0 sticky-pc-menu-top">
+               <section class="mt-3 p-3">
+                  <div class="container">
+                     <div class="row section-title">
+                        <div class="col">
+                           <h3 class="h6 mb-4 border-bottom-thick pb-2">결제 정보</h3>
+                        </div>
+                     </div>
+                     <div class="row js-vcd-not-soldout-elmt">
+                        <div class="col">
+                           <ul class="list-group list-group-flush">
+                              <li class="list-group-item bg-lg-none px-0">
+                                 <div class="dc-flex justify-content-between align-items-center color-grey-3 wordbreak-keepall">
+                                    <span class="js-vcd-txt-rent-price-label">대여요금</span>
+                                    <div class="text-right">
+                                       <span class="js-vcd-txt-rent-price" th:text="${#numbers.formatInteger(session.ThorCarDTO.car_shortp,3, 'COMMA')}"></span>
+                                       <span class="js-vcd-txt-rent-price">원</span>
+                                    </div>
+                                 </div>
+                              </li>
+                              
+                           
+                              
+                              <li class="list-group-item bg-lg-none px-0">
+                                 <div class="dc-flex justify-content-between align-items-center color-grey-3 wordbreak-keepall font-weight-bold">
+                                    <span class="text-primary">예상 결제액</span>
+                                    <div class="text-right text-primary">
+                                       <span class="js-vcd-txt-expected-price" th:text="${#numbers.formatInteger(session.ThorCarDTO.car_shortp,3, 'COMMA')}"></span>
+                                       <span class="js-vcd-txt-expected-price">원</span>
+                                    </div>
+                                 </div>
+                              </li>
+                              
+                           </ul>
+                           <button class="js-vcd-btn-go-reservation btn btn-primary btn-block btn-lg mb-2 btn-border-10 mt-3" onclick="location.href='pay.action'">
+                              <div class="text-18 font-weight-bold text-white line-height-1">
+                                 <span class="js-vcd-txt-expected-price" th:text="${#numbers.formatInteger(session.ThorCarDTO.car_shortp,3, 'COMMA')}"></span>
+                                 <span class="js-vcd-txt-expected-price">원</span>
+                                 &nbsp;바로 예약하기
+                              </div>
+                              <div class="js-vcd-txt-price-desc text-12 text-white">
+                                 일반자차 포함
+                              </div>
+                           </button>
+                        
+                        </div>
+                     </div>
+                     <div class="row js-vcd-soldout-elmt dc-none" style="display: none;">
+                        <div class="col">
+                           <div class="pb-3 text-16-b">해당 차량은 마감되었어요 T^T</div>
+                           <button class="btn btn-primary btn-block btn-lg mb-2 btn-border-10 text-14 font-weight-bold" disabled="true">
+                              마감된 차량
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+                        
+                        
+   
+                                                   
+<!-- Channel Plugin Scripts -->
+<script>
+  (function chat() {
+    var w = window;
+    if (w.ChannelIO) {
+      return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+    }
+    var ch = function() {
+      ch.c(arguments);
+    };
+    ch.q = [];
+    ch.c = function(args) {
+      ch.q.push(args);
+    };
+    w.ChannelIO = ch;
+    function l() {
+      if (w.ChannelIOInitialized) {
+        return;
+      }
+      w.ChannelIOInitialized = true;
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+      s.charset = 'UTF-8';
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+    if (document.readyState === 'complete') {
+      l();
+    } else if (window.attachEvent) {
+      window.attachEvent('onload', l);
+    } else {
+      window.addEventListener('DOMContentLoaded', l, false);
+      window.addEventListener('load', l, false);
+    }
+  })();
+  ChannelIO('boot', {
+    "pluginKey": "4a21b723-30c3-42e6-ac5d-2d454abca41f"
+  });
+</script>
+<!-- End Channel Plugin --> 
+
+</body>
+</html>

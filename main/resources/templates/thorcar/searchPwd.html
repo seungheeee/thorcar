@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>비밀번호 찾기</title>
+    
+    <link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/common.css?202109021605">
+    <link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/login.css?202109021605">
+    <style>
+
+.fuSBOR {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 50px;
+    position: relative;
+    font-size: 16px;
+}
+
+</style>
+	<script type="text/javascript">
+	
+		function sendIt() {
+			
+			var f = document.myForm;
+			
+			if(!f.id.value){
+				alert("이름을 입력하세요!!")
+				f.name.focus();
+				return;
+			}
+			
+			if(!f.id.value){
+				alert("이름을 입력하세요!!")
+				f.name.focus();
+				return;
+			}
+			
+			if(!f.tel.value){
+				alert("전화번호를 입력하세요!!")
+				f.tel.focus();
+				return;
+			}
+			
+			
+			
+            if (!(f.tel.value.length >= 10 && f.tel.value.length <= 11)) {
+            	alert("양식에 맞춰 입력해주세요.")
+				f.tel.focus();
+            	return;
+            }
+            
+			
+			
+			f.action = "/searchPwd_ok.action";
+			f.submit();
+			
+		}
+	
+
+	</script>
+	</head>
+	<body class="vsc-initialized">
+	<div class="musinsa-wrapper wrapper-member devicePC">
+
+        <div id="commonLayoutHeader">
+        	<div class="common-layout__sc-1q47zu5-1 fhWAHi">
+        		<h2 class="common-layout__sc-wllrag-0 fuSBOR">비밀번호 찾기</h2>
+        	</div>
+        </div>
+        
+        <!-- Member -->
+        <div class="n-member-area form-area">
+
+            <!-- Find Tab -->
+            <div class="n-tab-btn">
+                <a href="searchId.action" class="">아이디 찾기</a>
+                <a href="searchPwd.action" class="is-active">비밀번호 찾기</a>
+            </div>
+
+            <div class="member-find-radio">
+                
+            </div>
+            
+            <form name="myForm" action="">
+
+	            <div class="n-form-item">
+	                <input type="text" class="n-input" placeholder="아이디 입력" id="memberId" name="id" minlength="3" maxlength="20" value="" style="padding-right: 0px;">
+	                <p class="n-validation" id="searchValidMemberId" style="display: none"></p>
+	            </div>
+	
+	            <div class="n-form-item">
+	                <input type="text" class="n-input" id="memberName" name="name" placeholder="이름 입력" style="padding-right:0px;">
+	                <p class="n-validation" id="searchValidMemberName" style="display: none;"></p>
+	            </div>
+				<div class="n-form-item tel-area" id="input-div">
+	                <input type="tel" class="n-input" placeholder="휴대전화 입력(-없이)" minlength="10" maxlength="11" id="phoneNumber" name="tel">
+	                <p class="n-validation" id="searchValidPhone" style="display: none"></p>
+	            </div>
+            
+            </form>
+
+            <div class="member-btn">
+                <button type="submit" class="n-btn btn-primary" id="searchIdBtn" onclick="sendIt();">비밀번호 찾기</button>
+            </div>
+        </div>
+    </div>
+	
+	
+	</body>
+	</html>

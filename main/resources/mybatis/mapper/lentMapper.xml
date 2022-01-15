@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.LentMapper">
+
+	<select id="getLists" parameterType="hashMap" resultType="com.spring.boot.dto.LentDTO">
+		select * from (
+		select data.* from (
+		select region,place,placeAddr from lent) data)
+	</select>
+
+	<select id="getReadData" parameterType="string" resultType="com.spring.boot.dto.LentDTO">
+		select region,placeAddr from lent where place=#{place, jdbcType=VARCHAR}
+	</select>
+	
+	
+	
+</mapper>

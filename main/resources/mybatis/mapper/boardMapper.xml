@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.BoardMapper">
+
+<select id="maxNum" resultType="int">
+	select nvl(max(boardNum),0) from bbs
+</select>
+
+<insert id="insertData" parameterType="com.spring.boot.dto.BoardDTO">
+	insert into bbs (boardNum,name,pwd,email,subject,content,ipAddr,groupNum,
+	depth,orderNo,parent,hitCount,created) values (#{boardNum},#{name},#{pwd},
+	#{email},#{subject},#{content},#{ipAddr},#{groupNum},#{depth},#{orderNo},
+	#{parent},0,sysdate)
+</insert>
+
+<select id="getDataCount" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from bbs
+	where ${searchKey} like '%' || #{searchValue} || '%'
+</select>
+
+<select id="getLists" parameterType="hashMap" resultType="com.spring.boot.dto.BoardDTO">
+	select * from (
+	select rownum rnum, data.* from (
+	select boardNum,name,subject,depth,hitCount,to_char(created,'YYYY-MM-DD') created
+	from bbs where ${searchKey} like '%' || #{searchValue} || '%'
+	order by boardNum desc) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<update id="updateHitCount" parameterType="int">
+	update bbs set hitCount=hitCount+1 where boardNum=#{boardNum}
+</update>
+
+<select id="getReadData" parameterType="int" resultType="com.spring.boot.dto.BoardDTO">
+	select boardNum,name,pwd,email,subject,content,ipAddr,
+	groupNum,depth,orderNo,parent,hitCount,created from bbs where boardNum=#{boardNum}
+</select>
+
+<select id="preReadData" parameterType="map" resultType="com.spring.boot.dto.BoardDTO">
+	select data.* from (
+	select boardNum,subject from bbs
+	where (${searchKey} like '%' || #{searchValue} || '%')
+<![CDATA[	
+	and ((groupNum=#{groupNum} and orderNo<#{orderNo}) 
+	or (groupNum>#{groupNum}))
+	order by groupNum asc, orderNo desc) data
+	where rownum=1
+]]>
+</select>
+
+<select id="nextReadData" parameterType="map" resultType="com.spring.boot.dto.BoardDTO">
+	select data.* from (
+	select boardNum,subject from bbs
+	where (${searchKey} like '%' || #{searchValue} || '%')
+<![CDATA[	
+	and ((groupNum=#{groupNum} and orderNo>#{orderNo}) 
+	or (groupNum<#{groupNum}))
+	order by groupNum asc, orderNo desc) data
+	where rownum=1
+]]>
+</select>
+
+<update id="orderNoUpdate" parameterType="map">
+	update bbs set orderNo=orderNo+1
+	where groupNum=#{groupNum} and orderNo>#{orderNo}
+</update>
+
+<update id="updateData" parameterType="com.spring.boot.dto.BoardDTO">
+	update bbs set name=#{name},pwd=#{pwd},email=#{email},
+	subject=#{subject},content=#{content} where boardNum=#{boardNum}
+</update>
+
+<delete id="deleteData" parameterType="int">
+	delete bbs 
+	where boardNum in
+	(select boardNum from bbs start with boardNum=#{boardNum}
+     connect by prior boardNum=parent)
+</delete>
+
+
+
+
+
+
+
+</mapper>
+

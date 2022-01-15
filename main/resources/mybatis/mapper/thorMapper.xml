@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boot.mapper.ThorMapper">
+
+<select id="getListsFromSearchValue" parameterType="hashMap" resultType="com.spring.boot.dto.ThorCarDTO">
+	select * from (
+    select data.* from (
+    select num, car_type, car_name, car_col, car_shortp, car_place, sub, 
+    car_year, car_mileage, car_inwon, car_km, car_fuel, state, car_make, 
+    car_fileurl from thorcar where (upper(car_name) like upper('%' || #{searchValue} || '%')) order by car_name) data)
+</select>
+
+<select id="getListshort" parameterType="hashMap" resultType="com.spring.boot.dto.ThorOrdShortDTO">
+    select * from (
+    select data.* from (
+    select tid,quantity,created_at,indate,outdate,staydate,total_amount,cus_num,car_num,
+    car_type, car_name, car_col,car_shortp, car_place, car_make, sub, car_year, car_mileage, car_inwon, car_km, 
+    car_fuel, car_fileurl from thorordshort) data)
+</select>
+
+<insert id="insertDataordshort" parameterType="com.spring.boot.dto.ThorOrdShortDTO">
+    insert into ThorOrdShort (tid,quantity,created_at,indate,outdate,staydate,total_amount,cus_num,car_num,
+    car_type, car_name, car_col,car_shortp, car_place, car_make, sub, car_year, car_mileage, car_inwon, car_km, 
+    car_fuel, car_fileurl) values (#{tid, jdbcType=VARCHAR},#{quantity, jdbcType=VARCHAR},#{created_at, jdbcType=VARCHAR},
+    #{inDate, jdbcType=VARCHAR},#{outDate, jdbcType=VARCHAR},#{staydate, jdbcType=VARCHAR},#{total_amount, jdbcType=VARCHAR},
+    #{cus_num, jdbcType=VARCHAR},#{car_num, jdbcType=VARCHAR},#{car_type, jdbcType=VARCHAR},#{car_name, jdbcType=VARCHAR},
+    #{car_col, jdbcType=VARCHAR},#{car_shortp, jdbcType=VARCHAR},#{car_place, jdbcType=VARCHAR},#{car_make, jdbcType=VARCHAR},
+    #{sub, jdbcType=VARCHAR},#{car_year, jdbcType=VARCHAR},#{car_mileage, jdbcType=VARCHAR}, #{car_inwon, jdbcType=VARCHAR}, 
+    #{car_km, jdbcType=VARCHAR},#{car_fuel, jdbcType=VARCHAR},#{car_fileurl, jdbcType=VARCHAR})
+</insert>
+
+<insert id="insertData1" parameterType="com.spring.boot.dto.ThorOrdDTO">
+    insert into ThorOrd (sid,quantity,created_at,lastdate,total_amount,cus_num,car_num) values 
+    (#{sid, jdbcType=VARCHAR},#{quantity, jdbcType=VARCHAR},#{created_at, jdbcType=VARCHAR},#{lastdate, jdbcType=VARCHAR},
+    #{total_amount, jdbcType=VARCHAR},#{cus_num, jdbcType=VARCHAR},#{car_num, jdbcType=VARCHAR})
+</insert>
+
+<select id="getreaddatafromcusnum" parameterType="hashMap" resultType="com.spring.boot.dto.ThorOrdDTO">
+   select sid,quantity,created_at,lastdate,total_amount,cus_num,car_num from thorord where cus_num = #{cus_num}
+</select>
+
+<select id="maxNum1" resultType="int">
+    select nvl(max(num),0) from thorcar
+</select>
+
+<select id="getReadData1" parameterType="int" resultType="com.spring.boot.dto.ThorCarDTO">
+   select car_type, car_name, car_col, car_shortp, car_place, sub, car_year, car_mileage, car_inwon, car_km, car_fuel, state, car_make, car_fileurl from thorcar where num=#{num}
+</select>
+
+<select id="getReadnumfromcurrentid" parameterType="String" resultType="int">
+	select num from client where id=#{id}
+</select>
+
+<select id="maxNum" resultType="int">
+    select nvl(max(num),0) from client
+</select>
+
+<insert id="insertData" parameterType="com.spring.boot.dto.ThorClientDTO">
+    insert into client (num,name,pwd,tel,id,li_num,birth,type) values (#{num},#{name},#{pwd},#{tel},#{id},#{li_num},#{birth},#{type})
+</insert>
+
+<select id="getReadData" parameterType="string" resultType="com.spring.boot.dto.ThorClientDTO">
+	select num, id, name, pwd, tel, birth, li_num, type from client where id=#{id}
+</select>
+
+<select id="getReadTel" parameterType="string" resultType="com.spring.boot.dto.ThorClientDTO">
+	select num, id, name, pwd, tel from client where tel=#{tel}
+</select>
+
+<update id="updatePwd" parameterType="com.spring.boot.dto.ThorClientDTO">
+    update client set pwd=#{pwd} where id=#{id}
+</update>
+
+<select id = "idCheck" resultType="int">
+	select count(*) from client where id=#{id}
+</select>
+
+<select id = "telCheck" resultType="int">
+	select count(*) from client where tel=#{tel}
+</select>
+
+<delete id="deleteData" parameterType="int">
+	delete thorord where cus_num = #{cus_num}
+</delete>
+
+</mapper>

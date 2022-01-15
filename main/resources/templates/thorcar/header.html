@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?8341415e5d1784eb0583"/>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?6cf12188f920809f5aa6"/>
+</head>
+<body>
+
+   <!-- 맨위상단메뉴고정 -->
+   <header th:fragment="headerFragment">
+   <div class="main-contents">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white dc-none dc-lg-block border-bottom fixed-top header-pc" id="container_pc_navbar" style="display: flex;">
+         <div class="container">
+            <a class="js-btn-navbar-brand navbar-brand clickable" style="font-size: initial;" href="main.action">
+               <img class="js-img-header-logo h-100" src="logoimages/logo.png" style="height: 78px !important;"></a>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="0" href="main.action">홈</a>
+                        </li>
+                        
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="2" href="/subInfo.action">월구독</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="3" href="/charging.action">전기차충전소</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="4" href="/travel.action">여행지검색</a></li>
+                        
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="5" href="/cscenter.action">고객센터</a></li>
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="6" href="/reservation.action">마이페이지</a></li>
+                     </ul>
+                     <div th:if="${session.loginDTO== null}">
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/login.action'">로그인</button>
+                        <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/signup.action'">회원가입</button>
+                     </div>
+                     <div th:unless="${session.loginDTO== null}">
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" 
+                         type="button"  th:text="|${session.loginDTO.id} 님 반가워요|"></button>
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/logout.action'">로그아웃</button>
+                     </div>
+                  </div>
+         </div>
+      </nav>
+   </div>
+</body>
+</header>
+</html>

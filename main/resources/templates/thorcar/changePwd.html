@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>비밀번호 찾기 결과</title>
+    
+<link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/common.css?202109021605">
+<link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/login.css?202109021605">
+<style>
+
+.fuSBOR {
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 50px;
+    position: relative;
+    font-size: 16px;
+    
+}
+
+</style>
+<script type="text/javascript">
+	
+	function sendIt() {
+		
+		var f = document.myForm;
+		
+		str = f.pwd.value;
+		if(!f.pwd.value){
+			alert("새비밀번호를 입력하세요!!")
+			f.pwd.focus();
+			return;
+		}
+		f.pwd.value = str;
+		
+		if(!f.pwd2.value){
+			alert("비밀번호를 확인해주세요!!")
+			f.pwd2.focus();
+			return;
+		}
+		
+
+		f.action = "/update_Pwd.action";
+		f.submit();
+		
+	}
+</script>
+
+</head>
+<body class="vsc-initialized">
+<form action="" method="post" name="myForm">
+<!-- WRAPPER -->
+<div class="musinsa-wrapper wrapper-member devicePC">
+	<div id="commonLayoutHeader">
+    	<div class="common-layout__sc-1q47zu5-1 fhWAHi">
+       		<h2 class="common-layout__sc-wllrag-0 fuSBOR">비밀번호 찾기 결과</h2>
+        </div>
+    </div>	
+       
+    <!-- Member -->
+    <div class="n-member-area">
+    	<div class="layer-certify find-id-multi">
+       		<div class="txt-certify-alert">
+	       		<p class="alert" th:text ="${head_message}"></p>
+               	<div class="n-form-set" style="margin-top: 10px;">
+                   	<div class="n-form-icon">
+                       	<input type="password" class="n-input input" id="pwd" name="pwd" placeholder="새비밀번호(숫자,영문,특수문자 조합 최소8자)">
+                   	</div>
+                </div>
+                <div class="n-form-set" style="margin-top: 10px;">
+                	<div class="n-form-icon">
+                       	<input type="password" class="n-input input" id="pwd2" name="pwd2" placeholder="비밀번호 확인">
+                   	</div>
+                </div>
+         	</div>
+            <!-- ------------------ -->
+           	<div class="member-btn">
+           		<input type="hidden" name="id" th:value="${dto.id}" />
+            	<button type="submit" class="n-btn btn-primary" onclick="sendIt();">비밀번호 변경</button>
+	        </div>
+	    </div>
+    </div>	
+</div>
+</form>	
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>단기렌트 | thorcar</title>
+
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?8341415e5d1784eb0583"/>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?6cf12188f920809f5aa6"/>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<style>
+
+.tab-content.current {cursor: pointer;}
+
+img {
+border-radius : 10px 10px 10px 10px;
+}
+
+   body{
+   margin-top: 50px;
+   
+   line-height: 1.6
+}
+
+.container2{
+   position: relative;
+   width: 700px;
+   margin: 0 auto;
+   
+}
+
+<!-- 창크기 반응형 (position) --!>
+.container2:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+ul.tabs{
+   position: absolute;    
+   margin: 0px;
+   padding: 0px;
+   list-style: none;
+   color: white;
+}
+
+ul.tabs li{
+   background: none;
+   color: #222;
+   display: inline-block;
+   padding: 10px 15px;
+   cursor: pointer;
+   border-radius : 10px 10px 10px 10px;
+}
+
+ul.tabs li.current{
+   background: #0d6ffc;
+   color: white;
+}
+
+.tab-content{
+   display: none;
+   background: #ededed;
+   padding: 15px;
+   border-radius : 10px 10px 10px 10px;
+   
+}
+
+.tab-content.current{
+   display: inherit;
+}
+</style>
+
+
+</head>
+<body>
+
+<header th:replace="thorcar/header::headerFragment"></header>
+
+<!-- 장소, 날짜 검색 -->
+<div class="container_search_list_view">
+   <div class="dc-none dc-lg-block container-pc-carlist-controller" id="js_container_search_list_controller" style="top: 80px;">
+      <div class="container py-3">
+         <div class="row">
+            <div class="col-lg-4">
+               <div class="js-vsl-btn-select-area clickable dc-flex box-round-4px px-3 py-2 justify-content-between align-items-center">
+                  <p class="js-vsl-txt-select-area mb-0 text-20 font-weight-bold color-grey-3">제주국제공항</p>
+                  <div class="text-right">
+                     <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI1IDI1Ij4KICAgIDxwYXRoIGZpbGw9IiM5Nzk3OTciIGQ9Ik0xMi42MTU1NTQsMTIuODAyMTc3OCBMMTcuNjcxNzA4OSw5LjE4NjY0NzU2IEMxOC4xMjA5NTM3LDguODY1NDAzOCAxOC43NDU1NTgxLDguOTY5MTY5MTUgMTkuMDY2ODAxOCw5LjQxODQxMzk1IEMxOS4zODgwNDU2LDkuODY3NjU4NzYgMTkuMjg0MjgwMiwxMC40OTIyNjMxIDE4LjgzNTAzNTQsMTAuODEzNTA2OSBMMTMuMTk1OTI3MywxNC44NDU4OTI1IEMxMi44NDc0MiwxNS4wOTUxMDE0IDEyLjM3ODg4MDMsMTUuMDk0NjEwMiAxMi4wMzA4OTYzLDE0Ljg0NDY3MSBMNi40MTY3MDc3MywxMC44MTIyODU0IEM1Ljk2ODEzNzU1LDEwLjQ5MDEwMDMgNS44NjU2ODIyMSw5Ljg2NTI3OTY4IDYuMTg3ODY3MzEsOS40MTY3MDk1IEM2LjUxMDA1MjQxLDguOTY4MTM5MzIgNy4xMzQ4NzMwMiw4Ljg2NTY4Mzk3IDcuNTgzNDQzMiw5LjE4Nzg2OTA3IEwxMi42MTU1NTQsMTIuODAyMTc3OCBaIi8+Cjwvc3ZnPgo=" style="width: 16px; height: 16px;">
+                  </div>
+               </div>
+            </div>
+         <div class="col-lg-5">
+               <div class="form-group mb-0 h-100" id="js_container_search_list_rent_date_view_pc">
+                  <div class="js-vsl-btn-rent-date dc-flex justify-content-center align-items-center clickable box-round-4px px-3 py-1 h-100" style="width:350px !important;">
+                     <div class="text-16 font-weight-bold color-grey-3 mb-0">
+                        <span class="txt-rent-start-date" th:text="${session.MainDateDTO.inDate}"></span>
+                        <span>&nbsp;</span>
+                        
+                     </div>
+                     <div class="dc-flex badge-rent-period-pc-carlist-controller text-12 color-grey-4 py-1 px-2 mx-4">
+                        <span class="txt-rent-period-time" th:text="${session.MainDateDTO.staydate}"></span>
+                        <span class="txt-rent-period-time-unit">일</span>
+                     </div>
+                     <div class="text-16 font-weight-bold color-grey-3 mb-0">
+                        <span class="txt-rent-end-date" th:text="${session.MainDateDTO.outDate}"></span>
+                        <span>&nbsp;</span>
+                       
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+<!-- 장소, 날짜 검색 끝-->
+   
+   
+   
+   <div class="container">
+      <div class="row space-top-lg-3" id="js_container_carlist">
+      
+      <!-- 왼쪽 카테고리 --> 
+         <div class="col-lg-4 dc-none dc-lg-block">
+            <div class="sticky sticky-pc-menu-top" id="js_stickey_carlist" style="top: 192px;">
+            <!-- ::before -->
+               <div style="position: relative; overflow-y: auto;">
+                  <div id="js_sticky_carlist_inner_scroll" style="height: 694px;">
+                     <div id="search_list_container_pc_view_filter" style="display: block;">
+                        <div>
+                           <div class="filter-section">
+                              <div class="filter-pc-container-content px-3 pt-4" id="filter_pc_container_contents" style="min-height:10px !important;">
+                                 <div class="js-vf-section-car-model">
+                                    <div class="form-group mb-0">
+                                       <div class="text-14 font-weight-bold color-grey-5 mb-2">자동차 모델</div>
+                                       <div class="dc-flex">
+                                          <div class="dc-block w-100">
+                                               <div class="position-relative">
+                                               <form action="/searchCar.action" name="searchForm" method="post">
+                                                   <input class="js-input-deletable form-control form-control-sm" name="searchValue" id="vf_car_model_input_pc" 
+                                                   placeholder="자동차 모델명으로 검색할 수 있습니다" type="text" maxlength="20">
+                                               
+                                                <div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vf_car_model_input_pc">
+                                                   <div class="wrapper">
+                                                      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <button class="btn btn-primary btn-sm px-3 ml-1" id="js_vf_btn_car_model_apply_pc">검색</button>
+                                       </div>
+                                    </div>
+                                    
+                                    <hr>
+                                 </div>
+                               </div>
+                               
+                                    <div class="p-3" id="js_filter_pc_container_btn">
+                                       <button onClick="window.location.reload()" class="js-vf-btn-init btn btn-light btn-block text-center bg-color-grey-7">
+                                          <div class="d-flex justify-content-center">
+                                             <img class="icon-25" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDI2IDI2Ij4KICAgIDxwYXRoIGZpbGw9IiM2NjYiIGQ9Ik01LjUzNCA3LjEyNGMuMDM1LS4wNTcuMDc2LS4xMTEuMTI0LS4xNjIgMS44MDMtMS44ODggNC4yOTQtMi45NzcgNi45NTctMi45NzcgNS4zMSAwIDkuNjE2IDQuMzA1IDkuNjE2IDkuNjE1IDAgNS4zMS00LjMwNSA5LjYxNS05LjYxNiA5LjYxNUM3LjMwNSAyMy4yMTUgMyAxOC45MSAzIDEzLjZjMC0uNTMxLjQzLS45NjIuOTYyLS45NjIuNTMgMCAuOTYxLjQzLjk2MS45NjIgMCA0LjI0OCAzLjQ0NCA3LjY5MiA3LjY5MiA3LjY5MiA0LjI0OSAwIDcuNjkzLTMuNDQ0IDcuNjkzLTcuNjkycy0zLjQ0NC03LjY5Mi03LjY5My03LjY5MmMtMi4xMzIgMC00LjEyMi44Ny01LjU2NSAyLjM4Mi0uMDMuMDMtLjA2LjA2LS4wOTMuMDg1bDMuNDEuMDAyYy41NDMgMCAuOTgzLjQ0Ljk4NC45ODQgMCAuNTQ0LS40NC45ODQtLjk4NC45ODRsLTUuOTA2LS4wMDJjLS41NDMgMC0uOTg0LS40NC0uOTg0LS45ODVsLS4wMDItNS4zNzRjMC0uNTQ0LjQ0LS45ODQuOTg0LS45ODQuNTQzIDAgLjk4NC40NDEuOTg0Ljk4NWwuMDg5IDMuMTM4LjAwMi4wMDF6Ii8+Cjwvc3ZnPgo=">
+                                             <div class="text-16 color-grey-4 mb-0">필터 초기화</div>
+                                          </div>
+                                       </button>
+                                       </form>
+                                    </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- ::after -->
+            </div>
+         </div>
+         
+<!-- 왼쪽 카테고리 --> 
+
+
+
+<!-- 오른쪽 검색결과 -->
+         <div class="vsl-container-car-list col-lg-8" style="max-width: 100% !important;">            
+            <div class="vsl-container-car-list col-lg-8" style="max-width: 100% !important;">
+               <div id="container_search_list_search_hearder">
+                  <div class="row d-none d-lg-flex align-items-center mt-5">
+                     <div class="col">
+                        <h2 class="text-20 text-left">검색결과</h2>
+                     </div>
+                     <div class="col mb-3 dc-flex justify-content-end">
+                        <div id="js_sort_filter_container" style="display: block;">
+                           <div class="sort-filter-container dc-none dc-lg-block">
+                              <div class="table-sort dc-flex justify-content-end">
+                                 <div class="js-vsl-btn-sort radio-sort left-margin">
+                                    <div class="icon-sort"></div>
+                                    <div class="txt-sort">가격순</div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- 개똥 -->
+					<div id="js_container_tab_car_type_pc" style="display: block;">
+						<div class="dc-none dc-lg-flex">
+							<div class="btn-group btn-group-toggle flex-1 mb-5" id="filterDay" data-toggle="buttons">
+								<label class="btn btn-white js-tab-car-type-pc active" data-i="1" id="전체" checked onclick="div_show('전체','divshow1');">
+									<input id="option1" type="radio" class="toggle" name="radio_car_type" autocomplete="off" value="전체"> 
+									전체
+								</label>
+								<label class="btn btn-white js-tab-car-type-pc" data-i="2" id="SUV" onclick="div_show('SUV','divshow2');">
+									<input id="option2" type="radio" class="toggle" name="radio_car_type" autocomplete="off" value="SUV"> 
+									SUV
+								</label>
+								<label class="btn btn-white js-tab-car-type-pc" data-i="3" id="소형" onclick="div_show('소형','divshow3');">
+									<input id="option3" type="radio" class="toggle" name="radio_car_type" autocomplete="off" value="소형"> 
+									소형
+								</label>
+								<label class="btn btn-white js-tab-car-type-pc" data-i="4" id="준중형" onclick="div_show('준중형','divshow4');">
+									<input id="option4" type="radio" class="toggle" name="radio_car_type" autocomplete="off" value="준중형"> 
+									준중형
+								</label>
+								<label class="btn btn-white js-tab-car-type-pc" data-i="5" id="세단" onclick="div_show('세단','divshow5');">
+									<input id="option5" type="radio" class="toggle" name="radio_car_type" autocomplete="off" value="세단"> 
+									세단
+								</label>
+								<label class="btn btn-white js-tab-car-type-pc" data-i="6" id="수입" onclick="div_show('수입','divshow6');">
+									<input id="option6" type="radio" class="toggle" name="radio_car_type" autocomplete="off" value="수입"> 
+									수입
+								</label>
+							</div>
+						</div>
+					</div>
+               
+                     <!-- 전체---------------------------------------------------- -->
+                     <div id="divshow1" style="display:block;">
+                     <th:block th:each="dto:${lists}">
+                     	<div class="tab-content current"  style="background: white; padding: 0px; 
+                              margin-top: 20px;" th:onclick="'location.href=\'carInfo.action?num=' + @{${dto.num}} + '\''">
+                                    <div class="col-12 col-lg-5" style="max-width: 100% !important;">
+                                       <div class="pt-3 pb-2 px-1 p-lg-3">
+                                         <div class="row no-gutters">
+                                             <div class="col-6 col-lg-12 pb-lg-3">
+                                                <img th:src="'https://i.ibb.co/' + @{${dto.car_fileurl}} + '/' + @{${dto.car_name}}+ '.png'" style="width:400px; margin-left: 14%;">
+                                                <div class="d-flex justify-content-center align-items-center"></div>
+                                             </div>
+		                                   <div class="col-6 col-lg-12 d-flex flex-column justify-content-center">
+		                                       <div class="pt-lg-3 border-lg-top">
+		                                          <div class="js-vsl-badge-car-type">
+		                                             <div class="badge-car-type px-2 py-1 dc-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                <span class="ml-1">[[${dto.car_type}]]</span>
+		                                                
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-vsl-txt-car-model text-20 mb-1 color-grey-1">[[${dto.car_name}]]</div>
+		                                             <div class="js-vsl-txt-car-desc text-12 color-grey-5"></div>
+		                                           <div class="js-vsl-txt-car-price-range text-primary text-16 text-lg-12 mb-0 mt-2 color-grey-5 font-weight-medium">
+		                                              [[${#numbers.formatInteger(dto.car_shortp,3, 'COMMA')}]]&nbsp;원
+		                                           </div>
+		                                       </div>
+		                                    </div>
+		                                 </div>
+		                                 <div class="js-group-include-info row no-gutters">
+		                                    <div class="col-12 px-3 px-lg-0 text-12">
+		                                       <div class="d-flex justify-content-between align-items-center flex-wrap">
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                             <div class="d-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik0xMi41IDEzLjA2MXYtMS40OTVjMC0xLjg1MS0xLjE2NC0zLjQyNC0yLjc2Ni0zLjk2Ny43Ny0uNDUyIDEuMjkzLTEuMzEzIDEuMjkzLTIuMjk5IDAtMS40NTEtMS4xMzQtMi42MzQtMi41MjctMi42MzQtMS4zOTMgMC0yLjUyNyAxLjE4My0yLjUyNyAyLjYzNCAwIC45ODYuNTIzIDEuODQ3IDEuMjkzIDIuMjk5QzUuNjYyIDguMTQyIDQuNSA5LjcxNSA0LjUgMTEuNTY2djEuNDk1YzAgLjE1LjExNi4yNzIuMjYuMjcyaDcuNDg0Yy4xNC0uMDAyLjI1Ni0uMTIyLjI1Ni0uMjcyeiIvPgo8L3N2Zz4K">
+		                                                <span class="js-car-info-txt-passenger ml-1">[[${dto.car_inwon}]]</span>
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFpNOC41OTMwNCAxMS41Nzc3VjguODA0NDhMMTEuMTE2OCA0LjgxMDYxSDkuODI5ODJMNy45NDI1MyA3LjgxMjZMNi4yNzIwOCA0LjgxMDYxSDQuOTQ3MDJMNy4zNTYyNiA4LjgwNDQ4VjExLjU3NzdIOC41OTMwNFoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-car-year ml-1">
+		                                                      [[${dto.car_year }]]년
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik03Ljk3IDIuMTc0QzcuODQgMi4wNTkgNy42NzggMiA3LjUxNiAyYy0uMTYzIDAtLjMyNi4wNTktLjQ1OC4xNzQtLjE2NS4xNDYtNC4wNDIgMy42NDYtNC4wNDIgNy4yNzMgMCAyLjUxMyAyLjAxNiA0LjU1MyA0LjUgNC41NTMgMi40OCAwIDQuNS0yLjA0MyA0LjUtNC41NTMgMC0zLjYyNy0zLjg4LTcuMTI3LTQuMDQ2LTcuMjczeiIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-fuel ml-1">
+		                                                      [[${dto.car_fuel }]]
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNS4wNTFDMiA0LjE5NSAyLjY5NSAzLjUgMy41NTEgMy41aDQuNzUxYy40NzcgMCAuOTI4LjIyIDEuMjIyLjU5NWwxLjMxNCAxLjY4IDEuODEzIDIuMjIzYy4yMjYuMjc3LjM0OS42MjMuMzQ5Ljk4djMuOTdjMCAuODU3LS42OTQgMS41NTItMS41NTEgMS41NTJIMy41NUMyLjY5NSAxNC41IDIgMTMuODA2IDIgMTIuOTQ5VjUuMDV6bTEuNTUxLjM5NWMwLS4yMTguMTc3LS4zOTUuMzk1LS4zOTVoMy42OThjLjEyNiAwIC4yNDQuMDYuMzE4LjE2MUw4Ljk4MiA2LjYgOS45IDcuODAxYy4wOTEuMTIuMTA3LjI4LjA0LjQxNS0uMDY2LjEzNS0uMjA0LjIyLS4zNTQuMjJoLTUuNjRjLS4yMTkgMC0uMzk2LS4xNzctLjM5Ni0uMzk1VjUuNDQ2em0uNTY0IDQuMTE4Yy0uMzExIDAtLjU2NC4yNTMtLjU2NC41NjQgMCAuMzEyLjI1My41NjQuNTY0LjU2NGgxLjEyOWMuMzExIDAgLjU2NC0uMjUyLjU2NC0uNTY0IDAtLjMxMS0uMjUzLS41NjQtLjU2NC0uNTY0SDQuMTE1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-door ml-1">[[${dto.car_make}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcuOTggMi41Yy40NDQgMCAuODA0LjM2LjgwNC44MDR2LjM3OGwuMjA3LS4xNGMuMzY4LS4yNS44NjgtLjE1NCAxLjExNy4yMTQuMjQ5LjM2Ny4xNTMuODY3LS4yMTQgMS4xMTZsLTEuMTEuNzUzdjEuOTA3bDEuNjkyLS45NzQuMTA3LTEuM2MuMDM2LS40NDIuNDI0LS43NzIuODY3LS43MzUuNDQyLjAzNi43NzEuNDI0LjczNS44NjdsLS4wMTYuMTk0LjMxMy0uMThjLjM4NC0uMjIxLjg3Ni0uMDg5IDEuMDk3LjI5Ni4yMjEuMzg1LjA5Ljg3Ni0uMjk2IDEuMDk4bC0uMzI1LjE4Ny4yMTcuMTA0Yy40LjE5My41NjguNjczLjM3NiAxLjA3My0uMTkzLjQtLjY3My41NjktMS4wNzMuMzc2bC0xLjIwOS0uNTgxLTEuNjU3Ljk1MyAxLjY4NS45NyAxLjE4Ni0uNTZjLjQwMi0uMTg5Ljg4LS4wMTcgMS4wNy4zODUuMTkuNDAxLjAxOC44OC0uMzg0IDEuMDdsLS4xNzQuMDgyLjMwNi4xNzZjLjM4NS4yMjEuNTE3LjcxMy4yOTYgMS4wOTctLjIyMS4zODUtLjcxMy41MTgtMS4wOTguMjk2bC0uMzMyLS4xOTEuMDE4LjI0M2MuMDMzLjQ0My0uMy44MjgtLjc0Mi44NjEtLjQ0My4wMzMtLjgyOC0uMy0uODYxLS43NDJsLS4wOTktMS4zMy0xLjctLjk3OXYyLjA2bDEuMTEuNzUyYy4zNjguMjQ5LjQ2NC43NDkuMjE1IDEuMTE2LS4yNS4zNjgtLjc1LjQ2NC0xLjExNy4yMTRsLS4yMDctLjE0di4yNjdjMCAuNDQ0LS4zNi44MDQtLjgwNC44MDQtLjQ0NCAwLS44MDQtLjM2LS44MDQtLjgwNHYtLjI0MmwtLjE2Mi4xMTJjLS4zNjYuMjUyLS44NjYuMTYtMS4xMTgtLjIwNi0uMjUyLS4zNjUtLjE2LS44NjYuMjA1LTEuMTE4bDEuMDc1LS43NDF2LTIuMDVsLTEuNzU1IDEuMDEtLjA5OSAxLjMzYy0uMDMzLjQ0My0uNDE4Ljc3NS0uODYxLjc0My0uNDQzLS4wMzMtLjc3NS0uNDE5LS43NDItLjg2MmwuMDE4LS4yNDMtLjIzNy4xMzZjLS4zODQuMjIyLS44NzYuMDktMS4wOTctLjI5Ni0uMjIyLS4zODQtLjA5LS44NzYuMjk2LTEuMDk3bC4yMS0uMTIxLS4xNzQtLjA4MmMtLjQwMS0uMTktLjU3My0uNjY4LS4zODQtMS4wNy4xOS0uNDAxLjY2OC0uNTczIDEuMDctLjM4NGwxLjE4Ni41Nkw2LjM4OCA4LjkxIDQuNjM1IDcuOTAxbC0xLjIxLjU4MmMtLjQuMTkyLS44OC4wMjQtMS4wNzItLjM3Ni0uMTkyLS40LS4wMjQtLjg4LjM3Ni0xLjA3M2wuMjE3LS4xMDQtLjIzLS4xMzNjLS4zODQtLjIyMS0uNTE3LS43MTItLjI5NS0xLjA5Ny4yMjEtLjM4NS43MTMtLjUxNyAxLjA5Ny0uMjk2bC4yMTcuMTI1LS4wMTYtLjE5NWMtLjAzNi0uNDQyLjI5My0uODMuNzM1LS44NjcuNDQzLS4wMzYuODMuMjkzLjg2Ny43MzZsLjEwNyAxLjMgMS43NDggMS4wMDZ2LTEuOWwtMS4wNzUtLjc0Yy0uMzY1LS4yNTItLjQ1Ny0uNzUzLS4yMDUtMS4xMTguMjUyLS4zNjYuNzUyLS40NTggMS4xMTgtLjIwNmwuMTYyLjExMnYtLjM1M2MwLS40NDQuMzYtLjgwNC44MDQtLjgwNHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-air-condition ml-1">에어컨</span>
+		                                                </div>
+		                                             </div>
+		                                          
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSI5LjQ5OSIgcj0iMS4xNjciIGZpbGw9IiM3ODhBQUMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDggOS40OTkpIi8+CiAgICA8cGF0aCBmaWxsPSIjNzg4QUFDIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yMzkgMTQuMTQxbC0zLjQ5My0zLjA5NWMuMzY1LS40MTIuNTg3LS45NTQuNTg3LTEuNTQ4IDAtMS4yODktMS4wNDQtMi4zMzMtMi4zMzMtMi4zMzMtLjI3OCAwLS41NDUuMDQ4LS43OTMuMTM4TDYuMTMzIDUuODdjLS4xOTMtLjI1OC0uNTU5LS4zMS0uODE2LS4xMTctLjI1OC4xOTQtLjMxLjU2LS4xMTcuODE3bDEuMDQzIDEuMzljLS4zNTkuNDExLS41NzcuOTQ5LS41NzcgMS41MzcgMCAuNi4yMjcgMS4xNDguNiAxLjU2MWwtMy40NyAzLjEyMkMxLjY4IDEyLjk0IDEgMTEuMjk5IDEgOS40OThjMC0zLjg2NiAzLjEzNC03IDctN3M3IDMuMTM0IDcgN2MwIDEuNzgyLS42NjUgMy40MDgtMS43NjEgNC42NDN6TTcuNDk1IDMuNjY1di41ODNjMCAuMzIyLjI2Mi41ODMuNTg0LjU4My4zMjIgMCAuNTgzLS4yNi41ODMtLjU4M3YtLjU4M2MwLS4zMjItLjI2MS0uNTg0LS41ODMtLjU4NC0uMzIyIDAtLjU4NC4yNjItLjU4NC41ODR6bTUuODU1IDYuMDk0Yy4zMjIgMCAuNTgzLS4yNjIuNTgzLS41ODQgMC0uMzIyLS4yNjEtLjU4My0uNTgzLS41ODNoLS42MjhjLS4zMjIgMC0uNTgzLjI2MS0uNTgzLjU4MyAwIC4zMjIuMjYuNTg0LjU4My41ODRoLjYyOHptLTkuOTcyIDBjLjMyMiAwIC41ODMtLjI2Mi41ODMtLjU4NCAwLS4zMjItLjI2MS0uNTgzLS41ODMtLjU4M0gyLjc1Yy0uMzIyIDAtLjU4My4yNjEtLjU4My41ODMgMCAuMzIyLjI2LjU4NC41ODMuNTg0aC42Mjh6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-fuel-ratio ml-1">[[${dto.car_mileage}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxyZWN0IHdpZHRoPSIxMS41MzciIGhlaWdodD0iMS4zNTIiIHg9IjIuMjMxIiB5PSIxMS4wNDMiIGZpbGw9IiM4NTkyQUIiIHJ4PSIuNjc2Ii8+CiAgICA8cGF0aCBmaWxsPSIjODU5MkFCIiBkPSJNNC4wODIgMTMuNjk2YzAtLjM3NC4zMDItLjY3Ni42NzYtLjY3Nmg2LjUxMmMuMzczIDAgLjY3Ni4zMDIuNjc2LjY3NiAwIC4zNzMtLjMwMy42NzYtLjY3Ni42NzZINC43NThjLS4zNzQgMC0uNjc2LS4zMDMtLjY3Ni0uNjc2eiIvPgogICAgPHBhdGggZmlsbD0iIzg1OTJBQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTQuMjcxIDUuNDZsLTEuMTI0LS41MTQtLjk5My0xLjU4NGMtLjI4Ny0uNDU5LS43OTItLjczNy0xLjMzNC0uNzM0SDYuNTkxYy0uNDkgMC0uOTU1LjIyNy0xLjI1My42MTdMNC4wNTUgNC45MjNsLTIuMTM3LjU4NUMxLjM3NiA1LjY1OCAxIDYuMTU0IDEgNi43MTZ2LjgxOGMwIC42OTEuNTUgMS4yNjIgMS4yNDIgMS4yNjJoMS4yNTljMCAuODI4LjY3MiAxLjUgMS41IDEuNS44MjkgMCAxLjUtLjY3MiAxLjUtMS41aDMuNzVjMCAuODI4LjY3MSAxLjUgMS41IDEuNS44MjggMCAxLjUtLjY3MiAxLjUtMS41aC41MDdjLjY5MSAwIDEuMjQyLS41NyAxLjI0Mi0xLjI2MlY2LjZjLjAwMy0uNDktLjI4NC0uOTM4LS43MjktMS4xNDF6bS0zLjUxOS0xLjIyMmMtLjE3My0uMzA3LS40NzktLjQ5NC0uODA3LS40OTJoLTIuNTZjLS4yOTcgMC0uNTc5LjE1Mi0uNzYuNDEzbC0uNDA0LjU3Yy0uMDIuMDU0LS4wMTUuMTYxLjE3Mi4xNTUuMTktLjAwNiAyLjkxOC0uMDAyIDQuMDMgMGguNDUzYy4xNzQgMCAuMTctLjE0NC4xMzItLjIwNGwtLjI1NS0uNDQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-drive-km ml-1">[[${dto.car_km }]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjE2IDUuMzA5Yy42OTQgMS4xMjQgMS4wNyAyLjQyOCAxLjA3IDMuODYxIDAgMy4wOS0xLjk4NCA1LjMzLTQuNTA4IDUuMzMtMS44NDEgMC0zLjM3Ni0xLjE1Ny00LjEtMy4wNzctLjE3Mi0uNDU4LS40NjItLjgyMy0xLjE1MS0uODc3LTEuNzU3LS4xNC0yLjcwMS0xLjQxMi0yLjcwMS0zLjE1MyAwLS42MTYuMTUzLTEuMTg5LjQxNS0xLjY3NCAwIDAgLjQ1My0uOTY3IDEuNDg2LTEuODIuODk1LS44NDQgMi40Mi0xLjM5OSA0LjE1MS0xLjM5OSAyLjUyIDAgNC40NzQgMS40MSA1LjMzOCAyLjgwOXptLTQuNDk5IDUuNzZjMCAuNzQ0LjYwNCAxLjM0OCAxLjM0OCAxLjM0OC43NDUgMCAxLjM0OS0uNjA0IDEuMzQ5LTEuMzQ4IDAtLjc0NS0uNjA0LTEuMzQ5LTEuMzQ5LTEuMzQ5LS43NDQgMC0xLjM0OC42MDQtMS4zNDggMS4zNDl6bTIuNDk3LTIuNzk2Yy41MjYgMCAuOTUyLS40MjYuOTUyLS45NTJzLS40MjYtLjk1Mi0uOTUyLS45NTJjLS41MjUgMC0uOTUxLjQyNi0uOTUxLjk1MnMuNDI1Ljk1Mi45NTEuOTUyek05LjkwMyA1LjE5YzAgLjUyNS0uNDI2Ljk1MS0uOTUxLjk1MS0uNTI2IDAtLjk1Mi0uNDI2LS45NTItLjk1MSAwLS41MjYuNDI2LS45NTIuOTUyLS45NTIuNTI1IDAgLjk1MS40MjYuOTUxLjk1MnptLTQuMDU0LjU2Yy4zNjggMCAuNjY3LS4zLjY2Ny0uNjY4IDAtLjM2OS0uMjk5LS42NjgtLjY2Ny0uNjY4LS4zNjkgMC0uNjY4LjMtLjY2OC42NjggMCAuMzY4LjMuNjY3LjY2OC42Njd6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-color ml-1">[[${dto.car_col}]]</span>
+		                                                </div>
+		                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        </th:block>
+                    </div>
+                 <!-- SUV---------------------------------------------------- -->
+                     <div id="divshow2" style="display:none;">
+                     <th:block th:if="${dto?.car_type}=='SUV'" th:each="dto:${lists}">
+                     	<div class="tab-content current"  style="background: white; padding: 0px; 
+                              margin-top: 20px;" th:onclick="'location.href=\'carInfo.action?num=' + @{${dto.num}} + '\''">
+                                    <div class="col-12 col-lg-5" style="max-width: 100% !important;">
+                                       <div class="pt-3 pb-2 px-1 p-lg-3">
+                                         <div class="row no-gutters">
+                                             <div class="col-6 col-lg-12 pb-lg-3">
+                                                <img th:src="'https://i.ibb.co/' + @{${dto.car_fileurl}} + '/' + @{${dto.car_name}}+ '.png'" style="width:400px; margin-left: 14%;">
+                                                <div class="d-flex justify-content-center align-items-center"></div>
+                                             </div>
+		                                   <div class="col-6 col-lg-12 d-flex flex-column justify-content-center">
+		                                       <div class="pt-lg-3 border-lg-top">
+		                                          <div class="js-vsl-badge-car-type">
+		                                             <div class="badge-car-type px-2 py-1 dc-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                <span class="ml-1">[[${dto.car_type}]]</span>
+		                                                
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-vsl-txt-car-model text-20 mb-1 color-grey-1">[[${dto.car_name}]]</div>
+		                                             <div class="js-vsl-txt-car-desc text-12 color-grey-5"></div>
+		                                           <div class="js-vsl-txt-car-price-range text-primary text-16 text-lg-12 mb-0 mt-2 color-grey-5 font-weight-medium">
+		                                              [[${#numbers.formatInteger(dto.car_shortp,3, 'COMMA')}]]&nbsp;원
+		                                           </div>
+		                                       </div>
+		                                    </div>
+		                                 </div>
+		                                 <div class="js-group-include-info row no-gutters">
+		                                    <div class="col-12 px-3 px-lg-0 text-12">
+		                                       <div class="d-flex justify-content-between align-items-center flex-wrap">
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                             <div class="d-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik0xMi41IDEzLjA2MXYtMS40OTVjMC0xLjg1MS0xLjE2NC0zLjQyNC0yLjc2Ni0zLjk2Ny43Ny0uNDUyIDEuMjkzLTEuMzEzIDEuMjkzLTIuMjk5IDAtMS40NTEtMS4xMzQtMi42MzQtMi41MjctMi42MzQtMS4zOTMgMC0yLjUyNyAxLjE4My0yLjUyNyAyLjYzNCAwIC45ODYuNTIzIDEuODQ3IDEuMjkzIDIuMjk5QzUuNjYyIDguMTQyIDQuNSA5LjcxNSA0LjUgMTEuNTY2djEuNDk1YzAgLjE1LjExNi4yNzIuMjYuMjcyaDcuNDg0Yy4xNC0uMDAyLjI1Ni0uMTIyLjI1Ni0uMjcyeiIvPgo8L3N2Zz4K">
+		                                                <span class="js-car-info-txt-passenger ml-1">[[${dto.car_inwon}]]</span>
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFpNOC41OTMwNCAxMS41Nzc3VjguODA0NDhMMTEuMTE2OCA0LjgxMDYxSDkuODI5ODJMNy45NDI1MyA3LjgxMjZMNi4yNzIwOCA0LjgxMDYxSDQuOTQ3MDJMNy4zNTYyNiA4LjgwNDQ4VjExLjU3NzdIOC41OTMwNFoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-car-year ml-1">
+		                                                      [[${dto.car_year }]]년
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik03Ljk3IDIuMTc0QzcuODQgMi4wNTkgNy42NzggMiA3LjUxNiAyYy0uMTYzIDAtLjMyNi4wNTktLjQ1OC4xNzQtLjE2NS4xNDYtNC4wNDIgMy42NDYtNC4wNDIgNy4yNzMgMCAyLjUxMyAyLjAxNiA0LjU1MyA0LjUgNC41NTMgMi40OCAwIDQuNS0yLjA0MyA0LjUtNC41NTMgMC0zLjYyNy0zLjg4LTcuMTI3LTQuMDQ2LTcuMjczeiIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-fuel ml-1">
+		                                                      [[${dto.car_fuel }]]
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNS4wNTFDMiA0LjE5NSAyLjY5NSAzLjUgMy41NTEgMy41aDQuNzUxYy40NzcgMCAuOTI4LjIyIDEuMjIyLjU5NWwxLjMxNCAxLjY4IDEuODEzIDIuMjIzYy4yMjYuMjc3LjM0OS42MjMuMzQ5Ljk4djMuOTdjMCAuODU3LS42OTQgMS41NTItMS41NTEgMS41NTJIMy41NUMyLjY5NSAxNC41IDIgMTMuODA2IDIgMTIuOTQ5VjUuMDV6bTEuNTUxLjM5NWMwLS4yMTguMTc3LS4zOTUuMzk1LS4zOTVoMy42OThjLjEyNiAwIC4yNDQuMDYuMzE4LjE2MUw4Ljk4MiA2LjYgOS45IDcuODAxYy4wOTEuMTIuMTA3LjI4LjA0LjQxNS0uMDY2LjEzNS0uMjA0LjIyLS4zNTQuMjJoLTUuNjRjLS4yMTkgMC0uMzk2LS4xNzctLjM5Ni0uMzk1VjUuNDQ2em0uNTY0IDQuMTE4Yy0uMzExIDAtLjU2NC4yNTMtLjU2NC41NjQgMCAuMzEyLjI1My41NjQuNTY0LjU2NGgxLjEyOWMuMzExIDAgLjU2NC0uMjUyLjU2NC0uNTY0IDAtLjMxMS0uMjUzLS41NjQtLjU2NC0uNTY0SDQuMTE1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-door ml-1">[[${dto.car_make}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcuOTggMi41Yy40NDQgMCAuODA0LjM2LjgwNC44MDR2LjM3OGwuMjA3LS4xNGMuMzY4LS4yNS44NjgtLjE1NCAxLjExNy4yMTQuMjQ5LjM2Ny4xNTMuODY3LS4yMTQgMS4xMTZsLTEuMTEuNzUzdjEuOTA3bDEuNjkyLS45NzQuMTA3LTEuM2MuMDM2LS40NDIuNDI0LS43NzIuODY3LS43MzUuNDQyLjAzNi43NzEuNDI0LjczNS44NjdsLS4wMTYuMTk0LjMxMy0uMThjLjM4NC0uMjIxLjg3Ni0uMDg5IDEuMDk3LjI5Ni4yMjEuMzg1LjA5Ljg3Ni0uMjk2IDEuMDk4bC0uMzI1LjE4Ny4yMTcuMTA0Yy40LjE5My41NjguNjczLjM3NiAxLjA3My0uMTkzLjQtLjY3My41NjktMS4wNzMuMzc2bC0xLjIwOS0uNTgxLTEuNjU3Ljk1MyAxLjY4NS45NyAxLjE4Ni0uNTZjLjQwMi0uMTg5Ljg4LS4wMTcgMS4wNy4zODUuMTkuNDAxLjAxOC44OC0uMzg0IDEuMDdsLS4xNzQuMDgyLjMwNi4xNzZjLjM4NS4yMjEuNTE3LjcxMy4yOTYgMS4wOTctLjIyMS4zODUtLjcxMy41MTgtMS4wOTguMjk2bC0uMzMyLS4xOTEuMDE4LjI0M2MuMDMzLjQ0My0uMy44MjgtLjc0Mi44NjEtLjQ0My4wMzMtLjgyOC0uMy0uODYxLS43NDJsLS4wOTktMS4zMy0xLjctLjk3OXYyLjA2bDEuMTEuNzUyYy4zNjguMjQ5LjQ2NC43NDkuMjE1IDEuMTE2LS4yNS4zNjgtLjc1LjQ2NC0xLjExNy4yMTRsLS4yMDctLjE0di4yNjdjMCAuNDQ0LS4zNi44MDQtLjgwNC44MDQtLjQ0NCAwLS44MDQtLjM2LS44MDQtLjgwNHYtLjI0MmwtLjE2Mi4xMTJjLS4zNjYuMjUyLS44NjYuMTYtMS4xMTgtLjIwNi0uMjUyLS4zNjUtLjE2LS44NjYuMjA1LTEuMTE4bDEuMDc1LS43NDF2LTIuMDVsLTEuNzU1IDEuMDEtLjA5OSAxLjMzYy0uMDMzLjQ0My0uNDE4Ljc3NS0uODYxLjc0My0uNDQzLS4wMzMtLjc3NS0uNDE5LS43NDItLjg2MmwuMDE4LS4yNDMtLjIzNy4xMzZjLS4zODQuMjIyLS44NzYuMDktMS4wOTctLjI5Ni0uMjIyLS4zODQtLjA5LS44NzYuMjk2LTEuMDk3bC4yMS0uMTIxLS4xNzQtLjA4MmMtLjQwMS0uMTktLjU3My0uNjY4LS4zODQtMS4wNy4xOS0uNDAxLjY2OC0uNTczIDEuMDctLjM4NGwxLjE4Ni41Nkw2LjM4OCA4LjkxIDQuNjM1IDcuOTAxbC0xLjIxLjU4MmMtLjQuMTkyLS44OC4wMjQtMS4wNzItLjM3Ni0uMTkyLS40LS4wMjQtLjg4LjM3Ni0xLjA3M2wuMjE3LS4xMDQtLjIzLS4xMzNjLS4zODQtLjIyMS0uNTE3LS43MTItLjI5NS0xLjA5Ny4yMjEtLjM4NS43MTMtLjUxNyAxLjA5Ny0uMjk2bC4yMTcuMTI1LS4wMTYtLjE5NWMtLjAzNi0uNDQyLjI5My0uODMuNzM1LS44NjcuNDQzLS4wMzYuODMuMjkzLjg2Ny43MzZsLjEwNyAxLjMgMS43NDggMS4wMDZ2LTEuOWwtMS4wNzUtLjc0Yy0uMzY1LS4yNTItLjQ1Ny0uNzUzLS4yMDUtMS4xMTguMjUyLS4zNjYuNzUyLS40NTggMS4xMTgtLjIwNmwuMTYyLjExMnYtLjM1M2MwLS40NDQuMzYtLjgwNC44MDQtLjgwNHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-air-condition ml-1">에어컨</span>
+		                                                </div>
+		                                             </div>
+		                                          
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSI5LjQ5OSIgcj0iMS4xNjciIGZpbGw9IiM3ODhBQUMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDggOS40OTkpIi8+CiAgICA8cGF0aCBmaWxsPSIjNzg4QUFDIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yMzkgMTQuMTQxbC0zLjQ5My0zLjA5NWMuMzY1LS40MTIuNTg3LS45NTQuNTg3LTEuNTQ4IDAtMS4yODktMS4wNDQtMi4zMzMtMi4zMzMtMi4zMzMtLjI3OCAwLS41NDUuMDQ4LS43OTMuMTM4TDYuMTMzIDUuODdjLS4xOTMtLjI1OC0uNTU5LS4zMS0uODE2LS4xMTctLjI1OC4xOTQtLjMxLjU2LS4xMTcuODE3bDEuMDQzIDEuMzljLS4zNTkuNDExLS41NzcuOTQ5LS41NzcgMS41MzcgMCAuNi4yMjcgMS4xNDguNiAxLjU2MWwtMy40NyAzLjEyMkMxLjY4IDEyLjk0IDEgMTEuMjk5IDEgOS40OThjMC0zLjg2NiAzLjEzNC03IDctN3M3IDMuMTM0IDcgN2MwIDEuNzgyLS42NjUgMy40MDgtMS43NjEgNC42NDN6TTcuNDk1IDMuNjY1di41ODNjMCAuMzIyLjI2Mi41ODMuNTg0LjU4My4zMjIgMCAuNTgzLS4yNi41ODMtLjU4M3YtLjU4M2MwLS4zMjItLjI2MS0uNTg0LS41ODMtLjU4NC0uMzIyIDAtLjU4NC4yNjItLjU4NC41ODR6bTUuODU1IDYuMDk0Yy4zMjIgMCAuNTgzLS4yNjIuNTgzLS41ODQgMC0uMzIyLS4yNjEtLjU4My0uNTgzLS41ODNoLS42MjhjLS4zMjIgMC0uNTgzLjI2MS0uNTgzLjU4MyAwIC4zMjIuMjYuNTg0LjU4My41ODRoLjYyOHptLTkuOTcyIDBjLjMyMiAwIC41ODMtLjI2Mi41ODMtLjU4NCAwLS4zMjItLjI2MS0uNTgzLS41ODMtLjU4M0gyLjc1Yy0uMzIyIDAtLjU4My4yNjEtLjU4My41ODMgMCAuMzIyLjI2LjU4NC41ODMuNTg0aC42Mjh6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-fuel-ratio ml-1">[[${dto.car_mileage}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxyZWN0IHdpZHRoPSIxMS41MzciIGhlaWdodD0iMS4zNTIiIHg9IjIuMjMxIiB5PSIxMS4wNDMiIGZpbGw9IiM4NTkyQUIiIHJ4PSIuNjc2Ii8+CiAgICA8cGF0aCBmaWxsPSIjODU5MkFCIiBkPSJNNC4wODIgMTMuNjk2YzAtLjM3NC4zMDItLjY3Ni42NzYtLjY3Nmg2LjUxMmMuMzczIDAgLjY3Ni4zMDIuNjc2LjY3NiAwIC4zNzMtLjMwMy42NzYtLjY3Ni42NzZINC43NThjLS4zNzQgMC0uNjc2LS4zMDMtLjY3Ni0uNjc2eiIvPgogICAgPHBhdGggZmlsbD0iIzg1OTJBQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTQuMjcxIDUuNDZsLTEuMTI0LS41MTQtLjk5My0xLjU4NGMtLjI4Ny0uNDU5LS43OTItLjczNy0xLjMzNC0uNzM0SDYuNTkxYy0uNDkgMC0uOTU1LjIyNy0xLjI1My42MTdMNC4wNTUgNC45MjNsLTIuMTM3LjU4NUMxLjM3NiA1LjY1OCAxIDYuMTU0IDEgNi43MTZ2LjgxOGMwIC42OTEuNTUgMS4yNjIgMS4yNDIgMS4yNjJoMS4yNTljMCAuODI4LjY3MiAxLjUgMS41IDEuNS44MjkgMCAxLjUtLjY3MiAxLjUtMS41aDMuNzVjMCAuODI4LjY3MSAxLjUgMS41IDEuNS44MjggMCAxLjUtLjY3MiAxLjUtMS41aC41MDdjLjY5MSAwIDEuMjQyLS41NyAxLjI0Mi0xLjI2MlY2LjZjLjAwMy0uNDktLjI4NC0uOTM4LS43MjktMS4xNDF6bS0zLjUxOS0xLjIyMmMtLjE3My0uMzA3LS40NzktLjQ5NC0uODA3LS40OTJoLTIuNTZjLS4yOTcgMC0uNTc5LjE1Mi0uNzYuNDEzbC0uNDA0LjU3Yy0uMDIuMDU0LS4wMTUuMTYxLjE3Mi4xNTUuMTktLjAwNiAyLjkxOC0uMDAyIDQuMDMgMGguNDUzYy4xNzQgMCAuMTctLjE0NC4xMzItLjIwNGwtLjI1NS0uNDQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-drive-km ml-1">[[${dto.car_km }]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjE2IDUuMzA5Yy42OTQgMS4xMjQgMS4wNyAyLjQyOCAxLjA3IDMuODYxIDAgMy4wOS0xLjk4NCA1LjMzLTQuNTA4IDUuMzMtMS44NDEgMC0zLjM3Ni0xLjE1Ny00LjEtMy4wNzctLjE3Mi0uNDU4LS40NjItLjgyMy0xLjE1MS0uODc3LTEuNzU3LS4xNC0yLjcwMS0xLjQxMi0yLjcwMS0zLjE1MyAwLS42MTYuMTUzLTEuMTg5LjQxNS0xLjY3NCAwIDAgLjQ1My0uOTY3IDEuNDg2LTEuODIuODk1LS44NDQgMi40Mi0xLjM5OSA0LjE1MS0xLjM5OSAyLjUyIDAgNC40NzQgMS40MSA1LjMzOCAyLjgwOXptLTQuNDk5IDUuNzZjMCAuNzQ0LjYwNCAxLjM0OCAxLjM0OCAxLjM0OC43NDUgMCAxLjM0OS0uNjA0IDEuMzQ5LTEuMzQ4IDAtLjc0NS0uNjA0LTEuMzQ5LTEuMzQ5LTEuMzQ5LS43NDQgMC0xLjM0OC42MDQtMS4zNDggMS4zNDl6bTIuNDk3LTIuNzk2Yy41MjYgMCAuOTUyLS40MjYuOTUyLS45NTJzLS40MjYtLjk1Mi0uOTUyLS45NTJjLS41MjUgMC0uOTUxLjQyNi0uOTUxLjk1MnMuNDI1Ljk1Mi45NTEuOTUyek05LjkwMyA1LjE5YzAgLjUyNS0uNDI2Ljk1MS0uOTUxLjk1MS0uNTI2IDAtLjk1Mi0uNDI2LS45NTItLjk1MSAwLS41MjYuNDI2LS45NTIuOTUyLS45NTIuNTI1IDAgLjk1MS40MjYuOTUxLjk1MnptLTQuMDU0LjU2Yy4zNjggMCAuNjY3LS4zLjY2Ny0uNjY4IDAtLjM2OS0uMjk5LS42NjgtLjY2Ny0uNjY4LS4zNjkgMC0uNjY4LjMtLjY2OC42NjggMCAuMzY4LjMuNjY3LjY2OC42Njd6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-color ml-1">[[${dto.car_col}]]</span>
+		                                                </div>
+		                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        </th:block>
+                    </div>
+                    <!-- 소형---------------------------------------------------- -->
+                     <div id="divshow3" style="display:none;">
+                     <th:block th:if="${dto?.car_type}=='소형'" th:each="dto:${lists}">
+                     	<div class="tab-content current"  style="background: white; padding: 0px; 
+                              margin-top: 20px;" th:onclick="'location.href=\'carInfo.action?num=' + @{${dto.num}} + '\''">
+                                    <div class="col-12 col-lg-5" style="max-width: 100% !important;">
+                                       <div class="pt-3 pb-2 px-1 p-lg-3">
+                                         <div class="row no-gutters">
+                                             <div class="col-6 col-lg-12 pb-lg-3">
+                                                <img th:src="'https://i.ibb.co/' + @{${dto.car_fileurl}} + '/' + @{${dto.car_name}}+ '.png'" style="width:400px; margin-left: 14%;">
+                                                <div class="d-flex justify-content-center align-items-center"></div>
+                                             </div>
+		                                   <div class="col-6 col-lg-12 d-flex flex-column justify-content-center">
+		                                       <div class="pt-lg-3 border-lg-top">
+		                                          <div class="js-vsl-badge-car-type">
+		                                             <div class="badge-car-type px-2 py-1 dc-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                <span class="ml-1">[[${dto.car_type}]]</span>
+		                                                
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-vsl-txt-car-model text-20 mb-1 color-grey-1">[[${dto.car_name}]]</div>
+		                                             <div class="js-vsl-txt-car-desc text-12 color-grey-5"></div>
+		                                           <div class="js-vsl-txt-car-price-range text-primary text-16 text-lg-12 mb-0 mt-2 color-grey-5 font-weight-medium">
+		                                              [[${#numbers.formatInteger(dto.car_shortp,3, 'COMMA')}]]&nbsp;원
+		                                           </div>
+		                                       </div>
+		                                    </div>
+		                                 </div>
+		                                 <div class="js-group-include-info row no-gutters">
+		                                    <div class="col-12 px-3 px-lg-0 text-12">
+		                                       <div class="d-flex justify-content-between align-items-center flex-wrap">
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                             <div class="d-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik0xMi41IDEzLjA2MXYtMS40OTVjMC0xLjg1MS0xLjE2NC0zLjQyNC0yLjc2Ni0zLjk2Ny43Ny0uNDUyIDEuMjkzLTEuMzEzIDEuMjkzLTIuMjk5IDAtMS40NTEtMS4xMzQtMi42MzQtMi41MjctMi42MzQtMS4zOTMgMC0yLjUyNyAxLjE4My0yLjUyNyAyLjYzNCAwIC45ODYuNTIzIDEuODQ3IDEuMjkzIDIuMjk5QzUuNjYyIDguMTQyIDQuNSA5LjcxNSA0LjUgMTEuNTY2djEuNDk1YzAgLjE1LjExNi4yNzIuMjYuMjcyaDcuNDg0Yy4xNC0uMDAyLjI1Ni0uMTIyLjI1Ni0uMjcyeiIvPgo8L3N2Zz4K">
+		                                                <span class="js-car-info-txt-passenger ml-1">[[${dto.car_inwon}]]</span>
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFpNOC41OTMwNCAxMS41Nzc3VjguODA0NDhMMTEuMTE2OCA0LjgxMDYxSDkuODI5ODJMNy45NDI1MyA3LjgxMjZMNi4yNzIwOCA0LjgxMDYxSDQuOTQ3MDJMNy4zNTYyNiA4LjgwNDQ4VjExLjU3NzdIOC41OTMwNFoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-car-year ml-1">
+		                                                      [[${dto.car_year }]]년
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik03Ljk3IDIuMTc0QzcuODQgMi4wNTkgNy42NzggMiA3LjUxNiAyYy0uMTYzIDAtLjMyNi4wNTktLjQ1OC4xNzQtLjE2NS4xNDYtNC4wNDIgMy42NDYtNC4wNDIgNy4yNzMgMCAyLjUxMyAyLjAxNiA0LjU1MyA0LjUgNC41NTMgMi40OCAwIDQuNS0yLjA0MyA0LjUtNC41NTMgMC0zLjYyNy0zLjg4LTcuMTI3LTQuMDQ2LTcuMjczeiIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-fuel ml-1">
+		                                                      [[${dto.car_fuel }]]
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNS4wNTFDMiA0LjE5NSAyLjY5NSAzLjUgMy41NTEgMy41aDQuNzUxYy40NzcgMCAuOTI4LjIyIDEuMjIyLjU5NWwxLjMxNCAxLjY4IDEuODEzIDIuMjIzYy4yMjYuMjc3LjM0OS42MjMuMzQ5Ljk4djMuOTdjMCAuODU3LS42OTQgMS41NTItMS41NTEgMS41NTJIMy41NUMyLjY5NSAxNC41IDIgMTMuODA2IDIgMTIuOTQ5VjUuMDV6bTEuNTUxLjM5NWMwLS4yMTguMTc3LS4zOTUuMzk1LS4zOTVoMy42OThjLjEyNiAwIC4yNDQuMDYuMzE4LjE2MUw4Ljk4MiA2LjYgOS45IDcuODAxYy4wOTEuMTIuMTA3LjI4LjA0LjQxNS0uMDY2LjEzNS0uMjA0LjIyLS4zNTQuMjJoLTUuNjRjLS4yMTkgMC0uMzk2LS4xNzctLjM5Ni0uMzk1VjUuNDQ2em0uNTY0IDQuMTE4Yy0uMzExIDAtLjU2NC4yNTMtLjU2NC41NjQgMCAuMzEyLjI1My41NjQuNTY0LjU2NGgxLjEyOWMuMzExIDAgLjU2NC0uMjUyLjU2NC0uNTY0IDAtLjMxMS0uMjUzLS41NjQtLjU2NC0uNTY0SDQuMTE1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-door ml-1">[[${dto.car_make}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcuOTggMi41Yy40NDQgMCAuODA0LjM2LjgwNC44MDR2LjM3OGwuMjA3LS4xNGMuMzY4LS4yNS44NjgtLjE1NCAxLjExNy4yMTQuMjQ5LjM2Ny4xNTMuODY3LS4yMTQgMS4xMTZsLTEuMTEuNzUzdjEuOTA3bDEuNjkyLS45NzQuMTA3LTEuM2MuMDM2LS40NDIuNDI0LS43NzIuODY3LS43MzUuNDQyLjAzNi43NzEuNDI0LjczNS44NjdsLS4wMTYuMTk0LjMxMy0uMThjLjM4NC0uMjIxLjg3Ni0uMDg5IDEuMDk3LjI5Ni4yMjEuMzg1LjA5Ljg3Ni0uMjk2IDEuMDk4bC0uMzI1LjE4Ny4yMTcuMTA0Yy40LjE5My41NjguNjczLjM3NiAxLjA3My0uMTkzLjQtLjY3My41NjktMS4wNzMuMzc2bC0xLjIwOS0uNTgxLTEuNjU3Ljk1MyAxLjY4NS45NyAxLjE4Ni0uNTZjLjQwMi0uMTg5Ljg4LS4wMTcgMS4wNy4zODUuMTkuNDAxLjAxOC44OC0uMzg0IDEuMDdsLS4xNzQuMDgyLjMwNi4xNzZjLjM4NS4yMjEuNTE3LjcxMy4yOTYgMS4wOTctLjIyMS4zODUtLjcxMy41MTgtMS4wOTguMjk2bC0uMzMyLS4xOTEuMDE4LjI0M2MuMDMzLjQ0My0uMy44MjgtLjc0Mi44NjEtLjQ0My4wMzMtLjgyOC0uMy0uODYxLS43NDJsLS4wOTktMS4zMy0xLjctLjk3OXYyLjA2bDEuMTEuNzUyYy4zNjguMjQ5LjQ2NC43NDkuMjE1IDEuMTE2LS4yNS4zNjgtLjc1LjQ2NC0xLjExNy4yMTRsLS4yMDctLjE0di4yNjdjMCAuNDQ0LS4zNi44MDQtLjgwNC44MDQtLjQ0NCAwLS44MDQtLjM2LS44MDQtLjgwNHYtLjI0MmwtLjE2Mi4xMTJjLS4zNjYuMjUyLS44NjYuMTYtMS4xMTgtLjIwNi0uMjUyLS4zNjUtLjE2LS44NjYuMjA1LTEuMTE4bDEuMDc1LS43NDF2LTIuMDVsLTEuNzU1IDEuMDEtLjA5OSAxLjMzYy0uMDMzLjQ0My0uNDE4Ljc3NS0uODYxLjc0My0uNDQzLS4wMzMtLjc3NS0uNDE5LS43NDItLjg2MmwuMDE4LS4yNDMtLjIzNy4xMzZjLS4zODQuMjIyLS44NzYuMDktMS4wOTctLjI5Ni0uMjIyLS4zODQtLjA5LS44NzYuMjk2LTEuMDk3bC4yMS0uMTIxLS4xNzQtLjA4MmMtLjQwMS0uMTktLjU3My0uNjY4LS4zODQtMS4wNy4xOS0uNDAxLjY2OC0uNTczIDEuMDctLjM4NGwxLjE4Ni41Nkw2LjM4OCA4LjkxIDQuNjM1IDcuOTAxbC0xLjIxLjU4MmMtLjQuMTkyLS44OC4wMjQtMS4wNzItLjM3Ni0uMTkyLS40LS4wMjQtLjg4LjM3Ni0xLjA3M2wuMjE3LS4xMDQtLjIzLS4xMzNjLS4zODQtLjIyMS0uNTE3LS43MTItLjI5NS0xLjA5Ny4yMjEtLjM4NS43MTMtLjUxNyAxLjA5Ny0uMjk2bC4yMTcuMTI1LS4wMTYtLjE5NWMtLjAzNi0uNDQyLjI5My0uODMuNzM1LS44NjcuNDQzLS4wMzYuODMuMjkzLjg2Ny43MzZsLjEwNyAxLjMgMS43NDggMS4wMDZ2LTEuOWwtMS4wNzUtLjc0Yy0uMzY1LS4yNTItLjQ1Ny0uNzUzLS4yMDUtMS4xMTguMjUyLS4zNjYuNzUyLS40NTggMS4xMTgtLjIwNmwuMTYyLjExMnYtLjM1M2MwLS40NDQuMzYtLjgwNC44MDQtLjgwNHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-air-condition ml-1">에어컨</span>
+		                                                </div>
+		                                             </div>
+		                                          
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSI5LjQ5OSIgcj0iMS4xNjciIGZpbGw9IiM3ODhBQUMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDggOS40OTkpIi8+CiAgICA8cGF0aCBmaWxsPSIjNzg4QUFDIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yMzkgMTQuMTQxbC0zLjQ5My0zLjA5NWMuMzY1LS40MTIuNTg3LS45NTQuNTg3LTEuNTQ4IDAtMS4yODktMS4wNDQtMi4zMzMtMi4zMzMtMi4zMzMtLjI3OCAwLS41NDUuMDQ4LS43OTMuMTM4TDYuMTMzIDUuODdjLS4xOTMtLjI1OC0uNTU5LS4zMS0uODE2LS4xMTctLjI1OC4xOTQtLjMxLjU2LS4xMTcuODE3bDEuMDQzIDEuMzljLS4zNTkuNDExLS41NzcuOTQ5LS41NzcgMS41MzcgMCAuNi4yMjcgMS4xNDguNiAxLjU2MWwtMy40NyAzLjEyMkMxLjY4IDEyLjk0IDEgMTEuMjk5IDEgOS40OThjMC0zLjg2NiAzLjEzNC03IDctN3M3IDMuMTM0IDcgN2MwIDEuNzgyLS42NjUgMy40MDgtMS43NjEgNC42NDN6TTcuNDk1IDMuNjY1di41ODNjMCAuMzIyLjI2Mi41ODMuNTg0LjU4My4zMjIgMCAuNTgzLS4yNi41ODMtLjU4M3YtLjU4M2MwLS4zMjItLjI2MS0uNTg0LS41ODMtLjU4NC0uMzIyIDAtLjU4NC4yNjItLjU4NC41ODR6bTUuODU1IDYuMDk0Yy4zMjIgMCAuNTgzLS4yNjIuNTgzLS41ODQgMC0uMzIyLS4yNjEtLjU4My0uNTgzLS41ODNoLS42MjhjLS4zMjIgMC0uNTgzLjI2MS0uNTgzLjU4MyAwIC4zMjIuMjYuNTg0LjU4My41ODRoLjYyOHptLTkuOTcyIDBjLjMyMiAwIC41ODMtLjI2Mi41ODMtLjU4NCAwLS4zMjItLjI2MS0uNTgzLS41ODMtLjU4M0gyLjc1Yy0uMzIyIDAtLjU4My4yNjEtLjU4My41ODMgMCAuMzIyLjI2LjU4NC41ODMuNTg0aC42Mjh6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-fuel-ratio ml-1">[[${dto.car_mileage}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxyZWN0IHdpZHRoPSIxMS41MzciIGhlaWdodD0iMS4zNTIiIHg9IjIuMjMxIiB5PSIxMS4wNDMiIGZpbGw9IiM4NTkyQUIiIHJ4PSIuNjc2Ii8+CiAgICA8cGF0aCBmaWxsPSIjODU5MkFCIiBkPSJNNC4wODIgMTMuNjk2YzAtLjM3NC4zMDItLjY3Ni42NzYtLjY3Nmg2LjUxMmMuMzczIDAgLjY3Ni4zMDIuNjc2LjY3NiAwIC4zNzMtLjMwMy42NzYtLjY3Ni42NzZINC43NThjLS4zNzQgMC0uNjc2LS4zMDMtLjY3Ni0uNjc2eiIvPgogICAgPHBhdGggZmlsbD0iIzg1OTJBQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTQuMjcxIDUuNDZsLTEuMTI0LS41MTQtLjk5My0xLjU4NGMtLjI4Ny0uNDU5LS43OTItLjczNy0xLjMzNC0uNzM0SDYuNTkxYy0uNDkgMC0uOTU1LjIyNy0xLjI1My42MTdMNC4wNTUgNC45MjNsLTIuMTM3LjU4NUMxLjM3NiA1LjY1OCAxIDYuMTU0IDEgNi43MTZ2LjgxOGMwIC42OTEuNTUgMS4yNjIgMS4yNDIgMS4yNjJoMS4yNTljMCAuODI4LjY3MiAxLjUgMS41IDEuNS44MjkgMCAxLjUtLjY3MiAxLjUtMS41aDMuNzVjMCAuODI4LjY3MSAxLjUgMS41IDEuNS44MjggMCAxLjUtLjY3MiAxLjUtMS41aC41MDdjLjY5MSAwIDEuMjQyLS41NyAxLjI0Mi0xLjI2MlY2LjZjLjAwMy0uNDktLjI4NC0uOTM4LS43MjktMS4xNDF6bS0zLjUxOS0xLjIyMmMtLjE3My0uMzA3LS40NzktLjQ5NC0uODA3LS40OTJoLTIuNTZjLS4yOTcgMC0uNTc5LjE1Mi0uNzYuNDEzbC0uNDA0LjU3Yy0uMDIuMDU0LS4wMTUuMTYxLjE3Mi4xNTUuMTktLjAwNiAyLjkxOC0uMDAyIDQuMDMgMGguNDUzYy4xNzQgMCAuMTctLjE0NC4xMzItLjIwNGwtLjI1NS0uNDQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-drive-km ml-1">[[${dto.car_km }]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjE2IDUuMzA5Yy42OTQgMS4xMjQgMS4wNyAyLjQyOCAxLjA3IDMuODYxIDAgMy4wOS0xLjk4NCA1LjMzLTQuNTA4IDUuMzMtMS44NDEgMC0zLjM3Ni0xLjE1Ny00LjEtMy4wNzctLjE3Mi0uNDU4LS40NjItLjgyMy0xLjE1MS0uODc3LTEuNzU3LS4xNC0yLjcwMS0xLjQxMi0yLjcwMS0zLjE1MyAwLS42MTYuMTUzLTEuMTg5LjQxNS0xLjY3NCAwIDAgLjQ1My0uOTY3IDEuNDg2LTEuODIuODk1LS44NDQgMi40Mi0xLjM5OSA0LjE1MS0xLjM5OSAyLjUyIDAgNC40NzQgMS40MSA1LjMzOCAyLjgwOXptLTQuNDk5IDUuNzZjMCAuNzQ0LjYwNCAxLjM0OCAxLjM0OCAxLjM0OC43NDUgMCAxLjM0OS0uNjA0IDEuMzQ5LTEuMzQ4IDAtLjc0NS0uNjA0LTEuMzQ5LTEuMzQ5LTEuMzQ5LS43NDQgMC0xLjM0OC42MDQtMS4zNDggMS4zNDl6bTIuNDk3LTIuNzk2Yy41MjYgMCAuOTUyLS40MjYuOTUyLS45NTJzLS40MjYtLjk1Mi0uOTUyLS45NTJjLS41MjUgMC0uOTUxLjQyNi0uOTUxLjk1MnMuNDI1Ljk1Mi45NTEuOTUyek05LjkwMyA1LjE5YzAgLjUyNS0uNDI2Ljk1MS0uOTUxLjk1MS0uNTI2IDAtLjk1Mi0uNDI2LS45NTItLjk1MSAwLS41MjYuNDI2LS45NTIuOTUyLS45NTIuNTI1IDAgLjk1MS40MjYuOTUxLjk1MnptLTQuMDU0LjU2Yy4zNjggMCAuNjY3LS4zLjY2Ny0uNjY4IDAtLjM2OS0uMjk5LS42NjgtLjY2Ny0uNjY4LS4zNjkgMC0uNjY4LjMtLjY2OC42NjggMCAuMzY4LjMuNjY3LjY2OC42Njd6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-color ml-1">[[${dto.car_col}]]</span>
+		                                                </div>
+		                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        </th:block>
+                    </div>
+                    <!-- 준중형---------------------------------------------------- -->
+                     <div id="divshow4" style="display:none;">
+                     <th:block th:if="${dto?.car_type}=='준중형'" th:each="dto:${lists}">
+                     	<div class="tab-content current"  style="background: white; padding: 0px; 
+                              margin-top: 20px;" th:onclick="'location.href=\'carInfo.action?num=' + @{${dto.num}} + '\''">
+                                    <div class="col-12 col-lg-5" style="max-width: 100% !important;">
+                                       <div class="pt-3 pb-2 px-1 p-lg-3">
+                                         <div class="row no-gutters">
+                                             <div class="col-6 col-lg-12 pb-lg-3">
+                                                <img th:src="'https://i.ibb.co/' + @{${dto.car_fileurl}} + '/' + @{${dto.car_name}}+ '.png'" style="width:400px; margin-left: 14%;">
+                                                <div class="d-flex justify-content-center align-items-center"></div>
+                                             </div>
+		                                   <div class="col-6 col-lg-12 d-flex flex-column justify-content-center">
+		                                       <div class="pt-lg-3 border-lg-top">
+		                                          <div class="js-vsl-badge-car-type">
+		                                             <div class="badge-car-type px-2 py-1 dc-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                <span class="ml-1">[[${dto.car_type}]]</span>
+		                                                
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-vsl-txt-car-model text-20 mb-1 color-grey-1">[[${dto.car_name}]]</div>
+		                                             <div class="js-vsl-txt-car-desc text-12 color-grey-5"></div>
+		                                           <div class="js-vsl-txt-car-price-range text-primary text-16 text-lg-12 mb-0 mt-2 color-grey-5 font-weight-medium">
+		                                              [[${#numbers.formatInteger(dto.car_shortp,3, 'COMMA')}]]&nbsp;원
+		                                           </div>
+		                                       </div>
+		                                    </div>
+		                                 </div>
+		                                 <div class="js-group-include-info row no-gutters">
+		                                    <div class="col-12 px-3 px-lg-0 text-12">
+		                                       <div class="d-flex justify-content-between align-items-center flex-wrap">
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                             <div class="d-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik0xMi41IDEzLjA2MXYtMS40OTVjMC0xLjg1MS0xLjE2NC0zLjQyNC0yLjc2Ni0zLjk2Ny43Ny0uNDUyIDEuMjkzLTEuMzEzIDEuMjkzLTIuMjk5IDAtMS40NTEtMS4xMzQtMi42MzQtMi41MjctMi42MzQtMS4zOTMgMC0yLjUyNyAxLjE4My0yLjUyNyAyLjYzNCAwIC45ODYuNTIzIDEuODQ3IDEuMjkzIDIuMjk5QzUuNjYyIDguMTQyIDQuNSA5LjcxNSA0LjUgMTEuNTY2djEuNDk1YzAgLjE1LjExNi4yNzIuMjYuMjcyaDcuNDg0Yy4xNC0uMDAyLjI1Ni0uMTIyLjI1Ni0uMjcyeiIvPgo8L3N2Zz4K">
+		                                                <span class="js-car-info-txt-passenger ml-1">[[${dto.car_inwon}]]</span>
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFpNOC41OTMwNCAxMS41Nzc3VjguODA0NDhMMTEuMTE2OCA0LjgxMDYxSDkuODI5ODJMNy45NDI1MyA3LjgxMjZMNi4yNzIwOCA0LjgxMDYxSDQuOTQ3MDJMNy4zNTYyNiA4LjgwNDQ4VjExLjU3NzdIOC41OTMwNFoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-car-year ml-1">
+		                                                      [[${dto.car_year }]]년
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik03Ljk3IDIuMTc0QzcuODQgMi4wNTkgNy42NzggMiA3LjUxNiAyYy0uMTYzIDAtLjMyNi4wNTktLjQ1OC4xNzQtLjE2NS4xNDYtNC4wNDIgMy42NDYtNC4wNDIgNy4yNzMgMCAyLjUxMyAyLjAxNiA0LjU1MyA0LjUgNC41NTMgMi40OCAwIDQuNS0yLjA0MyA0LjUtNC41NTMgMC0zLjYyNy0zLjg4LTcuMTI3LTQuMDQ2LTcuMjczeiIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-fuel ml-1">
+		                                                      [[${dto.car_fuel }]]
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNS4wNTFDMiA0LjE5NSAyLjY5NSAzLjUgMy41NTEgMy41aDQuNzUxYy40NzcgMCAuOTI4LjIyIDEuMjIyLjU5NWwxLjMxNCAxLjY4IDEuODEzIDIuMjIzYy4yMjYuMjc3LjM0OS42MjMuMzQ5Ljk4djMuOTdjMCAuODU3LS42OTQgMS41NTItMS41NTEgMS41NTJIMy41NUMyLjY5NSAxNC41IDIgMTMuODA2IDIgMTIuOTQ5VjUuMDV6bTEuNTUxLjM5NWMwLS4yMTguMTc3LS4zOTUuMzk1LS4zOTVoMy42OThjLjEyNiAwIC4yNDQuMDYuMzE4LjE2MUw4Ljk4MiA2LjYgOS45IDcuODAxYy4wOTEuMTIuMTA3LjI4LjA0LjQxNS0uMDY2LjEzNS0uMjA0LjIyLS4zNTQuMjJoLTUuNjRjLS4yMTkgMC0uMzk2LS4xNzctLjM5Ni0uMzk1VjUuNDQ2em0uNTY0IDQuMTE4Yy0uMzExIDAtLjU2NC4yNTMtLjU2NC41NjQgMCAuMzEyLjI1My41NjQuNTY0LjU2NGgxLjEyOWMuMzExIDAgLjU2NC0uMjUyLjU2NC0uNTY0IDAtLjMxMS0uMjUzLS41NjQtLjU2NC0uNTY0SDQuMTE1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-door ml-1">[[${dto.car_make}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcuOTggMi41Yy40NDQgMCAuODA0LjM2LjgwNC44MDR2LjM3OGwuMjA3LS4xNGMuMzY4LS4yNS44NjgtLjE1NCAxLjExNy4yMTQuMjQ5LjM2Ny4xNTMuODY3LS4yMTQgMS4xMTZsLTEuMTEuNzUzdjEuOTA3bDEuNjkyLS45NzQuMTA3LTEuM2MuMDM2LS40NDIuNDI0LS43NzIuODY3LS43MzUuNDQyLjAzNi43NzEuNDI0LjczNS44NjdsLS4wMTYuMTk0LjMxMy0uMThjLjM4NC0uMjIxLjg3Ni0uMDg5IDEuMDk3LjI5Ni4yMjEuMzg1LjA5Ljg3Ni0uMjk2IDEuMDk4bC0uMzI1LjE4Ny4yMTcuMTA0Yy40LjE5My41NjguNjczLjM3NiAxLjA3My0uMTkzLjQtLjY3My41NjktMS4wNzMuMzc2bC0xLjIwOS0uNTgxLTEuNjU3Ljk1MyAxLjY4NS45NyAxLjE4Ni0uNTZjLjQwMi0uMTg5Ljg4LS4wMTcgMS4wNy4zODUuMTkuNDAxLjAxOC44OC0uMzg0IDEuMDdsLS4xNzQuMDgyLjMwNi4xNzZjLjM4NS4yMjEuNTE3LjcxMy4yOTYgMS4wOTctLjIyMS4zODUtLjcxMy41MTgtMS4wOTguMjk2bC0uMzMyLS4xOTEuMDE4LjI0M2MuMDMzLjQ0My0uMy44MjgtLjc0Mi44NjEtLjQ0My4wMzMtLjgyOC0uMy0uODYxLS43NDJsLS4wOTktMS4zMy0xLjctLjk3OXYyLjA2bDEuMTEuNzUyYy4zNjguMjQ5LjQ2NC43NDkuMjE1IDEuMTE2LS4yNS4zNjgtLjc1LjQ2NC0xLjExNy4yMTRsLS4yMDctLjE0di4yNjdjMCAuNDQ0LS4zNi44MDQtLjgwNC44MDQtLjQ0NCAwLS44MDQtLjM2LS44MDQtLjgwNHYtLjI0MmwtLjE2Mi4xMTJjLS4zNjYuMjUyLS44NjYuMTYtMS4xMTgtLjIwNi0uMjUyLS4zNjUtLjE2LS44NjYuMjA1LTEuMTE4bDEuMDc1LS43NDF2LTIuMDVsLTEuNzU1IDEuMDEtLjA5OSAxLjMzYy0uMDMzLjQ0My0uNDE4Ljc3NS0uODYxLjc0My0uNDQzLS4wMzMtLjc3NS0uNDE5LS43NDItLjg2MmwuMDE4LS4yNDMtLjIzNy4xMzZjLS4zODQuMjIyLS44NzYuMDktMS4wOTctLjI5Ni0uMjIyLS4zODQtLjA5LS44NzYuMjk2LTEuMDk3bC4yMS0uMTIxLS4xNzQtLjA4MmMtLjQwMS0uMTktLjU3My0uNjY4LS4zODQtMS4wNy4xOS0uNDAxLjY2OC0uNTczIDEuMDctLjM4NGwxLjE4Ni41Nkw2LjM4OCA4LjkxIDQuNjM1IDcuOTAxbC0xLjIxLjU4MmMtLjQuMTkyLS44OC4wMjQtMS4wNzItLjM3Ni0uMTkyLS40LS4wMjQtLjg4LjM3Ni0xLjA3M2wuMjE3LS4xMDQtLjIzLS4xMzNjLS4zODQtLjIyMS0uNTE3LS43MTItLjI5NS0xLjA5Ny4yMjEtLjM4NS43MTMtLjUxNyAxLjA5Ny0uMjk2bC4yMTcuMTI1LS4wMTYtLjE5NWMtLjAzNi0uNDQyLjI5My0uODMuNzM1LS44NjcuNDQzLS4wMzYuODMuMjkzLjg2Ny43MzZsLjEwNyAxLjMgMS43NDggMS4wMDZ2LTEuOWwtMS4wNzUtLjc0Yy0uMzY1LS4yNTItLjQ1Ny0uNzUzLS4yMDUtMS4xMTguMjUyLS4zNjYuNzUyLS40NTggMS4xMTgtLjIwNmwuMTYyLjExMnYtLjM1M2MwLS40NDQuMzYtLjgwNC44MDQtLjgwNHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-air-condition ml-1">에어컨</span>
+		                                                </div>
+		                                             </div>
+		                                          
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSI5LjQ5OSIgcj0iMS4xNjciIGZpbGw9IiM3ODhBQUMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDggOS40OTkpIi8+CiAgICA8cGF0aCBmaWxsPSIjNzg4QUFDIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yMzkgMTQuMTQxbC0zLjQ5My0zLjA5NWMuMzY1LS40MTIuNTg3LS45NTQuNTg3LTEuNTQ4IDAtMS4yODktMS4wNDQtMi4zMzMtMi4zMzMtMi4zMzMtLjI3OCAwLS41NDUuMDQ4LS43OTMuMTM4TDYuMTMzIDUuODdjLS4xOTMtLjI1OC0uNTU5LS4zMS0uODE2LS4xMTctLjI1OC4xOTQtLjMxLjU2LS4xMTcuODE3bDEuMDQzIDEuMzljLS4zNTkuNDExLS41NzcuOTQ5LS41NzcgMS41MzcgMCAuNi4yMjcgMS4xNDguNiAxLjU2MWwtMy40NyAzLjEyMkMxLjY4IDEyLjk0IDEgMTEuMjk5IDEgOS40OThjMC0zLjg2NiAzLjEzNC03IDctN3M3IDMuMTM0IDcgN2MwIDEuNzgyLS42NjUgMy40MDgtMS43NjEgNC42NDN6TTcuNDk1IDMuNjY1di41ODNjMCAuMzIyLjI2Mi41ODMuNTg0LjU4My4zMjIgMCAuNTgzLS4yNi41ODMtLjU4M3YtLjU4M2MwLS4zMjItLjI2MS0uNTg0LS41ODMtLjU4NC0uMzIyIDAtLjU4NC4yNjItLjU4NC41ODR6bTUuODU1IDYuMDk0Yy4zMjIgMCAuNTgzLS4yNjIuNTgzLS41ODQgMC0uMzIyLS4yNjEtLjU4My0uNTgzLS41ODNoLS42MjhjLS4zMjIgMC0uNTgzLjI2MS0uNTgzLjU4MyAwIC4zMjIuMjYuNTg0LjU4My41ODRoLjYyOHptLTkuOTcyIDBjLjMyMiAwIC41ODMtLjI2Mi41ODMtLjU4NCAwLS4zMjItLjI2MS0uNTgzLS41ODMtLjU4M0gyLjc1Yy0uMzIyIDAtLjU4My4yNjEtLjU4My41ODMgMCAuMzIyLjI2LjU4NC41ODMuNTg0aC42Mjh6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-fuel-ratio ml-1">[[${dto.car_mileage}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxyZWN0IHdpZHRoPSIxMS41MzciIGhlaWdodD0iMS4zNTIiIHg9IjIuMjMxIiB5PSIxMS4wNDMiIGZpbGw9IiM4NTkyQUIiIHJ4PSIuNjc2Ii8+CiAgICA8cGF0aCBmaWxsPSIjODU5MkFCIiBkPSJNNC4wODIgMTMuNjk2YzAtLjM3NC4zMDItLjY3Ni42NzYtLjY3Nmg2LjUxMmMuMzczIDAgLjY3Ni4zMDIuNjc2LjY3NiAwIC4zNzMtLjMwMy42NzYtLjY3Ni42NzZINC43NThjLS4zNzQgMC0uNjc2LS4zMDMtLjY3Ni0uNjc2eiIvPgogICAgPHBhdGggZmlsbD0iIzg1OTJBQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTQuMjcxIDUuNDZsLTEuMTI0LS41MTQtLjk5My0xLjU4NGMtLjI4Ny0uNDU5LS43OTItLjczNy0xLjMzNC0uNzM0SDYuNTkxYy0uNDkgMC0uOTU1LjIyNy0xLjI1My42MTdMNC4wNTUgNC45MjNsLTIuMTM3LjU4NUMxLjM3NiA1LjY1OCAxIDYuMTU0IDEgNi43MTZ2LjgxOGMwIC42OTEuNTUgMS4yNjIgMS4yNDIgMS4yNjJoMS4yNTljMCAuODI4LjY3MiAxLjUgMS41IDEuNS44MjkgMCAxLjUtLjY3MiAxLjUtMS41aDMuNzVjMCAuODI4LjY3MSAxLjUgMS41IDEuNS44MjggMCAxLjUtLjY3MiAxLjUtMS41aC41MDdjLjY5MSAwIDEuMjQyLS41NyAxLjI0Mi0xLjI2MlY2LjZjLjAwMy0uNDktLjI4NC0uOTM4LS43MjktMS4xNDF6bS0zLjUxOS0xLjIyMmMtLjE3My0uMzA3LS40NzktLjQ5NC0uODA3LS40OTJoLTIuNTZjLS4yOTcgMC0uNTc5LjE1Mi0uNzYuNDEzbC0uNDA0LjU3Yy0uMDIuMDU0LS4wMTUuMTYxLjE3Mi4xNTUuMTktLjAwNiAyLjkxOC0uMDAyIDQuMDMgMGguNDUzYy4xNzQgMCAuMTctLjE0NC4xMzItLjIwNGwtLjI1NS0uNDQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-drive-km ml-1">[[${dto.car_km }]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjE2IDUuMzA5Yy42OTQgMS4xMjQgMS4wNyAyLjQyOCAxLjA3IDMuODYxIDAgMy4wOS0xLjk4NCA1LjMzLTQuNTA4IDUuMzMtMS44NDEgMC0zLjM3Ni0xLjE1Ny00LjEtMy4wNzctLjE3Mi0uNDU4LS40NjItLjgyMy0xLjE1MS0uODc3LTEuNzU3LS4xNC0yLjcwMS0xLjQxMi0yLjcwMS0zLjE1MyAwLS42MTYuMTUzLTEuMTg5LjQxNS0xLjY3NCAwIDAgLjQ1My0uOTY3IDEuNDg2LTEuODIuODk1LS44NDQgMi40Mi0xLjM5OSA0LjE1MS0xLjM5OSAyLjUyIDAgNC40NzQgMS40MSA1LjMzOCAyLjgwOXptLTQuNDk5IDUuNzZjMCAuNzQ0LjYwNCAxLjM0OCAxLjM0OCAxLjM0OC43NDUgMCAxLjM0OS0uNjA0IDEuMzQ5LTEuMzQ4IDAtLjc0NS0uNjA0LTEuMzQ5LTEuMzQ5LTEuMzQ5LS43NDQgMC0xLjM0OC42MDQtMS4zNDggMS4zNDl6bTIuNDk3LTIuNzk2Yy41MjYgMCAuOTUyLS40MjYuOTUyLS45NTJzLS40MjYtLjk1Mi0uOTUyLS45NTJjLS41MjUgMC0uOTUxLjQyNi0uOTUxLjk1MnMuNDI1Ljk1Mi45NTEuOTUyek05LjkwMyA1LjE5YzAgLjUyNS0uNDI2Ljk1MS0uOTUxLjk1MS0uNTI2IDAtLjk1Mi0uNDI2LS45NTItLjk1MSAwLS41MjYuNDI2LS45NTIuOTUyLS45NTIuNTI1IDAgLjk1MS40MjYuOTUxLjk1MnptLTQuMDU0LjU2Yy4zNjggMCAuNjY3LS4zLjY2Ny0uNjY4IDAtLjM2OS0uMjk5LS42NjgtLjY2Ny0uNjY4LS4zNjkgMC0uNjY4LjMtLjY2OC42NjggMCAuMzY4LjMuNjY3LjY2OC42Njd6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-color ml-1">[[${dto.car_col}]]</span>
+		                                                </div>
+		                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        </th:block>
+                    </div>
+                    <!-- 세단---------------------------------------------------- -->
+                     <div id="divshow5" style="display:none;">
+                     <th:block th:if="${dto?.car_type}=='세단'" th:each="dto:${lists}">
+                     	<div class="tab-content current"  style="background: white; padding: 0px; 
+                              margin-top: 20px;" th:onclick="'location.href=\'carInfo.action?num=' + @{${dto.num}} + '\''">
+                                    <div class="col-12 col-lg-5" style="max-width: 100% !important;">
+                                       <div class="pt-3 pb-2 px-1 p-lg-3">
+                                         <div class="row no-gutters">
+                                             <div class="col-6 col-lg-12 pb-lg-3">
+                                                <img th:src="'https://i.ibb.co/' + @{${dto.car_fileurl}} + '/' + @{${dto.car_name}}+ '.png'" style="width:400px; margin-left: 14%;">
+                                                <div class="d-flex justify-content-center align-items-center"></div>
+                                             </div>
+		                                   <div class="col-6 col-lg-12 d-flex flex-column justify-content-center">
+		                                       <div class="pt-lg-3 border-lg-top">
+		                                          <div class="js-vsl-badge-car-type">
+		                                             <div class="badge-car-type px-2 py-1 dc-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                <span class="ml-1">[[${dto.car_type}]]</span>
+		                                                
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-vsl-txt-car-model text-20 mb-1 color-grey-1">[[${dto.car_name}]]</div>
+		                                             <div class="js-vsl-txt-car-desc text-12 color-grey-5"></div>
+		                                           <div class="js-vsl-txt-car-price-range text-primary text-16 text-lg-12 mb-0 mt-2 color-grey-5 font-weight-medium">
+		                                              [[${#numbers.formatInteger(dto.car_shortp,3, 'COMMA')}]]&nbsp;원
+		                                           </div>
+		                                       </div>
+		                                    </div>
+		                                 </div>
+		                                 <div class="js-group-include-info row no-gutters">
+		                                    <div class="col-12 px-3 px-lg-0 text-12">
+		                                       <div class="d-flex justify-content-between align-items-center flex-wrap">
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                             <div class="d-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik0xMi41IDEzLjA2MXYtMS40OTVjMC0xLjg1MS0xLjE2NC0zLjQyNC0yLjc2Ni0zLjk2Ny43Ny0uNDUyIDEuMjkzLTEuMzEzIDEuMjkzLTIuMjk5IDAtMS40NTEtMS4xMzQtMi42MzQtMi41MjctMi42MzQtMS4zOTMgMC0yLjUyNyAxLjE4My0yLjUyNyAyLjYzNCAwIC45ODYuNTIzIDEuODQ3IDEuMjkzIDIuMjk5QzUuNjYyIDguMTQyIDQuNSA5LjcxNSA0LjUgMTEuNTY2djEuNDk1YzAgLjE1LjExNi4yNzIuMjYuMjcyaDcuNDg0Yy4xNC0uMDAyLjI1Ni0uMTIyLjI1Ni0uMjcyeiIvPgo8L3N2Zz4K">
+		                                                <span class="js-car-info-txt-passenger ml-1">[[${dto.car_inwon}]]</span>
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFpNOC41OTMwNCAxMS41Nzc3VjguODA0NDhMMTEuMTE2OCA0LjgxMDYxSDkuODI5ODJMNy45NDI1MyA3LjgxMjZMNi4yNzIwOCA0LjgxMDYxSDQuOTQ3MDJMNy4zNTYyNiA4LjgwNDQ4VjExLjU3NzdIOC41OTMwNFoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-car-year ml-1">
+		                                                      [[${dto.car_year }]]년
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik03Ljk3IDIuMTc0QzcuODQgMi4wNTkgNy42NzggMiA3LjUxNiAyYy0uMTYzIDAtLjMyNi4wNTktLjQ1OC4xNzQtLjE2NS4xNDYtNC4wNDIgMy42NDYtNC4wNDIgNy4yNzMgMCAyLjUxMyAyLjAxNiA0LjU1MyA0LjUgNC41NTMgMi40OCAwIDQuNS0yLjA0MyA0LjUtNC41NTMgMC0zLjYyNy0zLjg4LTcuMTI3LTQuMDQ2LTcuMjczeiIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-fuel ml-1">
+		                                                      [[${dto.car_fuel }]]
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNS4wNTFDMiA0LjE5NSAyLjY5NSAzLjUgMy41NTEgMy41aDQuNzUxYy40NzcgMCAuOTI4LjIyIDEuMjIyLjU5NWwxLjMxNCAxLjY4IDEuODEzIDIuMjIzYy4yMjYuMjc3LjM0OS42MjMuMzQ5Ljk4djMuOTdjMCAuODU3LS42OTQgMS41NTItMS41NTEgMS41NTJIMy41NUMyLjY5NSAxNC41IDIgMTMuODA2IDIgMTIuOTQ5VjUuMDV6bTEuNTUxLjM5NWMwLS4yMTguMTc3LS4zOTUuMzk1LS4zOTVoMy42OThjLjEyNiAwIC4yNDQuMDYuMzE4LjE2MUw4Ljk4MiA2LjYgOS45IDcuODAxYy4wOTEuMTIuMTA3LjI4LjA0LjQxNS0uMDY2LjEzNS0uMjA0LjIyLS4zNTQuMjJoLTUuNjRjLS4yMTkgMC0uMzk2LS4xNzctLjM5Ni0uMzk1VjUuNDQ2em0uNTY0IDQuMTE4Yy0uMzExIDAtLjU2NC4yNTMtLjU2NC41NjQgMCAuMzEyLjI1My41NjQuNTY0LjU2NGgxLjEyOWMuMzExIDAgLjU2NC0uMjUyLjU2NC0uNTY0IDAtLjMxMS0uMjUzLS41NjQtLjU2NC0uNTY0SDQuMTE1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-door ml-1">[[${dto.car_make}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcuOTggMi41Yy40NDQgMCAuODA0LjM2LjgwNC44MDR2LjM3OGwuMjA3LS4xNGMuMzY4LS4yNS44NjgtLjE1NCAxLjExNy4yMTQuMjQ5LjM2Ny4xNTMuODY3LS4yMTQgMS4xMTZsLTEuMTEuNzUzdjEuOTA3bDEuNjkyLS45NzQuMTA3LTEuM2MuMDM2LS40NDIuNDI0LS43NzIuODY3LS43MzUuNDQyLjAzNi43NzEuNDI0LjczNS44NjdsLS4wMTYuMTk0LjMxMy0uMThjLjM4NC0uMjIxLjg3Ni0uMDg5IDEuMDk3LjI5Ni4yMjEuMzg1LjA5Ljg3Ni0uMjk2IDEuMDk4bC0uMzI1LjE4Ny4yMTcuMTA0Yy40LjE5My41NjguNjczLjM3NiAxLjA3My0uMTkzLjQtLjY3My41NjktMS4wNzMuMzc2bC0xLjIwOS0uNTgxLTEuNjU3Ljk1MyAxLjY4NS45NyAxLjE4Ni0uNTZjLjQwMi0uMTg5Ljg4LS4wMTcgMS4wNy4zODUuMTkuNDAxLjAxOC44OC0uMzg0IDEuMDdsLS4xNzQuMDgyLjMwNi4xNzZjLjM4NS4yMjEuNTE3LjcxMy4yOTYgMS4wOTctLjIyMS4zODUtLjcxMy41MTgtMS4wOTguMjk2bC0uMzMyLS4xOTEuMDE4LjI0M2MuMDMzLjQ0My0uMy44MjgtLjc0Mi44NjEtLjQ0My4wMzMtLjgyOC0uMy0uODYxLS43NDJsLS4wOTktMS4zMy0xLjctLjk3OXYyLjA2bDEuMTEuNzUyYy4zNjguMjQ5LjQ2NC43NDkuMjE1IDEuMTE2LS4yNS4zNjgtLjc1LjQ2NC0xLjExNy4yMTRsLS4yMDctLjE0di4yNjdjMCAuNDQ0LS4zNi44MDQtLjgwNC44MDQtLjQ0NCAwLS44MDQtLjM2LS44MDQtLjgwNHYtLjI0MmwtLjE2Mi4xMTJjLS4zNjYuMjUyLS44NjYuMTYtMS4xMTgtLjIwNi0uMjUyLS4zNjUtLjE2LS44NjYuMjA1LTEuMTE4bDEuMDc1LS43NDF2LTIuMDVsLTEuNzU1IDEuMDEtLjA5OSAxLjMzYy0uMDMzLjQ0My0uNDE4Ljc3NS0uODYxLjc0My0uNDQzLS4wMzMtLjc3NS0uNDE5LS43NDItLjg2MmwuMDE4LS4yNDMtLjIzNy4xMzZjLS4zODQuMjIyLS44NzYuMDktMS4wOTctLjI5Ni0uMjIyLS4zODQtLjA5LS44NzYuMjk2LTEuMDk3bC4yMS0uMTIxLS4xNzQtLjA4MmMtLjQwMS0uMTktLjU3My0uNjY4LS4zODQtMS4wNy4xOS0uNDAxLjY2OC0uNTczIDEuMDctLjM4NGwxLjE4Ni41Nkw2LjM4OCA4LjkxIDQuNjM1IDcuOTAxbC0xLjIxLjU4MmMtLjQuMTkyLS44OC4wMjQtMS4wNzItLjM3Ni0uMTkyLS40LS4wMjQtLjg4LjM3Ni0xLjA3M2wuMjE3LS4xMDQtLjIzLS4xMzNjLS4zODQtLjIyMS0uNTE3LS43MTItLjI5NS0xLjA5Ny4yMjEtLjM4NS43MTMtLjUxNyAxLjA5Ny0uMjk2bC4yMTcuMTI1LS4wMTYtLjE5NWMtLjAzNi0uNDQyLjI5My0uODMuNzM1LS44NjcuNDQzLS4wMzYuODMuMjkzLjg2Ny43MzZsLjEwNyAxLjMgMS43NDggMS4wMDZ2LTEuOWwtMS4wNzUtLjc0Yy0uMzY1LS4yNTItLjQ1Ny0uNzUzLS4yMDUtMS4xMTguMjUyLS4zNjYuNzUyLS40NTggMS4xMTgtLjIwNmwuMTYyLjExMnYtLjM1M2MwLS40NDQuMzYtLjgwNC44MDQtLjgwNHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-air-condition ml-1">에어컨</span>
+		                                                </div>
+		                                             </div>
+		                                          
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSI5LjQ5OSIgcj0iMS4xNjciIGZpbGw9IiM3ODhBQUMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDggOS40OTkpIi8+CiAgICA8cGF0aCBmaWxsPSIjNzg4QUFDIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yMzkgMTQuMTQxbC0zLjQ5My0zLjA5NWMuMzY1LS40MTIuNTg3LS45NTQuNTg3LTEuNTQ4IDAtMS4yODktMS4wNDQtMi4zMzMtMi4zMzMtMi4zMzMtLjI3OCAwLS41NDUuMDQ4LS43OTMuMTM4TDYuMTMzIDUuODdjLS4xOTMtLjI1OC0uNTU5LS4zMS0uODE2LS4xMTctLjI1OC4xOTQtLjMxLjU2LS4xMTcuODE3bDEuMDQzIDEuMzljLS4zNTkuNDExLS41NzcuOTQ5LS41NzcgMS41MzcgMCAuNi4yMjcgMS4xNDguNiAxLjU2MWwtMy40NyAzLjEyMkMxLjY4IDEyLjk0IDEgMTEuMjk5IDEgOS40OThjMC0zLjg2NiAzLjEzNC03IDctN3M3IDMuMTM0IDcgN2MwIDEuNzgyLS42NjUgMy40MDgtMS43NjEgNC42NDN6TTcuNDk1IDMuNjY1di41ODNjMCAuMzIyLjI2Mi41ODMuNTg0LjU4My4zMjIgMCAuNTgzLS4yNi41ODMtLjU4M3YtLjU4M2MwLS4zMjItLjI2MS0uNTg0LS41ODMtLjU4NC0uMzIyIDAtLjU4NC4yNjItLjU4NC41ODR6bTUuODU1IDYuMDk0Yy4zMjIgMCAuNTgzLS4yNjIuNTgzLS41ODQgMC0uMzIyLS4yNjEtLjU4My0uNTgzLS41ODNoLS42MjhjLS4zMjIgMC0uNTgzLjI2MS0uNTgzLjU4MyAwIC4zMjIuMjYuNTg0LjU4My41ODRoLjYyOHptLTkuOTcyIDBjLjMyMiAwIC41ODMtLjI2Mi41ODMtLjU4NCAwLS4zMjItLjI2MS0uNTgzLS41ODMtLjU4M0gyLjc1Yy0uMzIyIDAtLjU4My4yNjEtLjU4My41ODMgMCAuMzIyLjI2LjU4NC41ODMuNTg0aC42Mjh6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-fuel-ratio ml-1">[[${dto.car_mileage}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxyZWN0IHdpZHRoPSIxMS41MzciIGhlaWdodD0iMS4zNTIiIHg9IjIuMjMxIiB5PSIxMS4wNDMiIGZpbGw9IiM4NTkyQUIiIHJ4PSIuNjc2Ii8+CiAgICA8cGF0aCBmaWxsPSIjODU5MkFCIiBkPSJNNC4wODIgMTMuNjk2YzAtLjM3NC4zMDItLjY3Ni42NzYtLjY3Nmg2LjUxMmMuMzczIDAgLjY3Ni4zMDIuNjc2LjY3NiAwIC4zNzMtLjMwMy42NzYtLjY3Ni42NzZINC43NThjLS4zNzQgMC0uNjc2LS4zMDMtLjY3Ni0uNjc2eiIvPgogICAgPHBhdGggZmlsbD0iIzg1OTJBQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTQuMjcxIDUuNDZsLTEuMTI0LS41MTQtLjk5My0xLjU4NGMtLjI4Ny0uNDU5LS43OTItLjczNy0xLjMzNC0uNzM0SDYuNTkxYy0uNDkgMC0uOTU1LjIyNy0xLjI1My42MTdMNC4wNTUgNC45MjNsLTIuMTM3LjU4NUMxLjM3NiA1LjY1OCAxIDYuMTU0IDEgNi43MTZ2LjgxOGMwIC42OTEuNTUgMS4yNjIgMS4yNDIgMS4yNjJoMS4yNTljMCAuODI4LjY3MiAxLjUgMS41IDEuNS44MjkgMCAxLjUtLjY3MiAxLjUtMS41aDMuNzVjMCAuODI4LjY3MSAxLjUgMS41IDEuNS44MjggMCAxLjUtLjY3MiAxLjUtMS41aC41MDdjLjY5MSAwIDEuMjQyLS41NyAxLjI0Mi0xLjI2MlY2LjZjLjAwMy0uNDktLjI4NC0uOTM4LS43MjktMS4xNDF6bS0zLjUxOS0xLjIyMmMtLjE3My0uMzA3LS40NzktLjQ5NC0uODA3LS40OTJoLTIuNTZjLS4yOTcgMC0uNTc5LjE1Mi0uNzYuNDEzbC0uNDA0LjU3Yy0uMDIuMDU0LS4wMTUuMTYxLjE3Mi4xNTUuMTktLjAwNiAyLjkxOC0uMDAyIDQuMDMgMGguNDUzYy4xNzQgMCAuMTctLjE0NC4xMzItLjIwNGwtLjI1NS0uNDQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-drive-km ml-1">[[${dto.car_km }]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjE2IDUuMzA5Yy42OTQgMS4xMjQgMS4wNyAyLjQyOCAxLjA3IDMuODYxIDAgMy4wOS0xLjk4NCA1LjMzLTQuNTA4IDUuMzMtMS44NDEgMC0zLjM3Ni0xLjE1Ny00LjEtMy4wNzctLjE3Mi0uNDU4LS40NjItLjgyMy0xLjE1MS0uODc3LTEuNzU3LS4xNC0yLjcwMS0xLjQxMi0yLjcwMS0zLjE1MyAwLS42MTYuMTUzLTEuMTg5LjQxNS0xLjY3NCAwIDAgLjQ1My0uOTY3IDEuNDg2LTEuODIuODk1LS44NDQgMi40Mi0xLjM5OSA0LjE1MS0xLjM5OSAyLjUyIDAgNC40NzQgMS40MSA1LjMzOCAyLjgwOXptLTQuNDk5IDUuNzZjMCAuNzQ0LjYwNCAxLjM0OCAxLjM0OCAxLjM0OC43NDUgMCAxLjM0OS0uNjA0IDEuMzQ5LTEuMzQ4IDAtLjc0NS0uNjA0LTEuMzQ5LTEuMzQ5LTEuMzQ5LS43NDQgMC0xLjM0OC42MDQtMS4zNDggMS4zNDl6bTIuNDk3LTIuNzk2Yy41MjYgMCAuOTUyLS40MjYuOTUyLS45NTJzLS40MjYtLjk1Mi0uOTUyLS45NTJjLS41MjUgMC0uOTUxLjQyNi0uOTUxLjk1MnMuNDI1Ljk1Mi45NTEuOTUyek05LjkwMyA1LjE5YzAgLjUyNS0uNDI2Ljk1MS0uOTUxLjk1MS0uNTI2IDAtLjk1Mi0uNDI2LS45NTItLjk1MSAwLS41MjYuNDI2LS45NTIuOTUyLS45NTIuNTI1IDAgLjk1MS40MjYuOTUxLjk1MnptLTQuMDU0LjU2Yy4zNjggMCAuNjY3LS4zLjY2Ny0uNjY4IDAtLjM2OS0uMjk5LS42NjgtLjY2Ny0uNjY4LS4zNjkgMC0uNjY4LjMtLjY2OC42NjggMCAuMzY4LjMuNjY3LjY2OC42Njd6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-color ml-1">[[${dto.car_col}]]</span>
+		                                                </div>
+		                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        </th:block>
+                    </div>
+                    <!-- 수입---------------------------------------------------- -->
+                     <div id="divshow6" style="display:none;">
+                     <th:block th:if="${dto?.car_type}=='수입'" th:each="dto:${lists}">
+                     	<div class="tab-content current"  style="background: white; padding: 0px; 
+                              margin-top: 20px;" th:onclick="'location.href=\'carInfo.action?num=' + @{${dto.num}} + '\''">
+                                    <div class="col-12 col-lg-5" style="max-width: 100% !important;">
+                                       <div class="pt-3 pb-2 px-1 p-lg-3">
+                                         <div class="row no-gutters">
+                                             <div class="col-6 col-lg-12 pb-lg-3">
+                                                <img th:src="'https://i.ibb.co/' + @{${dto.car_fileurl}} + '/' + @{${dto.car_name}}+ '.png'" style="width:400px; margin-left: 14%;">
+                                                <div class="d-flex justify-content-center align-items-center"></div>
+                                             </div>
+		                                   <div class="col-6 col-lg-12 d-flex flex-column justify-content-center">
+		                                       <div class="pt-lg-3 border-lg-top">
+		                                          <div class="js-vsl-badge-car-type">
+		                                             <div class="badge-car-type px-2 py-1 dc-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                <span class="ml-1">[[${dto.car_type}]]</span>
+		                                                
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-vsl-txt-car-model text-20 mb-1 color-grey-1">[[${dto.car_name}]]</div>
+		                                             <div class="js-vsl-txt-car-desc text-12 color-grey-5"></div>
+		                                           <div class="js-vsl-txt-car-price-range text-primary text-16 text-lg-12 mb-0 mt-2 color-grey-5 font-weight-medium">
+		                                              [[${#numbers.formatInteger(dto.car_shortp,3, 'COMMA')}]]&nbsp;원
+		                                           </div>
+		                                       </div>
+		                                    </div>
+		                                 </div>
+		                                 <div class="js-group-include-info row no-gutters">
+		                                    <div class="col-12 px-3 px-lg-0 text-12">
+		                                       <div class="d-flex justify-content-between align-items-center flex-wrap">
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                             <div class="d-flex align-items-center">
+		                                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik0xMi41IDEzLjA2MXYtMS40OTVjMC0xLjg1MS0xLjE2NC0zLjQyNC0yLjc2Ni0zLjk2Ny43Ny0uNDUyIDEuMjkzLTEuMzEzIDEuMjkzLTIuMjk5IDAtMS40NTEtMS4xMzQtMi42MzQtMi41MjctMi42MzQtMS4zOTMgMC0yLjUyNyAxLjE4My0yLjUyNyAyLjYzNCAwIC45ODYuNTIzIDEuODQ3IDEuMjkzIDIuMjk5QzUuNjYyIDguMTQyIDQuNSA5LjcxNSA0LjUgMTEuNTY2djEuNDk1YzAgLjE1LjExNi4yNzIuMjYuMjcyaDcuNDg0Yy4xNC0uMDAyLjI1Ni0uMTIyLjI1Ni0uMjcyeiIvPgo8L3N2Zz4K">
+		                                                <span class="js-car-info-txt-passenger ml-1">[[${dto.car_inwon}]]</span>
+		                                             </div>
+		                                          </div>
+		                                          <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNEMxMS4zMTM3IDE0IDE0IDExLjMxMzcgMTQgOEMxNCA0LjY4NjI5IDExLjMxMzcgMiA4IDJDNC42ODYyOSAyIDIgNC42ODYyOSAyIDhDMiAxMS4zMTM3IDQuNjg2MjkgMTQgOCAxNFpNOC41OTMwNCAxMS41Nzc3VjguODA0NDhMMTEuMTE2OCA0LjgxMDYxSDkuODI5ODJMNy45NDI1MyA3LjgxMjZMNi4yNzIwOCA0LjgxMDYxSDQuOTQ3MDJMNy4zNTYyNiA4LjgwNDQ4VjExLjU3NzdIOC41OTMwNFoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-car-year ml-1">
+		                                                      [[${dto.car_year }]]년
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE3IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGQ9Ik03Ljk3IDIuMTc0QzcuODQgMi4wNTkgNy42NzggMiA3LjUxNiAyYy0uMTYzIDAtLjMyNi4wNTktLjQ1OC4xNzQtLjE2NS4xNDYtNC4wNDIgMy42NDYtNC4wNDIgNy4yNzMgMCAyLjUxMyAyLjAxNiA0LjU1MyA0LjUgNC41NTMgMi40OCAwIDQuNS0yLjA0MyA0LjUtNC41NTMgMC0zLjYyNy0zLjg4LTcuMTI3LTQuMDQ2LTcuMjczeiIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-fuel ml-1">
+		                                                      [[${dto.car_fuel }]]
+		                                                   </span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNS4wNTFDMiA0LjE5NSAyLjY5NSAzLjUgMy41NTEgMy41aDQuNzUxYy40NzcgMCAuOTI4LjIyIDEuMjIyLjU5NWwxLjMxNCAxLjY4IDEuODEzIDIuMjIzYy4yMjYuMjc3LjM0OS42MjMuMzQ5Ljk4djMuOTdjMCAuODU3LS42OTQgMS41NTItMS41NTEgMS41NTJIMy41NUMyLjY5NSAxNC41IDIgMTMuODA2IDIgMTIuOTQ5VjUuMDV6bTEuNTUxLjM5NWMwLS4yMTguMTc3LS4zOTUuMzk1LS4zOTVoMy42OThjLjEyNiAwIC4yNDQuMDYuMzE4LjE2MUw4Ljk4MiA2LjYgOS45IDcuODAxYy4wOTEuMTIuMTA3LjI4LjA0LjQxNS0uMDY2LjEzNS0uMjA0LjIyLS4zNTQuMjJoLTUuNjRjLS4yMTkgMC0uMzk2LS4xNzctLjM5Ni0uMzk1VjUuNDQ2em0uNTY0IDQuMTE4Yy0uMzExIDAtLjU2NC4yNTMtLjU2NC41NjQgMCAuMzEyLjI1My41NjQuNTY0LjU2NGgxLjEyOWMuMzExIDAgLjU2NC0uMjUyLjU2NC0uNTY0IDAtLjMxMS0uMjUzLS41NjQtLjU2NC0uNTY0SDQuMTE1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-door ml-1">[[${dto.car_make}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM4NTkyQUIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTcuOTggMi41Yy40NDQgMCAuODA0LjM2LjgwNC44MDR2LjM3OGwuMjA3LS4xNGMuMzY4LS4yNS44NjgtLjE1NCAxLjExNy4yMTQuMjQ5LjM2Ny4xNTMuODY3LS4yMTQgMS4xMTZsLTEuMTEuNzUzdjEuOTA3bDEuNjkyLS45NzQuMTA3LTEuM2MuMDM2LS40NDIuNDI0LS43NzIuODY3LS43MzUuNDQyLjAzNi43NzEuNDI0LjczNS44NjdsLS4wMTYuMTk0LjMxMy0uMThjLjM4NC0uMjIxLjg3Ni0uMDg5IDEuMDk3LjI5Ni4yMjEuMzg1LjA5Ljg3Ni0uMjk2IDEuMDk4bC0uMzI1LjE4Ny4yMTcuMTA0Yy40LjE5My41NjguNjczLjM3NiAxLjA3My0uMTkzLjQtLjY3My41NjktMS4wNzMuMzc2bC0xLjIwOS0uNTgxLTEuNjU3Ljk1MyAxLjY4NS45NyAxLjE4Ni0uNTZjLjQwMi0uMTg5Ljg4LS4wMTcgMS4wNy4zODUuMTkuNDAxLjAxOC44OC0uMzg0IDEuMDdsLS4xNzQuMDgyLjMwNi4xNzZjLjM4NS4yMjEuNTE3LjcxMy4yOTYgMS4wOTctLjIyMS4zODUtLjcxMy41MTgtMS4wOTguMjk2bC0uMzMyLS4xOTEuMDE4LjI0M2MuMDMzLjQ0My0uMy44MjgtLjc0Mi44NjEtLjQ0My4wMzMtLjgyOC0uMy0uODYxLS43NDJsLS4wOTktMS4zMy0xLjctLjk3OXYyLjA2bDEuMTEuNzUyYy4zNjguMjQ5LjQ2NC43NDkuMjE1IDEuMTE2LS4yNS4zNjgtLjc1LjQ2NC0xLjExNy4yMTRsLS4yMDctLjE0di4yNjdjMCAuNDQ0LS4zNi44MDQtLjgwNC44MDQtLjQ0NCAwLS44MDQtLjM2LS44MDQtLjgwNHYtLjI0MmwtLjE2Mi4xMTJjLS4zNjYuMjUyLS44NjYuMTYtMS4xMTgtLjIwNi0uMjUyLS4zNjUtLjE2LS44NjYuMjA1LTEuMTE4bDEuMDc1LS43NDF2LTIuMDVsLTEuNzU1IDEuMDEtLjA5OSAxLjMzYy0uMDMzLjQ0My0uNDE4Ljc3NS0uODYxLjc0My0uNDQzLS4wMzMtLjc3NS0uNDE5LS43NDItLjg2MmwuMDE4LS4yNDMtLjIzNy4xMzZjLS4zODQuMjIyLS44NzYuMDktMS4wOTctLjI5Ni0uMjIyLS4zODQtLjA5LS44NzYuMjk2LTEuMDk3bC4yMS0uMTIxLS4xNzQtLjA4MmMtLjQwMS0uMTktLjU3My0uNjY4LS4zODQtMS4wNy4xOS0uNDAxLjY2OC0uNTczIDEuMDctLjM4NGwxLjE4Ni41Nkw2LjM4OCA4LjkxIDQuNjM1IDcuOTAxbC0xLjIxLjU4MmMtLjQuMTkyLS44OC4wMjQtMS4wNzItLjM3Ni0uMTkyLS40LS4wMjQtLjg4LjM3Ni0xLjA3M2wuMjE3LS4xMDQtLjIzLS4xMzNjLS4zODQtLjIyMS0uNTE3LS43MTItLjI5NS0xLjA5Ny4yMjEtLjM4NS43MTMtLjUxNyAxLjA5Ny0uMjk2bC4yMTcuMTI1LS4wMTYtLjE5NWMtLjAzNi0uNDQyLjI5My0uODMuNzM1LS44NjcuNDQzLS4wMzYuODMuMjkzLjg2Ny43MzZsLjEwNyAxLjMgMS43NDggMS4wMDZ2LTEuOWwtMS4wNzUtLjc0Yy0uMzY1LS4yNTItLjQ1Ny0uNzUzLS4yMDUtMS4xMTguMjUyLS4zNjYuNzUyLS40NTggMS4xMTgtLjIwNmwuMTYyLjExMnYtLjM1M2MwLS40NDQuMzYtLjgwNC44MDQtLjgwNHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+		                                                   <span class="js-car-info-txt-air-condition ml-1">에어컨</span>
+		                                                </div>
+		                                             </div>
+		                                          
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSI5LjQ5OSIgcj0iMS4xNjciIGZpbGw9IiM3ODhBQUMiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDggOS40OTkpIi8+CiAgICA8cGF0aCBmaWxsPSIjNzg4QUFDIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yMzkgMTQuMTQxbC0zLjQ5My0zLjA5NWMuMzY1LS40MTIuNTg3LS45NTQuNTg3LTEuNTQ4IDAtMS4yODktMS4wNDQtMi4zMzMtMi4zMzMtMi4zMzMtLjI3OCAwLS41NDUuMDQ4LS43OTMuMTM4TDYuMTMzIDUuODdjLS4xOTMtLjI1OC0uNTU5LS4zMS0uODE2LS4xMTctLjI1OC4xOTQtLjMxLjU2LS4xMTcuODE3bDEuMDQzIDEuMzljLS4zNTkuNDExLS41NzcuOTQ5LS41NzcgMS41MzcgMCAuNi4yMjcgMS4xNDguNiAxLjU2MWwtMy40NyAzLjEyMkMxLjY4IDEyLjk0IDEgMTEuMjk5IDEgOS40OThjMC0zLjg2NiAzLjEzNC03IDctN3M3IDMuMTM0IDcgN2MwIDEuNzgyLS42NjUgMy40MDgtMS43NjEgNC42NDN6TTcuNDk1IDMuNjY1di41ODNjMCAuMzIyLjI2Mi41ODMuNTg0LjU4My4zMjIgMCAuNTgzLS4yNi41ODMtLjU4M3YtLjU4M2MwLS4zMjItLjI2MS0uNTg0LS41ODMtLjU4NC0uMzIyIDAtLjU4NC4yNjItLjU4NC41ODR6bTUuODU1IDYuMDk0Yy4zMjIgMCAuNTgzLS4yNjIuNTgzLS41ODQgMC0uMzIyLS4yNjEtLjU4My0uNTgzLS41ODNoLS42MjhjLS4zMjIgMC0uNTgzLjI2MS0uNTgzLjU4MyAwIC4zMjIuMjYuNTg0LjU4My41ODRoLjYyOHptLTkuOTcyIDBjLjMyMiAwIC41ODMtLjI2Mi41ODMtLjU4NCAwLS4zMjItLjI2MS0uNTgzLS41ODMtLjU4M0gyLjc1Yy0uMzIyIDAtLjU4My4yNjEtLjU4My41ODMgMCAuMzIyLjI2LjU4NC41ODMuNTg0aC42Mjh6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-fuel-ratio ml-1">[[${dto.car_mileage}]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxyZWN0IHdpZHRoPSIxMS41MzciIGhlaWdodD0iMS4zNTIiIHg9IjIuMjMxIiB5PSIxMS4wNDMiIGZpbGw9IiM4NTkyQUIiIHJ4PSIuNjc2Ii8+CiAgICA8cGF0aCBmaWxsPSIjODU5MkFCIiBkPSJNNC4wODIgMTMuNjk2YzAtLjM3NC4zMDItLjY3Ni42NzYtLjY3Nmg2LjUxMmMuMzczIDAgLjY3Ni4zMDIuNjc2LjY3NiAwIC4zNzMtLjMwMy42NzYtLjY3Ni42NzZINC43NThjLS4zNzQgMC0uNjc2LS4zMDMtLjY3Ni0uNjc2eiIvPgogICAgPHBhdGggZmlsbD0iIzg1OTJBQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTQuMjcxIDUuNDZsLTEuMTI0LS41MTQtLjk5My0xLjU4NGMtLjI4Ny0uNDU5LS43OTItLjczNy0xLjMzNC0uNzM0SDYuNTkxYy0uNDkgMC0uOTU1LjIyNy0xLjI1My42MTdMNC4wNTUgNC45MjNsLTIuMTM3LjU4NUMxLjM3NiA1LjY1OCAxIDYuMTU0IDEgNi43MTZ2LjgxOGMwIC42OTEuNTUgMS4yNjIgMS4yNDIgMS4yNjJoMS4yNTljMCAuODI4LjY3MiAxLjUgMS41IDEuNS44MjkgMCAxLjUtLjY3MiAxLjUtMS41aDMuNzVjMCAuODI4LjY3MSAxLjUgMS41IDEuNS44MjggMCAxLjUtLjY3MiAxLjUtMS41aC41MDdjLjY5MSAwIDEuMjQyLS41NyAxLjI0Mi0xLjI2MlY2LjZjLjAwMy0uNDktLjI4NC0uOTM4LS43MjktMS4xNDF6bS0zLjUxOS0xLjIyMmMtLjE3My0uMzA3LS40NzktLjQ5NC0uODA3LS40OTJoLTIuNTZjLS4yOTcgMC0uNTc5LjE1Mi0uNzYuNDEzbC0uNDA0LjU3Yy0uMDIuMDU0LS4wMTUuMTYxLjE3Mi4xNTUuMTktLjAwNiAyLjkxOC0uMDAyIDQuMDMgMGguNDUzYy4xNzQgMCAuMTctLjE0NC4xMzItLjIwNGwtLjI1NS0uNDQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+		                                                   <span class="js-car-info-txt-drive-km ml-1">[[${dto.car_km }]]</span>
+		                                                </div>
+		                                             </div>
+		                                             
+		                                             <div class="js-container-car-info-icon pr-4 pt-2">
+		                                                <div class="d-flex align-items-center">
+		                                                   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE3Ij4KICAgIDxwYXRoIGZpbGw9IiM3ODhBQUMiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjE2IDUuMzA5Yy42OTQgMS4xMjQgMS4wNyAyLjQyOCAxLjA3IDMuODYxIDAgMy4wOS0xLjk4NCA1LjMzLTQuNTA4IDUuMzMtMS44NDEgMC0zLjM3Ni0xLjE1Ny00LjEtMy4wNzctLjE3Mi0uNDU4LS40NjItLjgyMy0xLjE1MS0uODc3LTEuNzU3LS4xNC0yLjcwMS0xLjQxMi0yLjcwMS0zLjE1MyAwLS42MTYuMTUzLTEuMTg5LjQxNS0xLjY3NCAwIDAgLjQ1My0uOTY3IDEuNDg2LTEuODIuODk1LS44NDQgMi40Mi0xLjM5OSA0LjE1MS0xLjM5OSAyLjUyIDAgNC40NzQgMS40MSA1LjMzOCAyLjgwOXptLTQuNDk5IDUuNzZjMCAuNzQ0LjYwNCAxLjM0OCAxLjM0OCAxLjM0OC43NDUgMCAxLjM0OS0uNjA0IDEuMzQ5LTEuMzQ4IDAtLjc0NS0uNjA0LTEuMzQ5LTEuMzQ5LTEuMzQ5LS43NDQgMC0xLjM0OC42MDQtMS4zNDggMS4zNDl6bTIuNDk3LTIuNzk2Yy41MjYgMCAuOTUyLS40MjYuOTUyLS45NTJzLS40MjYtLjk1Mi0uOTUyLS45NTJjLS41MjUgMC0uOTUxLjQyNi0uOTUxLjk1MnMuNDI1Ljk1Mi45NTEuOTUyek05LjkwMyA1LjE5YzAgLjUyNS0uNDI2Ljk1MS0uOTUxLjk1MS0uNTI2IDAtLjk1Mi0uNDI2LS45NTItLjk1MSAwLS41MjYuNDI2LS45NTIuOTUyLS45NTIuNTI1IDAgLjk1MS40MjYuOTUxLjk1MnptLTQuMDU0LjU2Yy4zNjggMCAuNjY3LS4zLjY2Ny0uNjY4IDAtLjM2OS0uMjk5LS42NjgtLjY2Ny0uNjY4LS4zNjkgMC0uNjY4LjMtLjY2OC42NjggMCAuMzY4LjMuNjY3LjY2OC42Njd6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==">
+		                                                   <span class="js-car-info-txt-color ml-1">[[${dto.car_col}]]</span>
+		                                                </div>
+		                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        </th:block>
+                    </div>
+                                        
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!--  
+<script type="text/javascript">
+var filterDay = $('#filterDay input:radio:checked').val()
+alert(filterDay);
+</script>
+-->
+
+<script type="text/javascript">
+
+function div_show(s,ss){
+	
+	
+   if(s == "전체"){
+	   $("#divshow1").css("display","block");
+	   $("#divshow2").css("display","none");
+	   $("#divshow3").css("display","none");
+	   $("#divshow4").css("display","none");
+	   $("#divshow5").css("display","none");
+	   $("#divshow6").css("display","none");
+   }else if(s == "SUV"){
+	   $("#divshow1").css("display","none");
+	   $("#divshow2").css("display","block");
+	   $("#divshow3").css("display","none");
+	   $("#divshow4").css("display","none");
+	   $("#divshow5").css("display","none");
+	   $("#divshow6").css("display","none");
+   }else if(s == "소형"){
+	   $("#divshow1").css("display","none");
+	   $("#divshow2").css("display","none");
+	   $("#divshow3").css("display","block");
+	   $("#divshow4").css("display","none");
+	   $("#divshow5").css("display","none");
+	   $("#divshow6").css("display","none");
+   }else if(s == "준중형"){
+	   $("#divshow1").css("display","none");
+	   $("#divshow2").css("display","none");
+	   $("#divshow3").css("display","none");
+	   $("#divshow4").css("display","block");
+	   $("#divshow5").css("display","none");
+	   $("#divshow6").css("display","none");
+   }else if(s == "세단"){
+	   $("#divshow1").css("display","none");
+	   $("#divshow2").css("display","none");
+	   $("#divshow3").css("display","none");
+	   $("#divshow4").css("display","none");
+	   $("#divshow5").css("display","block");
+	   $("#divshow6").css("display","none");
+   }else if(s == "수입"){
+	   $("#divshow1").css("display","none");
+	   $("#divshow2").css("display","none");
+	   $("#divshow3").css("display","none");
+	   $("#divshow4").css("display","none");
+	   $("#divshow5").css("display","none");
+	   $("#divshow6").css("display","block");
+   }
+   
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+

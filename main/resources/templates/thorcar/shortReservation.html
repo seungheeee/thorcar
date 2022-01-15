@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+
+<title>결제정보|thorcar</title>
+
+</head>
+<body>
+
+<header th:replace="thorcar/header::headerFragment"></header>
+   
+   		<div class="pc-mobile-header-container">
+			<div class="pc-header space-2 text-center dc-none dc-lg-block">
+				<div class="container">
+					<h2 class="text-grey-3 underline-bg dc-inline-block">마이 페이지</h2>
+					<br>
+					<p class="text-grey-5 mb-0">내 정보</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container py-5">
+				<div class="row">
+					<div class="col-md-4 text-left dc-block">
+						<div class="sticky-md sticky-pc-menu-top">
+							<section class="carmore-section p-0 bg-white cm-rounded bg-shadow mb-3">
+							<div class="pt-5 pb-3 px-3">
+								<div class="text-center" th:unless="${session.loginDTO== null}">
+									<div id="js_mypage_user_profile">
+										<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" style="font-size: 35px !important;" type="button" data-loc="main_header" th:text="|${session.loginDTO.id}|"></button>
+									</div>
+								</div>
+								<div th:if="${session.loginDTO== null}">
+									<div class="text-center">
+										<div style="font-size: 24px">
+											<img class="js_smti_img_user_grade_icon vertical-sub dc-none">
+											<span class="js-mypage-txt-nickname text-18-b wordbreak-breakword ml-1">&nbsp;</span>
+										</div>
+										<div class="js-mypage-txt-user-id color-grey-5 text-12 mb-0 wordbreak-keepall">&nbsp;</div>
+									</div>
+								</div>
+								<div th:if="${session.loginDTO== null}">
+									<div class="pt-2 text-center">
+										<div class="color-grey-3 text-18-b wordbreak-breakword">로그인 해주세요</div>
+									</div>
+								</div>
+								<div th:unless="${session.loginDTO== null}">
+									<div class="pt-2 text-center">
+										<div class="color-grey-3 text-18-b wordbreak-breakword">반가워요!</div>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div th:if="${session.loginDTO== null}">
+									<button class="js-mypage-btn-login btn btn-primary btn-block btn-pill max-w-lg-40rem mx-auto" onclick="location.href='/login.action'">로그인 하기</button>
+								</div>
+								<div class="pt-4"><hr class="p-0 m-0"></div>
+							</div>
+							<div class="pt-1">
+								<table class="w-100">
+									<colgroup>
+										<col style="width: 33%">
+										<col style="width: 33%">
+										<col style="width: 33%">
+									</colgroup>
+									<tr>
+										<td class="js-mypage-btn-point text-center clickable">
+											<div class="text-14 color-grey-4">
+												<span type="button" onclick="location.href='/qna.action'">나의 구독</span>
+												<div class="js-mypage-txt-point color-grey-3 font-weight-bold"></div>
+											</div>
+										</td>
+										<td class="js-mypage-btn-coupon text-center clickable">
+											<div class="text-14 color-grey-4">
+											<span type="button" onclick="location.href='/travel.action'">여행지 추천</span>
+												<div class="js-mypage-txt-coupon-cnt color-grey-3 font-weight-bold"></div>
+											</div>
+										</td>
+										<td class="js-mypage-btn-myreview text-center clickable">
+											<div class="text-14 color-grey-4">
+											<span type="button" onclick="location.href='/qna.action'">리뷰작성하기</span>
+												<div class="js-mypage-txt-review-cnt color-grey-3 font-weight-bold"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="py-1">
+								<div class="box-round-16-no-shadow p-3 m-3 clickable box-smti-grade-benefit dc-none" id="js_mypage_btn_grade_benefit">
+									<div class="dc-flex">
+										<div class="pl-2">
+											<div class="text-16 font-weight-bold text-white" id="js_mypage_btn_grade_benefit_title"></div>
+											<div class="text-14 text-white" id="js_mypage_btn_grade_benefit_description"></div>
+										</div>
+										<div class="text-white js-mypage-benefit-arrow mypage-benefit-arrow"></div>
+									</div>
+								</div>
+							</div>
+							</section>
+							<div class="text-left pt-5">
+								<div>
+									<h3 class="color-grey-3 text-14 list-border-bottom">이용내역</h3>
+									<div class="list-group list-group-flush">
+										<a class="js-mypage-btn-left-menu js-mypage-btn-curr-rent py-2 text-decoration-none px-0 clickable event-left-menu-doing clickable" data-type="curr_reserv" href="shortReservation.action">이용중인 차량</a>
+										<a class="js-mypage-btn-left-menu js-mypage-btn-rent-history is-only-member py-2 text-decoration-none px-0 clickable event-left-menu-doing clickable" data-type="prev_reserv" onclick="location.href='/reservation.action'">구독 정보</a>
+									</div>
+								</div>
+							</div>
+							
+								<div class="text-left pt-5">
+									<div>
+										<h3 class="color-grey-3 text-14 list-border-bottom">고객센터</h3>
+										<div class="dc-flex justify-content-between align-items-center mt-3">
+											<div class="text-14">
+												<div class="font-weight-bold color-grey-2">문의게시판</div>
+											</div>
+											<div class="center-align-container">
+												<button class="js-btn-channel-talk btn btn-outline-dark btn-sm" onclick="location.href='/qna.action'">문의하기</button>
+											</div>
+										</div>
+										<div class="dc-flex justify-content-between align-items-center mt-3">
+											<div class="text-14 font-weight-bold color-grey-2">전화문의</div>
+											<div class="dc-flex js-mypage-bnt-cs-tel js-btn-custom-cs-tel clickable">
+												<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDMwIDMwIj4KICAgIDxwYXRoIGZpbGw9IiM0OTQ5NDkiIGQ9Ik0yNCAxNi45Yy0uOS0uMS0xLjktLjQtMi43LS43LTEuMy0uNS0yLjctLjItMy43LjhsLS42LjZjLTEuOC0xLjItMy40LTIuOC00LjYtNC42bC42LS42YzEtMSAxLjMtMi40LjgtMy43LS4zLS45LS42LTEuOC0uNy0yLjctLjItMS43LTEuNy0zLTMuNC0zSDYuNWMtMSAwLTEuOS40LTIuNiAxLjEtLjYuNy0xIDEuNy0uOSAyLjcuNCAzLjUgMS42IDYuOSAzLjUgOS45IDEuNyAyLjcgNC4xIDUuMSA2LjggNi44IDIuOSAxLjkgNi4zIDMuMSA5LjggMy41aC4zYy45IDAgMS43LS4zIDIuNC0uOS43LS43IDEuMS0xLjYgMS4xLTIuNnYtMy4yYy4xLTEuNy0xLjEtMy4yLTIuOS0zLjR6bS0xMi44LTYuNGwtLjguOGMtLjguOC0uOSAyLS4zIDMgMS40IDIuMyAzLjQgNC4yIDUuNyA1LjcgMSAuNiAyLjIuNSAzLS4zbC44LS44Yy4yLS4yLjYtLjMuOS0uMiAxLjEuNCAyLjIuNyAzLjMuOC40LjEuNy40LjcuOHYzLjNjMCAuMi0uMS41LS4zLjYtLjIuMi0uNC4yLS42LjItMy4xLS4zLTYtMS40LTguNi0zLjEtMi41LTEuNi00LjUtMy42LTYtNi0xLjktMi43LTMtNS43LTMuNC04LjggMC0uMi4xLS40LjItLjYuMi0uMi40LS4zLjctLjNoMy4yYy40IDAgLjguMy44LjcuMiAxLjIuNSAyLjMuOCAzLjQuMi4zLjEuNi0uMS44eiIvPgo8L3N2Zz4K">
+												<div class="js-txt-custom-cs-tel text-24 font-weight-bold color-grey-3">010-4045-2764</div>
+											</div>
+										</div>
+										<div class="text-14 color-grey-5 mt-5">매일(공휴일 포함) 오전 9시 ~ 오후 6시<br>점심시간 오후 12시30분 ~ 1시30분 (1시간)</div>
+									</div>
+								</div>
+						</div>
+					</div>	
+ 		<div class="col-md-8">		
+			<div class="mypage-section" id="mypage_section_mypage">
+				<div class="container">
+                     <h3>결제 정보</h3>
+                 </div>
+            </div>
+            
+           <th:block th:if="${#lists.size(lists)}==0">
+            	<div class="col-md-8" style="margin: auto !important;">
+						
+						<div class="mypage-section" id="mypage_section_mypage" >
+							<section class="carmore-section">
+								<div class="container">
+									<div>
+										<div class="text-center py-3">
+											<h4 class="text-20">진행중인 렌트 내역이 없습니다 :)</h4>
+											<p class="color-grey-4 text-14">지금 원하는 렌트카 빌리고<br>신나게 떠나볼까요?</p>
+											<button class="js-mypage-btn-go-car-list btn btn-primary btn-block btn-pill max-w-lg-40rem mx-auto" onclick="location.href='/main.action'">구독 시작하기</button>
+										</div>
+									</div>
+									
+								</div>
+							</section>	
+						</div>
+												
+					</div>
+           </th:block>
+            
+           <th:block th:each="dto:${lists.get(lists.size() - 1)}">
+            <div class="container py-5">
+				<div class="row">
+					<div class="col-md-4 text-left dc-block">
+							<section class="carmore-section p-0 bg-white cm-rounded bg-shadow mb-3" style="width:350% !important;">
+								<div class="pt-5 pb-3 px-3">
+					               <div class="col-lg-7 cm-lg-rounded" style="max-width: 100% !important;">
+									<div class="mx-n15px mx-lg-0">
+										<section class="carmore-section px-3 pb-0 mt-lg-3">
+										<div class="col-8 offset-2 col-xl-6 offset-xl-3 px-5" style="margin-left:6% !important;">
+											<div class="mt-3 mb-xl-0">
+												<img th:src="'https://i.ibb.co/' + @{${dto.car_fileurl}} + 
+												'/' + @{${dto.car_name}}+ '.png'" style="width: 500px !important;">
+											</div> 
+										</div>
+									<div class="col-12 text-center">
+										<div class="text-10 color-grey-5 mt-2 mb-3">
+										차량 이미지는 이해를 돕기 위한 예시로, 배차 차량과 다를 수 있습니다.
+										</div>
+									</div>
+						<div id="js_vreserv_container_car_period">
+							<a class="js-cpi-container-car-type-badge badge badge-pill badge-bluegreylight color-light-purple">
+								<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS43NTQ0IDQuMDA5NzlMMTIuODIwNCA2Ljg0NzQyQzEzLjI0NyA2LjkwMzk4IDEzLjk5NzMgNy40MTcxNSAxNCA4LjM4ODMyVjExLjE3NDlDMTQgMTEuNjMyOSAxMy42NDAyIDEyLjAwMjYgMTMuMTk3NSAxMi4wMDI2SDEyLjk1OTVWMTIuNDgwOEMxMi45NTk1IDEzLjkwMyAxMS4wMDgxIDEzLjg4NjUgMTEuMDAyOCAxMi40ODA4VjEyLjAwMjZIMy45ODc4N1YxMi40ODA4QzMuOTg3ODcgMTMuODg2NSAyLjAzNjUzIDEzLjkwMyAyLjAzOTIxIDEyLjQ4MDhWMTIuMDAyNkgxLjgwMjQ4QzEuMzU5NzggMTIuMDAyNiAxIDExLjYzMTUgMSAxMS4xNzQ5VjguMzg4MzJDMC45OTg2NzEgNy40MTcxNSAxLjc0NzY0IDYuOTAzOTggMi4xNzAyNyA2Ljg0NzQyTDMuMjM2MjIgNC4wMDk3OUMzLjQzOTUxIDMuNDY2MjcgMy44NzU1MyAzLjAwNDE0IDQuNjk1MzcgM0gxMC4yOTUzQzExLjExOTEgMy4wMDQxNCAxMS41NTUxIDMuNDY2MjcgMTEuNzU0NCA0LjAwOTc5Wk0xMC44MzI5IDYuODIxMjFDMTEuMTI3MiA2LjgyMTIxIDExLjMyNjUgNi41MTIyMSAxMS4yMTE0IDYuMjMyMTZMMTAuNjQ5NyA0Ljg2MjMyTDEwLjYzNzIgNC44MzY0MUMxMC40ODA1IDQuNTA5OTkgMTAuMzg4IDQuMzE3MjggMTAuMDQ2NSA0LjMxMTlINC45NDE0N0M0LjU4NTcxIDQuMzE3NDIgNC40MjI1NSA0LjY0NTc0IDQuMzM4MjggNC44NjIzMkwzLjc3NjU1IDYuMjMyMTZDMy42NjE1MyA2LjUxMjIxIDMuODYwODEgNi44MjEyMSA0LjE1NTA0IDYuODIxMjFIMTAuODMyOVpNMTIuNjM1NiA4LjgzMTQzQzEyLjYzNTYgOS4zMjc5NyAxMi4yMzg4IDkuNzMwNDkgMTEuNzQ5MiA5LjczMDQ5QzExLjI1OTcgOS43MzA0OSAxMC44NjI5IDkuMzI3OTcgMTAuODYyOSA4LjgzMTQzQzEwLjg2MjkgOC4zMzQ5IDExLjI1OTcgNy45MzIzNyAxMS43NDkyIDcuOTMyMzdDMTIuMjM4OCA3LjkzMjM3IDEyLjYzNTYgOC4zMzQ5IDEyLjYzNTYgOC44MzE0M1pNMy4xNzM1OSA5LjczMDQ5QzMuNjYzMTIgOS43MzA0OSA0LjA1OTk1IDkuMzI3OTcgNC4wNTk5NSA4LjgzMTQzQzQuMDU5OTUgOC4zMzQ5IDMuNjYzMTIgNy45MzIzNyAzLjE3MzU5IDcuOTMyMzdDMi42ODQwNyA3LjkzMjM3IDIuMjg3MjMgOC4zMzQ5IDIuMjg3MjMgOC44MzE0M0MyLjI4NzIzIDkuMzI3OTcgMi42ODQwNyA5LjczMDQ5IDMuMTczNTkgOS43MzA0OVoiIGZpbGw9IiM4NTkyQUIiLz4KPC9zdmc+Cg==">
+								<span class="js-cpi-txt-car-type ml-1">
+									[[${dto.car_make}]]
+								</span>
+							</a>
+						<div class="js-cpi-txt-car-model text-20 font-weight-bold color-grey-3 mb-0">[[${dto.car_name }]]</div>
+							<div class="js-cpi-container-branch-info pt-1">
+								<div class="dc-flex align-items-center"></div>
+							</div>
+						<hr class="mb-2">
+							<div class="js-cpi-container-rent-period" style="height: 80px;">
+								<div class="dc-flex justify-content-around align-items-center">
+									<div class="text-center">
+										<div class="text-12 color-grey-5">대여일</div>
+										<div class="text-16-b color-grey-3">
+											<span class="txt-rent-start-date" th:text="${dto.inDate}"></span>
+										</div>
+									</div>
+									<span class="badge badge-pill badge-bluegreylight color-light-purple text-12 font-weight-normal">
+										<span class="txt-rent-period-time" th:if="${dto.staydate==null}">
+										<span class="txt-rent-period-day-unit">1</span>
+										</span>
+										<span class="txt-rent-period-time" th:unless="${dto.staydate==null}" th:text="${dto.staydate}"></span>
+										일
+									</span>
+									<div class="text-center">
+										<div class="text-12 color-grey-5">반납일</div>
+									<div class="text-16-b color-grey-3">
+										<span class="txt-rent-end-date" th:text="${dto.outDate}"></span>
+									</div>
+									</div>
+									</div>
+								</div>
+							</div>
+	 					
+	 					</section>	
+	 				</div>
+				</div>
+                         </div>
+                   </div>
+             </div>
+          				</div>
+          				</th:block>
+            
+				</div> 
+			</div>
+		</div>
+	</div>
+</body>
+</html>

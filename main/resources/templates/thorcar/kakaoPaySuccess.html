@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+
+<title>결제 정보</title>
+
+</head>
+<body>
+<header th:replace="thorcar/header::headerFragment"></header>
+   <div class="pc-mobile-header-container">
+      <div class="pc-header space-2 text-center dc-none dc-lg-block">
+         <div class="container">
+            <h2 class="text-grey-3 underline-bg dc-inline-block">카&nbsp;카&nbsp;오&nbsp;페&nbsp;이</h2>
+         </div>
+         <div class="container">
+            <h2 class="text-grey-3 underline-bg dc-inline-block">결&nbsp;제&nbsp;가&nbsp;&nbsp;정&nbsp;상&nbsp;적&nbsp;으&nbsp;로&nbsp;&nbsp;완&nbsp;료&nbsp;되&nbsp;었&nbsp;습&nbsp;니&nbsp;다</h2>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-5 dc-none dc-lg-block" style="margin: auto; margin-top: 30px;">
+      <div class="cm-rounded bg-shadow bg-white sticky mx-n15px mx-lg-0 sticky-pc-menu-top">
+         <section class="mt-3 p-3">
+            <div class="container">
+               <div class="row section-title">
+                  <div class="col">
+                     <h3 class="h6 mb-4 border-bottom-thick pb-2">결제 정보</h3>
+                  </div>
+               </div>
+                <div class="row">
+                   <div class="col">
+                      <ul class="list-group list-group-flush" id="vreserv_container_pay_info_desc">
+                         
+                         <li class="bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall text-14">
+                           성함
+                           <div class="text-right text-20">
+                              <span class="vreserv-txt-total-price" th:text="${session.loginDTO.name}"></span>
+                           </div>
+                        </li>
+                        <li class="bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall text-14">
+                           총 결제금액
+                           <div class="text-right text-20">
+                              <span class="vreserv-txt-total-price" th:text="${dto.total_amount}"></span>
+                           </div>
+                        </li>
+                        <li class="bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall text-14">
+                           결제번호
+                           <div class="text-right text-20">
+                              <span class="vreserv-txt-total-price" th:text="${info.sid}"></span>
+                           </div>
+                        </li>
+                        
+                        <li class="bg-white list-group-item px-0">
+                              <button class="js-vcd-btn-go-reservation btn btn-primary btn-block btn-lg mb-2 btn-border-10 mt-3" style="height: 50px !important;" onclick="location.href='/travel.action'">
+                                 <div class="text-18 font-weight-bold text-white line-height-1">
+                                 <span class="js-vcd-txt-expected-price" id="subprice3">여행지 검색 바로가기</span>
+                                 </div>
+                              </button>
+                        </li>
+                            </ul>
+                         </div>
+                      </div>
+                   </div>
+                </section>
+             </div>
+          </div>
+   
+   <!-- 나중에 삭제할부분 -->
+   <div class="container py-5">
+      <div class="row">
+         <div class="col-md-8">
+            <div class="mypage-section" id="mypage_section_mypage" style="">
+               
+               <section class="carmore-section">
+                  <div class="container">
+                     <h3>대여 차량 정보</h3>
+                        아이디 : [[${session.loginDTO.id}]]
+                        결제일시:     [[${info.approved_at}]]<br/>
+                        결제번호:     [[${info.sid}]]<br/>
+                        주문번호:     [[${info.partner_order_id}]]<br/>
+                        상품명:         [[${info.item_name}]]<br/>
+                        상품수량:     [[${info.quantity}]]<br/>
+                        결제금액:     [[${info.amount}]]<br/>
+                        결제방법:     [[${info.payment_method_type}]]<br/>
+                  </div>
+               </section>      
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+
+</body>
+</html>

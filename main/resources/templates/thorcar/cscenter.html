@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ThorCar</title>
+
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?8341415e5d1784eb0583"/>
+<link  rel="stylesheet" type="text/css" href="https://carmore.kr/home/container-view-mypage.html?tab=help"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+<style>
+    .menu a{cursor:pointer;}
+    .menu .hide{display:none;}
+    #ab{display:block;}
+</style>
+
+<script>
+    // html dom 이 다 로딩된 후 실행된다.
+    $(document).ready(function(){
+        // memu 클래스 바로 하위에 있는 a 태그를 클릭했을때
+        $(".menu>a").click(function(){
+            // 현재 클릭한 태그가 a 이기 때문에
+            // a 옆의 태그중 ul 태그에 hide 클래스 태그를 넣던지 빼던지 한다.
+            $(this).next("ul").toggleClass("hide");
+        });
+    });
+    
+    function changeAB(){
+    	con = document.getElementById("ab");
+    	con1 = document.getElementById("ab1");
+    	
+    	if(con.style.display=='none'){
+    		con.style.display = 'block';
+    	}else{
+    		con.style.display = 'none';
+    	}
+    }
+</script>
+
+
+
+
+
+</head>
+<body>
+
+
+<main id="content" role="main">
+
+
+		<!-- 맨위상단메뉴고정 -->
+	<div class="main-contents">
+		<nav class="navbar navbar-expand-lg navbar-light bg-white dc-none dc-lg-block border-bottom fixed-top header-pc" id="container_pc_navbar" style="display: flex;">
+			<div class="container">
+				<a class="js-btn-navbar-brand navbar-brand clickable" style="font-size: initial;" href="main.action">
+					<img class="js-img-header-logo h-100" src="logoimages/logo.png" style="height: 78px !important;"></a>
+						
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mr-auto">
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="0" href="/main.action">홈</a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="1">단기렌트<span class="sr-only"></span></a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="2">월구독</a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="3" href="/searchCar.action">차량검색</a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="3" href="/charging.action">전기차충전소</a>
+								</li>
+								<li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="4" href="/travel.action">여행지검색</a></li>
+								
+								<li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="5" href="/cscenter.action">고객센터</a></li>
+								<li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="6" href="/mypage.action">마이페이지</a></li>
+							</ul>
+							
+							<div th:if="${session.loginDTO== null}">
+    							
+    							<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/login.action'">로그인</button>
+								<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/signup.action'">회원가입</button>
+    
+							</div>
+							<div th:unless="${session.loginDTO== null}">
+    							
+    							
+    							<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" 
+    							type="button"  th:text="|${session.loginDTO.id} 님 반가워요|"></button>
+    							
+    							<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/logout.action'">로그아웃</button>
+    							
+    			
+							</div>
+						</div>
+			</div>
+		</nav>
+		<div class="pc-mobile-header-container">
+			<div class="pc-header space-2 text-center dc-none dc-lg-block">
+				<div class="container">
+					<h2 class="text-grey-3 underline-bg dc-inline-block">자주묻는 질문</h2>
+					<br>
+					<button style="color: black;" class="text-grey-5 mb-0" type="button" onclick="location.href='/qna.action'">문의글 남기기</button>
+				</div>
+			</div>
+		</div>
+		<div class="container py-5">
+				<div class="row">
+					
+					<div class="col-md-4 text-left dc-block">
+						<div class="sticky-md sticky-pc-menu-top">
+							<section class="carmore-section p-0 bg-white cm-rounded bg-shadow mb-3">
+							<div class="pt-5 pb-3 px-3">
+								
+								<div class="text-center" th:unless="${session.loginDTO== null}">
+									<div id="js_mypage_user_profile">
+										<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" style="font-size: 35px !important;" type="button" data-loc="main_header" th:text="|${session.loginDTO.id}|"></button>
+									</div>
+								</div>
+								
+								<div th:if="${session.loginDTO== null}">
+									<div class="text-center">
+										<div style="font-size: 24px">
+											<img class="js_smti_img_user_grade_icon vertical-sub dc-none">
+											<span class="js-mypage-txt-nickname text-18-b wordbreak-breakword ml-1">&nbsp;</span>
+										</div>
+										<div class="js-mypage-txt-user-id color-grey-5 text-12 mb-0 wordbreak-keepall">&nbsp;</div>
+									</div>
+								</div>
+								
+								<div th:if="${session.loginDTO== null}">
+									<div class="pt-2 text-center">
+										<div class="color-grey-3 text-18-b wordbreak-breakword">로그인 해주세요</div>
+									</div>
+								</div>
+								
+								<div th:unless="${session.loginDTO== null}">
+									<div class="pt-2 text-center">
+										<div class="color-grey-3 text-18-b wordbreak-breakword">반가워요!</div>
+									</div>
+								</div>
+								
+								
+							</div>
+							<div>
+								<div th:if="${session.loginDTO== null}">
+									<button class="js-mypage-btn-login btn btn-primary btn-block btn-pill max-w-lg-40rem mx-auto" onclick="location.href='/login.action'">로그인 하기</button>
+								</div>
+								<div class="pt-4"><hr class="p-0 m-0"></div>
+							</div>
+							<div class="pt-1">
+								<table class="w-100">
+									<colgroup>
+										<col style="width: 33%">
+										<col style="width: 33%">
+										<col style="width: 33%">
+									</colgroup>
+									<tr>
+										<td class="js-mypage-btn-point text-center clickable">
+											<div class="text-14 color-grey-4">
+												<span type="button" onclick="location.href='/qna.action'">나의 구독</span>
+												<div class="js-mypage-txt-point color-grey-3 font-weight-bold"></div>
+											</div>
+										</td>
+										<td class="js-mypage-btn-coupon text-center clickable">
+											<div class="text-14 color-grey-4">
+											<span type="button" onclick="location.href='/travel.action'">여행지 추천</span>
+												<div class="js-mypage-txt-coupon-cnt color-grey-3 font-weight-bold"></div>
+											</div>
+										</td>
+										<td class="js-mypage-btn-myreview text-center clickable">
+											<div class="text-14 color-grey-4">
+											<span type="button" onclick="location.href='/qna.action'">리뷰작성하기</span>
+												<div class="js-mypage-txt-review-cnt color-grey-3 font-weight-bold"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="py-1">
+								<div class="box-round-16-no-shadow p-3 m-3 clickable box-smti-grade-benefit dc-none" id="js_mypage_btn_grade_benefit">
+									<div class="dc-flex">
+										<div class="pl-2">
+											<div class="text-16 font-weight-bold text-white" id="js_mypage_btn_grade_benefit_title"></div>
+											<div class="text-14 text-white" id="js_mypage_btn_grade_benefit_description"></div>
+										</div>
+										<div class="text-white js-mypage-benefit-arrow mypage-benefit-arrow">></div>
+									</div>
+								</div>
+							</div>
+							</section>
+							<div class="text-left pt-5">
+								<div>
+									<h3 class="color-grey-3 text-14 list-border-bottom">이용내역</h3>
+									<div class="list-group list-group-flush">
+										<a class="js-mypage-btn-left-menu js-mypage-btn-curr-rent py-2 text-decoration-none px-0 clickable event-left-menu-doing clickable" data-type="curr_reserv">이용중인 차량</a>
+										<a class="js-mypage-btn-left-menu js-mypage-btn-rent-history is-only-member py-2 text-decoration-none px-0 clickable event-left-menu-doing clickable" data-type="prev_reserv">예약 조회</a>
+									</div>
+								</div>
+							</div>
+							
+								<div class="text-left pt-5">
+									<div>
+										<h3 class="color-grey-3 text-14 list-border-bottom">고객센터</h3>
+										<div class="dc-flex justify-content-between align-items-center mt-3">
+											<div class="text-14">
+												<div class="font-weight-bold color-grey-2">문의게시판</div>
+											</div>
+											<div class="center-align-container">
+												<button class="js-btn-channel-talk btn btn-outline-dark btn-sm" onclick="location.href='/qna.action'">문의하기</button>
+											</div>
+										</div>
+										<div class="dc-flex justify-content-between align-items-center mt-3">
+											<div class="text-14 font-weight-bold color-grey-2">전화문의</div>
+											<div class="dc-flex js-mypage-bnt-cs-tel js-btn-custom-cs-tel clickable">
+												<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDMwIDMwIj4KICAgIDxwYXRoIGZpbGw9IiM0OTQ5NDkiIGQ9Ik0yNCAxNi45Yy0uOS0uMS0xLjktLjQtMi43LS43LTEuMy0uNS0yLjctLjItMy43LjhsLS42LjZjLTEuOC0xLjItMy40LTIuOC00LjYtNC42bC42LS42YzEtMSAxLjMtMi40LjgtMy43LS4zLS45LS42LTEuOC0uNy0yLjctLjItMS43LTEuNy0zLTMuNC0zSDYuNWMtMSAwLTEuOS40LTIuNiAxLjEtLjYuNy0xIDEuNy0uOSAyLjcuNCAzLjUgMS42IDYuOSAzLjUgOS45IDEuNyAyLjcgNC4xIDUuMSA2LjggNi44IDIuOSAxLjkgNi4zIDMuMSA5LjggMy41aC4zYy45IDAgMS43LS4zIDIuNC0uOS43LS43IDEuMS0xLjYgMS4xLTIuNnYtMy4yYy4xLTEuNy0xLjEtMy4yLTIuOS0zLjR6bS0xMi44LTYuNGwtLjguOGMtLjguOC0uOSAyLS4zIDMgMS40IDIuMyAzLjQgNC4yIDUuNyA1LjcgMSAuNiAyLjIuNSAzLS4zbC44LS44Yy4yLS4yLjYtLjMuOS0uMiAxLjEuNCAyLjIuNyAzLjMuOC40LjEuNy40LjcuOHYzLjNjMCAuMi0uMS41LS4zLjYtLjIuMi0uNC4yLS42LjItMy4xLS4zLTYtMS40LTguNi0zLjEtMi41LTEuNi00LjUtMy42LTYtNi0xLjktMi43LTMtNS43LTMuNC04LjggMC0uMi4xLS40LjItLjYuMi0uMi40LS4zLjctLjNoMy4yYy40IDAgLjguMy44LjcuMiAxLjIuNSAyLjMuOCAzLjQuMi4zLjEuNi0uMS44eiIvPgo8L3N2Zz4K">
+												<div class="js-txt-custom-cs-tel text-24 font-weight-bold color-grey-3">010-4045-2764</div>
+											</div>
+										</div>
+										<div class="text-14 color-grey-5 mt-5">매일(공휴일 포함) 오전 9시 ~ 오후 6시<br>점심시간 오후 12시30분 ~ 1시30분 (1시간)</div>
+									</div>
+								</div>
+						</div>
+					
+					</div>
+
+            		<div class="container-help-contents">
+            			<ul class="list-group list-group-flush" id="js_help_container_contents">
+            				<li class="js-container-help-item color-grey-2 list-group-item list-group-item-lightb py-0" id="js_help_section_container_22_4">
+            				<label class="js-btn-help-item-title color-grey-2 mb-0 py-3 py-lg-4 clickable dc-block" id="js_help_item_templete_label" data-show="1">
+            				<div class="text-10 color-grey-5 dc-none" id="js_help_item_templete_txt_category"></div>
+            				<div class="font-weight-bold" id="js_help_item_templete_txt_title">
+            
+           
+           
+            <div class="container-help-contents">
+            <div class="mt-6"><div id="section_help_category">
+            
+            <hr>
+            
+            <ul class="nav nav-tabs">
+			      <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#nav1" aria-selected="true">예약/취소</a></li>
+			      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav2" aria-selected="false">이용방법</a></li>
+			      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav3" aria-selected="false">보험/사고</a></li>
+			      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav4" aria-selected="false">제주도</a></li>
+			      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav5" aria-selected="false">전기차</a></li>
+			      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav6" aria-selected="false">월렌트</a></li>
+			</ul>
+            
+            
+            <!-- Q&A 구역 -->
+           
+            <div class="mx-n15px">
+            <ul class="list-group list-group-flush" id="js_help_container_contents"> 
+            
+            <div class="tab-content">
+				  <div class="tab-pane fade show active" id="nav1">
+				    <p>
+				    	<ul>
+					        <li class="menu">
+					            <a>Q1. 예약하려면 회원가입이 필요한가요?"</a>
+					            <ul class="hide">
+					                <li>카모아는 카카오 간편로그인 또는 애플 아이디로 이용하실 수 있습니다.</li>
+					            </ul>
+					        </li>
+ 							<hr>
+ 						
+						    <li class="menu">
+						            <a>Q2. 예약 시 보험료도 함께 결제가 되나요?</a>
+						            <ul class="hide">
+						               <li> 네, 예약 시 차량대여료와 보험료를 한번에 결제합니다.
+			            				<br><hr>★ 예약 시 하단 최종결제금액에서 대여료와 보험료를 확인해주세요!</li>
+							               
+							       </ul>
+						    </li>
+						    <hr>
+					    
+					    
+						    <li class="menu">
+					            <a>Q3. 앱/웹에서 예약하면 예약 확정되는 건가요?</a>
+					            <ul class="hide">
+					                <li>네, 결제와 동시에 예약이 확정됩니다. 카모아는 실시간 예약서비스를 제공합니다.
+					            	<br><hr>★ 예약완료 후 내용을 확인할 수 있는 예약문자가 전송됩니다. 
+					            	<br>&nbsp;예약 문자를 못받았을 경우에는 카카오톡 카모아 또는 전화 문의 부탁드립니다.
+					            	</li>
+					            </ul>
+					        </li>
+					        <hr>
+				        
+				        <li class="menu">
+				            <a>Q4. 한 아이디로 여러 대를 예약할 수 있나요?</a>
+				            <ul class="hide">
+				                <li>네, 여러 대 예약 가능합니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q5. 예약자와 운전자가 동일해야 하나요?</a>
+				            <ul class="hide">
+				                <li>아니요, 다르셔도 무방합니다.<br>단, 예약하실 때 운전자 정보 기입란에 <strong>운전하시는 분의 정보를 정확히 기입</strong>해주세요. 
+				                <br>차량 대여 시, <strong>운전자 분이 면허증 소지하고 
+				                <br>직접 현장에서 계약서 작성하셔야 자차보험 적용이 가능</strong>하시니 이 점 참고 바랍니다.
+				                <br><hr>★ 운전자 본인 이외에는 상담이 제한될 수 있습니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q6. 운전자 추가가 가능한가요?</a>
+				            <ul class="hide">
+				                <li>네, <strong>제2운전자까지 가능</strong>합니다. 차량 대여 시, <strong>면허증 지참하여 동행</strong>하실 경우 운전자 추가가 가능합니다.
+				                <hr>★단, 제2운전자&nbsp;분도&nbsp; 차량 대여할 때&nbsp; 계약서 작성 시 운전자 등록과 서명을 하셔야 
+				                <br>자차보험 적용이 가능하니 이 점 참고 바랍니다. (<strong>면허증 필수지참</strong>)</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				         <li class="menu">
+				            <a>Q7. 타지역 반납은 가능한가요?"</a>
+				            <ul class="hide">
+				                <li>반납 가능 지역은 예약하실 때 <strong>차량 배달 서비스 부분</strong>에서 확인 가능합니다. 
+				                <br>업체별로 상이하기 때문에 꼭 확인 후 예약 진행해주세요.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q8. 예약연장이 가능한가요?</a>
+				            <ul class="hide">
+				                <li>예약한 렌트카 업체에 직접 문의 및 협의 후&nbsp;현장 결제해주시면 됩니다. 
+				                <br>예약 이후 카모아에서 발송된 카카오톡 예약 안내 내역에서 업체 전화번호를 확인하실 수 있습니다.
+				                <br><hr>★ 반납이 늦어질 경우, 업체가 임의로 차량을 회수할 수 있습니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q9. 예약한 차량과 다른 차량이 배차되는 경우도 있나요?</a>
+				            <ul class="hide">
+				                <li>카모아는 실시간 예약이기 때문에 대부분 예약한 차량 그대로 받아보실 수 있으나 
+				                <br>예약한 차량이 사고/고장으로 대여할 수 없는 상황일 때는 
+				                <br>동일 차종 혹은 다른 차량으로 변경 될 수 있습니다.
+				                <br><hr>★ 부득이하게 다른 차량으로 변경되는 경우에는 렌트카 업체에서 미리 안내해 드립니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q10. 예약 시 적립금과 쿠폰은 어떻게 적용하나요?</a>
+				            <ul class="hide">
+				                <li>예약화면 하단 할인정보에 쿠폰과 적립금을 사용할 수 있습니다.
+				                <br><hr>★ <strong>쿠폰은 중복사용 불가</strong>합니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q11. 예약변경은 가능한지 궁금합니다.</a>
+				            <ul class="hide">
+				                <li>예약 시간, 딜리버리 장소 변경 등을 희망하실 경우, <strong>예약을 취소하신 후 다시 예약</strong>해주셔야 합니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q12. 매출전표/사용내역/영수증 등을 출력하고 싶습니다.</a>
+				            <ul class="hide">
+				                <li>네, 가능합니다. 카카오톡 카모아로 문의남겨주시면 처리해드리겠습니다.
+				                <br><hr>★ 네이버페이 카드로 결제하셨을 경우 <strong>네이버페이 홈페이지에서 영수증 발급이 가능</strong>합니다.
+				                <br>네이버 포인트 또는 계좌이체로 결제하신 경우에는 영수증 발급이 불가하며, 
+				                <br>지출증빙용 거래명세서가 필요하시면 카모아 고객센터로 연락해 주세요.
+				                <br>(네이버페이 로그인 &gt; 결제 내역 &gt; 주문한 상품명 &gt; 주문 상세정보 &gt; 영수증 발급(우측 상단))</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q13. 현금영수증 또는 세금계산서 발행이 가능한가요?</a>
+				            <ul class="hide">
+				                <li>>카모아는 통신판매중개업이라 현금영수증 또는 세금계산서 발행이 어렵습니다.
+				                <br>법인인 경우, 법인 카드로 결제하시면 카드 영수증은 메일로 보내드릴 수 있습니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q14. 예약 취소 방법이 궁금합니다.</a>
+				            <ul class="hide">
+				                <li><strong>마이페이지(My) 에서 취소 가능</strong>합니다.
+				                <br>(마이페이지(My) &gt; 대여차량 정보 &gt; 상세내역 보기 &gt; 하단으로 이동 &gt; 예약취소)
+				                <br><hr>★ 단, 결제 이후 예약취소 수수료가 부과될 수 있으니 유의하시기 바랍니다.
+				                <br>★ 전화 예약은 환불을 따로 진행해드려야 하기 때문에 카모아로 연락 부탁드립니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q15. 단기렌트 취소, 변경 등 환불 수수료는 있나요?</a>
+				            <ul class="hide">
+				                <li><span style="font-size: 18px;"><span style="font-size: 18px;"><strong>&lt;국내 단기렌트 취소 정책&gt;<br></strong>
+            <span style="font-size: 14px;">※ 결제 후 한시간 이내 예약취소는 수수료가 없습니다.<br></span></span></span><hr>
+            <span style="font-size: 18px;"><strong>[성수기 취소 수수료]</strong></span><br>1. 대여시간 72-48시간 이내 - 90% 환불<br>2. 대여시간 47-24시간 이내 - 80% 환불<br>3. 대여시간 23시간 이내 - 70% 환불<br>4. 노쇼 - 환불 불가<br><strong>* 예약하신 기간이 카모아 성수기 기간 중 하루라도 포함되면 성수기 수수료가 발생합니다.</strong><br><hr>
+            <span style="font-size: 18px;"><strong>[비수기 취소 수수료]</strong></span><br>1. 대여시간 24시간 이전에는 100%환불<br>2. 대여시간 24시간 이내에는 90% 환불<br>3. 노쇼 - 환불 불가<br><hr>
+            <span style="font-size: 18px;"><strong>[카모아 성수기 기간]</strong></span><br>2020.12.23 ~ 2021.01.03<br>2021.02.10 ~ 2021.02.15<br>2021.02.26 ~ 2021.03.02<br>2021.05.01 ~ 2021.05.05<br>2021.05.15 ~ 2021.05.19<br>2021.07.14 ~ 2021.08.22<br>2021.09.17 ~ 2021.09.26<br>2021.12.24 ~ 2022.01.02<br><hr>
+            <span style="font-size: 18px;"><strong>[제주도 지역 특별약관]</strong></span><br><span style="font-size: 18px;"><span style="font-size: 18px;">
+            <span style="font-size: 14px;">1. 대여시간 72-48시간 이내 - 90% 환불</span><br>
+            <span style="font-size: 14px;">2. 대여시간 47-24시간 이내 - 80% 환불</span><br>
+            <span style="font-size: 14px;">3. 대여시간 23시간 이내 - 70% 환불<br>4. 대여 조건 미달 시 - 50% 환불</span><br>
+            <span style="font-size: 14px;">5. 노쇼 - 환불 불가<br>6.&nbsp;자연재해로 인한 결항 : 인수 당일 결항 확인서를 발급받아 카모아 카톡으로 전달 후 100% 취소.</span><strong><br></strong></span></span><hr>
+            <span style="font-size: 18px;"><strong>[울릉도 지역 특별약관]</strong></span><br>울릉도 지역은 배편으로만 이용할 수 있는 지역 특성에 따라서 취소 수수료를 아래와 같이 정합니다.<br>1. 대여시간 1주일 이전 : 100% 환불<br>2. 대여시간 1주일 이내 : 70% 환불<br>3. 대여시간 3일 이내 : 50% 환불<br>4. 대여시간 24시간 이내 취소 : 취소 불가(환불 불가)<br>5. 자연재해로 인한 결박 : 결박 확인서를 발급받아 카모아 카톡으로 전달 후 100% 취소. <br><hr>
+            <span style="font-size: 18px;"><span style="font-size: 18px;"><strong>[캠핑카 취소 수수료]<br></strong>
+            <span style="font-size: 14px;">1. 대여시간 7일 전 - 100% 환불</span><br>
+            <span style="font-size: 14px;">2. 대여시간 5일 전 - 70% 환불</span><br>
+            <span style="font-size: 14px;">3. 대여시간 3일 전 - 50% 환불</span><br>
+            <span style="font-size: 14px;">4. 대여시간 72시간 이내 - 환불 불가<br>5. 대여조건 미달 및 노쇼 - 환불 불가<br></span></span></span><hr>
+            <span style="font-size: 18px;"><strong>[대여 조건 미달 시 현장 취소 수수료]</strong></span><br>1. 비성수기 - 70% 환불<br>2. 성수기 - 50% 환불<br>- 현장 배차 시, 대여 조건에 맞지 않는 경우 위와 같은 수수료가 발생합니다.&nbsp;<br>* 여기서 대여 조건이란? : 차량 상세정보에 기입된 대여조건<br>*&nbsp;월렌트는 업체, 차량마다 대여조건 상이합니다. 꼭 확인해주세요 !</li>
+				            
+				            
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q16. 노쇼일 경우 수수료가 있나요?</a>
+				            <ul class="hide">
+				                <li><strong>[노쇼 수수료]</strong></span>
+				                <br>* 노쇼란? 대여시간 이후 사전 협의 없이 인수 장소에 나타나지 않고, 연락 두절하는 경우를 가리킵니다.
+				                <br><br>-노쇼일 경우, 환불 불가합니다.
+				                <br>-대여시간 3시간이 지난 후에는 연락이 되었거나 차량 이용을 원하더라도 차량 대여가 불가합니다.
+				                <br>-(배달 신청 고객) 예약한 대여시간에 배달장소에서 노쇼인 경우, 
+				                <br>대여시작시간이 지난 후 3시간 이내에는 업체 차고지에서 직접 인수해야 합니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q17. 결항으로 렌트카를 이용할 수 없는데 100%환불이 가능한가요?</a>
+				            <ul class="hide">
+				                <li>네, 가능합니다. <strong>결항확인서를 발급</strong>받으신 후 카카오톡 카모아 또는 홈페이지 문의로 남겨주시면, 
+				                <br>100% 환불 처리 도와드리고 있습니다.
+				                <br><br>단, 결항확인서 발급일 기준으로 5일안에 제출해주셔야 100% 환불처리가 가능합니다.
+				                <br><hr>★ 인수 당일 결항건에 한해 100% 환불 처리 가능합니다.
+				                <br>★ 환불은 카드사 영업일로 3-5일 정도 소요될 수 있습니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q18. 마이(MY)페이지에서 예약건이 확인이 안됩니다.</a>
+				            <ul class="hide">
+				                <li>전화예약으로 진행하신 경우, 비회원 예약조회로 확인해주시면 됩니다. 
+				                <br>도움이 필요하실 경우, 카모아 고객센터로 연락주세요.>
+				                <br><strong>★ 전화예약 취소는 카모아 고객센터로 연락주세요.</strong></li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q19. 업체 영업시간이 아닌 경우 대여/반납이 가능한가요?</a>
+				            <ul class="hide">
+				                <li>제주 이외의 지역인 경우, 영업시간 내에서만 대여/반납이 가능합니다.
+				                <br><br>제주도는&nbsp;영업시간 외 대여/반납 가능여부가 업체마다 상이하기 때문에 
+				                <br>예약 전에 업체 또는 카모아 고객센터로 문의 후 예약해주시기 바랍니다.
+				                <br>업체 전화번호는 원하시는 차량 클릭하시면 하단 업체 정보에서 확인 가능합니다.
+				                <br><hr>★ 업체마다 추가 요금 및 셔틀 운행 여부는 상이합니다.<br>★ 셔틀은 제주도만 해당됩니다.</li>
+				            </ul>
+				        </li>
+				        <hr>
+				        
+				        <li class="menu">
+				            <a>Q20. 단기렌트 차량 색상을 알 수 있나요?</a>
+				            <ul class="hide">
+				                <li>단기렌트 차량 색상은 랜덤으로 배차됩니다.</li>
+				            </ul>
+				        </li></p>  
+				  </div>
+				  
+				  <!-- 2. 이용방법  -->
+				  <div class="tab-pane fade" id="nav2">
+				    <p><ul>
+                    <li class="menu">
+                        <a>Q1. 주행 요금이 별도로 발생하나요?</a>
+                        <ul class="hide">
+                            <li>아니요. 렌트카는 주행요금이 별도 발생하지 않습니다.
+                           ★ 단기렌트와 월렌트 주행거리 제한이 있는 업체가 있으니 예약 전에 렌트카 업체 이름(제휴렌트카) 대여규정을 꼭 확인해주시기 바랍니다.</li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                           <a>Q2. 주행 중 기름이 부족하면 어떻게 하나요?</a>
+                           <ul class="hide">
+                              <li> <strong>연료비는 고객님 부담</strong>입니다. 주행 중 필요한 만큼 주유해서 사용하면 되고, 반납할 때 사용한 만큼만 채워놓으시면 됩니다.<br><hr><strong>★&nbsp;차량 반납 시, 대여 시의 연료량과 동일하도록 주유하여 반납해야 합니다. (차량 대여 직후 계기판 사진 촬영 권장)<br>★&nbsp;연료량이 모자를 경우, 추가 비용이 발생할 수 있으며 기존 연료량보다 많을 경우, 환불이 불가능합니다.<br>★&nbsp;반납 시 주유 불충분에 대해서는 주유소의 가격과 상이할 수 있으며, 주유서비스 비용이 함께 청구될 수 있습니다.</strong></li>
+                              
+                      </ul>
+                   </li>
+                   <hr>
+                   
+                   
+                   <li class="menu">
+                        <a>Q3. 업체 영업시간 외 대여·반납은 어떻게 하나요?</a>
+                        <ul class="hide">
+                            <li>영업 시간은 업체마다 상이하나, 보통 오전 9시부터 오후 7시까지 입니다. 차량 예약 시에 업체 영업시간을 확인하실 수 있습니다.<br><hr>★ 영업 시간 외의 대여/반납이 필요하신 경우, 카모아 고객센터를 통한 충분한 상담 후에 예약해주시기 바랍니다.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q4. 외국인도 렌트카 대여가 가능한가요?</a>
+                        <ul class="hide">
+                            <li>∨ 한국어를 이해하고 읽고 말할 수 있어야 합니다.<br>∨ 유효기간 내의 국제면허증(제네바 및 비엔나 협약국 발급)과 여권을 지참해주세요.<br>∨ 각 업체마다 대여조건이 다를 수 있으니 대여조건을 꼭 확인해주세요.<br><hr>★ 국내 면허증을 취득하였더라도 업체에 따라 국제운전면허증과 여권을 추가로 확인할 수 있으니, 예약 전 <strong>렌트카 업체로 대여 절차를 확인</strong>해주세요.<br>★ <strong>업체 대여규정</strong>을 확인해주세요. (원하시는 차량 클릭하시면 필독사항에서 확인 가능합니다.)</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q5. 예약자와 운전자가 동일해야 하나요?"</a>
+                        <ul class="hide">
+                            <li>아니요, 다르셔도 무방합니다.<br>단, 예약하실 때 운전자 정보 기입란에 <strong>운전하시는 분의 정보를 정확히 기입</strong>해주세요. <br>차량 대여 시, <strong>운전자 분이 면허증 소지하고 직접 현장에서 계약서 작성하셔야 자차보험 적용이 가능</strong>하시니 이 점 참고 바랍니다.<br><hr>★ 운전자 본인 이외에는 상담이 제한될 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q6. 면허증이 없어도 차량 대여가 가능한가요?</a>
+                        <ul class="hide">
+                            <li>∨ 한국어를 이해하고 읽고 말할 수 있어야 합니다.<br>∨ 유효기간 내의 국제면허증(제네바 및 비엔나 협약국 발급)과 여권을 지참해주세요.<br>∨ 각 업체마다 대여조건이 다를 수 있으니 대여조건을 꼭 확인해주세요.<br><hr>★ 국내 면허증을 취득하였더라도 업체에 따라 국제운전면허증과 여권을 추가로 확인할 수 있으니, 예약 전 <strong>렌트카 업체로 대여 절차를 확인</strong>해주세요.<br>★ <strong>업체 대여규정</strong>을 확인해주세요. (원하시는 차량 클릭하시면 필독사항에서 확인 가능합니다.)</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                     <li class="menu">
+                        <a>Q7. 승합차 대여조건이 따로 있나요?</a>
+                        <ul class="hide">
+                            <li>11인승 이상 승합차량은 1종보통 이상 면허가 필요합니다.<br><hr>★ 승합차량을 예약하기 전에는 면허종류를 꼭 확인해 주세요.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q8. 전연령 렌트카 대여가 가능한가요?</a>
+                        <ul class="hide">
+                            <li>11인승 이상 승합차량은 1종보통 이상 면허가 필요합니다.<br><hr>★ 승합차량을 예약하기 전에는 면허종류를 꼭 확인해 주세요.<br><hr>★ 반납이 늦어질 경우, 업체가 임의로 차량을 회수할 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q9. 예약한 차량과 다른 차량이 배차되는 경우도 있나요?</a>
+                        <ul class="hide">
+                            <li>카모아는 실시간 예약이기 때문에 대부분 예약한 차량 그대로 받아보실 수 있으나 예약한 차량이 사고/고장으로 대여할 수 없는 상황일 때는 동일 차종 혹은 다른 차량으로 변경 될 수 있습니다.<br><hr>★ 부득이하게 다른 차량으로 변경되는 경우에는 렌트카 업체에서 미리 안내해 드립니다.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q10. 사고, 고장 발생 시 어떻게 하면 되나요?</a>
+                        <ul class="hide">
+                            <li>사고 또는 고장 발생 시 대여한 렌트카 업체에 연락하셔야 합니다. 혹은, 카모아 고객센터로 연락해 주세요. 사고 직후 현장에 머물면서 차량 사진(피해차량과 가해차량 모두)을 찍어서 증거를 확보해 주세요. 그런 뒤 과실에 따라 대인/대물/자손 보험과 자차보험으로 처리가 가능합니다.&nbsp;</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q11. 타인 명의의 카드로 결제 가능한지 궁금합니다.</a>
+                        <ul class="hide">
+                            <li>네, 타인 명의의 카드로도 결제 가능합니다.<br>카드마다 결제 가능 여부가 상이할 수 있습니다.</li>
+                        </ul>
+                    </li></p>
+				  </div>
+				  
+				  <!-- 3. 보험  -->
+				  <div class="tab-pane fade" id="nav3">
+				    <p>
+				    <ul>
+                    <li class="menu">
+                        <a>Q1. 카모아 보험 정책에 대해 알려주세요.</a>
+                        <ul class="hide">
+                            <li>카모아의 모든 차량은 자동차 보험(대인배상/대물배상/자기신체사고 포함) 및 자기차량손해제도에 가입되어 있습니다.<br>대인/대물/자손에 대해 각각 면책금이 발생할 수 있으며, 배정되는 차량에 보험 내용이 조금 달라질 수 있다는 점 참고 부탁드립니다.<br><hr><span style="font-size: 18px;"><strong>대인, 대물, 자기신체사고 보험이란?</strong></span><br>대인배상, 대물배상, 자기신체사고 기준으로 자동차 보험에 규정된 보험에 의거하여 보상이 됩니다.<br><br>상해나 재물상의 손실이 배상한도를 초과 했을 경우 회원이 발생한 초과분에 대하여 지급 할 책임이 있으며,관련 보험사나 상대측 보험사와 컨택하여 처리 할 수 있습니다.<br><hr><span style="font-size: 18px;"><strong>대인, 대물, 자기신체사고 보험의 보상하는 내용</strong></span><br>1. 대인배상 : 자동차 사고로 다른 사람을 죽게 하거나 다치게 한 경우에 보상<br><br>2. 대물배상 : 자동차사고로 다른 사람의 재물을 없애거나 훼손한 경우에 보상<br><br>3. 자기신체사고 : 피보험자가 죽거나 다친 경우에 보상</li>
+                        </ul>
+                    </li>
+                   <hr>
+                   
+                   <li class="menu">
+                           <a>Q2. 자차보험이 무엇인가요?</a>
+                           <ul class="hide">
+                              <li>자차보험은 혹시 모를 사고로 인해 수리를 할 경우를 대비하여 반드시 필요합니다.<br>자차보험 미가입시, 수리비가 과다 청구될 수 있습니다.<br>&lt;예시&gt; 보험료 10,000원/ 보상한도 250만원/ 자기부담금 50만원인 경우,<br>- 1일 당 10,000원의 보험료가 발생합니다.<br>- 만약 250만원 이내의 사고가 났을 경우, 임차인(예약인)은 최대 50만원을 부담하게 됩니다.<br>- 250만원 이상의 사고가 났을 경우, 임차인(예약인)은 50+a만원을 부담하게 됩니다.<br><br>★ 휴차보상료는 자차보험 면책금과 별도로 발생합니다.</li>
+                      </ul>
+                   </li>
+                   <hr>
+                   
+                   
+                   <li class="menu">
+                        <a>Q3. 자차보험 종류는 어떻게 되나요?</a>
+                        <ul class="hide">
+                            <li>자차보험의 종류는 일반자차, 완전(고급)자차, 슈퍼자차로 총 3가지입니다.<br><hr>일반자차 : 보상한도 내에서 면책금이 있는 보험<br>완전(고급)자차 : 보상한도 내에서 면책금이 없는 보험<br>슈퍼자차 : 보상한도 무한, 면책금이 없는 보험<br><hr><strong>단독사고 시에는 적용이 어려울 수 있으며, 업체마다 보험 규정이 상이</strong>합니다.<br>문의사항이 있으신 경우 카모아와 충분한 상담 후 예약 진행해주세요.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q4. 자차보험을 꼭 선택해야 하나요?</a>
+                        <ul class="hide">
+                            <li> 카모아는 고객의 손해를 예방하고자 자차보험을 의무가입하고 있으며 자차보험 종류에 따라 보상한도와 자기부담금(면책금)이 다르며, 차량 예약시 고객이 직접 선택할 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q5. 자차보험을 업그레이드 하고 싶어요.</a>
+                        <ul class="hide">
+                            <li>카모아는 고객의 손해를 예방하고자 자차보험을 의무가입하고 있으며 자차보험 종류에 따라 보상한도와 자기부담금(면책금)이 다르며, 차량 예약시 고객이 직접 선택할 수 있습니다.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q6. 자차보험은 사고날 때마다 보험처리가 가능한가요?</a>
+                        <ul class="hide">
+                            <li>자차보험은 1회 소멸성으로 중복 보장이 되지 않습니다.<br><hr>★ 차량 운행 중 사고가 발생한다면 대여한 렌트카 업체로 꼭 연락하셔서 사고 혹은 고장 접수를 해주세요.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                     <li class="menu">
+                        <a>Q7. 사고가 발생하면 처리 과정이 어떻게 되나요?</a>
+                        <ul class="hide">
+                            <li>자차보험은 1회 소멸성으로 사고가 나면 반납을 해주셔야 합니다.<br>또한 사고 처리가 완료될 때까지는 차량 예약이 불가합니다.<br>사고 발생했던 렌트사에서 사고 처리가 모두 완료되었을 경우, 예약이 가능합니다.<br><hr>★ 사고로 인한 조기반납 시, 환불 불가합니다</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q8. 과거 사고 이력이 있는 경우에도, 차량 예약이 가능한가요?</a>
+                        <ul class="hide">
+                            <li>사고 처리가 완료될 때까지는 차량 예약이 불가합니다.<br>사고 발생했던 렌트사에서 사고 처리가 모두 완료되었을 경우, 예약이 가능합니다</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q9. 운전자보험을 통해 차량손실비용 처리가 가능한지 알려주세요.</a>
+                        <ul class="hide">
+                            <li>일부 운전자보험의 특약의 경우 보상이 가능하나 적용기준이 보험사별 각각 상이하므로 자세한 사항은 가입하신 보험사로 연락하여 문의하시기 바랍니다</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q10. 교통위반하면 어떻게 되나요?</a>
+                        <ul class="hide">
+                            <li>교통 위반 시 해당 렌트카 업체에서 당시 대여기간 대상자에게 벌금 및 위반과태료를 부과하고 있습니다.</li>
+                        </ul>
+                    </li>
+                    <hr>
+                    
+                    <li class="menu">
+                        <a>Q11. 왜 전연령 렌트카 예약은 안되나요?</a>
+                        <ul class="hide">
+                            <li>전연령 렌트카란?</strong></span><br>전연령 렌트카란 만 21세 미만의 사람들도 이용이 가능한 렌트카를 말합니다. <br><br>전연령 렌트카에 적용되는 종합보험은 전연령을 커버하는 보험이다 보니 보험료가 높습니다. 여기에 자차보험까지 가입한다면 그 보험료가 더 크게 인상되기 때문에 임의보험인 자차보험을 따로 가입시켜주지 않습니다.<br><br> 자차보험에 가입하지 않고 렌트카를 이용하다 사고가 나면, 차량에 발생한 피해는 오롯이 렌트한 사람의 부담이 됩니다. 즉, 작은 사고에도 수리비와 휴차비 등의 명목으로 업체에서 높은 금액의 합의금 요구가 가능해져서 아무리 운전에 자신 있다 해도, 벽에 살짝 긁은 정도의 사고에도 천 만원 단위의 합의금이 나올 수도 있습니다.<br><hr><span style="font-size: 18px;"><strong>그래서 카모아는</strong></span><br> 카모아는 고객님의 안전을 최우선으로 생각하며 안심하고 렌트카를 이용하실 수 있게 노력합니다. 전연령 렌트카를 이용하시려는 분들의 운전 실력을 우려하는 것이 아닙니다. 다만, 만약의 사고에서 고객님들의 피해를 최소화하는 것이 고객님을 위해서도, 사회를 위해서도 카모아가 추구해야 할 방향이라고 생각합니다. <br><br> 카모아의 파트너 업체 또한 카모아가 추구하는 이러한 정책을 준수하며 카모아와 같은 뜻을 나누고 있습니다. 안심할 수 있는 렌트카 문화를 위해 노력하며 고객님의 안전을 가장 중요하게 생각하여 전연령 렌트카를 판매하고 있지 않습니다.</li>
+                        </ul>
+                    </li></p>
+				  </div>
+				  
+				  <!-- 4.제주도  -->
+				  <div class="tab-pane fade" id="nav4">
+				    <p><ul>
+                    <li class="menu">
+                        <a>Q1.카시트, 유모차 대여는 어떻게 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            카모아와 제휴된 업체로 상담 및 예약 가능합니다.<strong><strong><br></strong></strong><hr><strong>*상담 및 예약 방법 안내<br>- 렌트카 업체 자체 운영</strong><br>1. My(마이페이지) &gt; 대여차량 정보 &gt; 상세내역 보기 &gt; 하단으로 이동<br>2. 제휴 혜택 안내 &gt; 유모차&amp;카시트<br>3. 렌트한 업체에서 대여 &gt; 전화 문의<br><br><strong>- 전문 유모차/카시트 업체에서 대여 (카카오톡/전화 상담 모두 가능)</strong><br>1. My(마이페이지) &gt; 대여차량 정보 &gt; 상세내역 보기 &gt; 하단으로 이동<br>2. 제휴 혜택 안내 &gt; 유모차&amp;카시트<br>3. 렌트 내역 복사<br>4. 카카오톡 친구 추가<br>5. 대화창에 렌트 내역 붙여넣기 후 상담
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q2.차량 대여는 공항 어디서 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            카모아와 제휴된 업체로 상담 및 예약 가능합니다.<strong><strong><br></strong></strong><hr><strong>*상담 및 예약 방법 안내<br>- 렌트카 업체 자체 운영</strong><br>1. My(마이페이지) &gt; 대여차량 정보 &gt; 상세내역 보기 &gt; 하단으로 이동<br>2. 제휴 혜택 안내 &gt; 유모차&amp;카시트<br>3. 렌트한 업체에서 대여 &gt; 전화 문의<br><br><strong>- 전문 유모차/카시트 업체에서 대여 (카카오톡/전화 상담 모두 가능)</strong><br>1. My(마이페이지) &gt; 대여차량 정보 &gt; 상세내역 보기 &gt; 하단으로 이동<br>2. 제휴 혜택 안내 &gt; 유모차&amp;카시트<br>3. 렌트 내역 복사<br>4. 카카오톡 친구 추가<br>5. 대화창에 렌트 내역 붙여넣기 후 상담
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q3.공항에서 렌트카 업체까지 얼마나 소요되나요?</a>
+                        <ul class="hide">
+                            <li>
+                            교통 상황에 따라 조금씩 차이가 있지만 셔틀버스를 타고 평균 5~20분 정도 소요됩니다.<br><hr>★ 원하시는 차량 클릭 후 예약정보 &gt; 무료 서틀 정보에서 셔틀 이용 방법, 셔틀 운행 간격과 소요 시간을 확인할 수 있습니다
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q4.렌트카 셔틀버스는 어디서 이용하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            ▶ 셔틀버스 이용방법<br>① 제주공항 1층 5번 출구로 이동<br>② 횡단보도 2개를 건넌 후 우측 ‘렌트카종합안내센터’로 이동<br>③ 예약문자의 셔틀버스 탑승구역에서 버스탑승
+                            </li>
+                        </ul>
+                   </li></p>
+				  </div>
+				  
+				  <!-- 5.전기차  -->
+				  <div class="tab-pane fade" id="nav5">
+				    <p><ul>
+				     <li class="menu">
+                        <a>Q1.충전 시 주의사항이 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            ★ 반드시 시동을 끄고 기어 P(Parking) 상태에서 충전해 주세요.<br>★ 충전기 커넥터와 차량 충전 소켓 부위에 물기가 있다면 제거 후 충전해주세요.<br>* 장마철 특히 유의하여 살펴주세요.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q2.충전비 지불 방법은 어떻게 되나요?</a>
+                        <ul class="hide">
+                            <li>
+                            전기차 충전카드 또는 고객님 신용카드로 지불하실 수 있습니다. 업체별로 두 가지 방법 중 한 가지만 가능하기도 하니 <strong>원하는 차량 클릭 &gt; 필독사항 &gt; 충전비 지불 방법 안내</strong>에서 꼭 확인해주세요.<br><hr>1. <strong>전기차 충전카드</strong> (1일당 3,000원 ~ 7,000원)<br>: 업체에서 충전카드를 대여하는 방식입니다. 반납 시 충전량 모자라게 반납해도 추가금이 발생하지 않습니다.&nbsp;<br>ex) 1일 카드 대여료 3천원이고 렌트 기간이 2박 3일인 경우 =&gt;카드 대여료 9천원(충전 비용 포함)<br>2. <strong>고객님 신용카드</strong><br>: IC 칩, 후불 기능이 있는 카드만 사용 가능합니다. 사용하신 만큼 충전해서 반납하셔야 하므로, 충전량 모자라면 업체 규정에 따라 추가 비용이 발생합니다.<hr>* 업체마다 결제 수단이나 충전비 규정이 상이하기 때문에 문의 사항이 있으신 경우 업체 또는 카모아와 충분한 상담 후 예약 진행해 주세요.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q3.충전은 언제 해야 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            배터리 잔량이 30% 이하로 내려가기 전 미리 충전해 주세요. 원활한 주행을 위하여 80%까지 충전하시는 것을 추천합니다.<br><br>충전량 부족으로 차량이 멈춘 경우, 가까운 충전소까지 이동하는 견인 비용을 고객님이 부담하셔야 합니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q4.전기차 충전은 어떻게 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            1) 차종에 맞는 충전방식 선택 (DC차데모, DC콤보, AC단상 등)<br>2) 충전량 선택 및 결제 후 충전기를 연결해 주세요.<br>3) 충전상태를 확인해 주세요.<br>4) 충전 완료 후 충전기를 분리해 주세요.<br><br>★ 차량마다, 충전기마다 방식이 다르기 때문에 기본적인 흐름만 참고해주세요.<br>★ 충전기 문제 발생 시, 단말기에 부착된 번호(충전기 운영 기관)로 문의하시면 자세히 안내받으실 수 있습니다. (요금 환불, 단말기 오류 등)
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q5.급속 충전과 완속 충전의 차이는 무엇인가요?</a>
+                        <ul class="hide">
+                            <li>
+                            방전 상태에서 80% 충전까지 급속 충전은 약 20~30분 소요되고 완속 충전은 약 5시간이 소요됩니다.<br>* 100% 충전은 상당히 많은 시간이 소요될 수 있고 배터리에 무리가 갈 수 있기에 권장하지 않습니다.<br>* 충전 시간은 차종에 따라 차이가 있습니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q6.전기차 충전소 정보는 어디서 확인할 수 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            전기차 충전소 위치는 아래 주소에서 확인하실 수 있습니다.<br>차종에 맞는 충전 방식과 희망 지역을 기재하여 검색하시면, 더욱 편리하게 이용 가능합니다.<br>또한 실시간 충전기 사용 가능 여부를 확인하시기 바랍니다.<br><br>전기차 충전소 안내 (https://www.ev.or.kr/evmonitor)<br>제주도는 ‘제주 전기차 충전소 안내’라는 앱을 통해서도 확인하실 수 있습니다
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q7.충전 시 얼마나 주행 가능한가요?</a>
+                        <ul class="hide">
+                            <li>
+                            2021년 출시된 전기차 주행 가능 거리는 완충 시 통상 약 400km입니다. <br>80% 이상 충전 시 약 300km 이상 주행하실 수 있습니다. 제주도를 한 바퀴 돌면 약 290km입니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q8.충전이 되지 않을 땐 어떻게 해야 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            >1) 차량 시동이 꺼져있는지 확인해 주세요.<br>2) 자동차 기어가 ‘P’(Parking)에 있는지 확인해 주세요.<br>3) 충전기 비상 정지 버튼이 눌려져 있는지 확인해 주세요. (눌려져있다면 오른쪽으로 돌려 해제해주세요)<br>4) 그래도 충전이 되지 않으면 업체에 문의해 주세요.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q9.전기차 반납</a>
+                        <ul class="hide">
+                            <li>
+                            전기차는 다음 사용자 예약이 되어 있는 경우, 기간 연장이 불가할 수 있습니다.
+							충분한 충전 시간이 필요하기 때문에, 반납 시간을 꼭 지켜주시기 바랍니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q10. 전기차 이용 시 주의해야 할 부분이 있을까요?</a>
+                        <ul class="hide">
+                            <li>
+                            1) <strong>급가속 주의</strong><br>:전기차는 내연기관차와 달리 출력이 매우 높기 때문에 항상 기어 상태를 확인해 주세요.<br>2) <strong>보행자 충돌 주의</strong><br>:운행 소음이 적어 보행자가 인식하기 어려울 수 있습니다. 항상 보행자를 살피며 운전해 주세요.<br>3) <strong>우천 시 안전 주의</strong><br>:비 오는 날 충전 시 손이나 커넥터에 물기가 있으면 감전 및 고장의 원인이 될 수 있으니 주의해 주세요.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q11.전기차 관련 문의할 수 있는 곳이 있을까요?</a>
+                        <ul class="hide">
+                            <li>
+                            충전 요금 환불 문의 또는 충전 단말기 오류 상황 문의는 전기차 충전 단말기에 부착된 번호로 문의하시면 해당 단말기에서 발생한 문제를 안내받으실 수 있습니다.
+                            <br><br>제주 전기차/충전기 사용방법은 전기차 이용객 종합 상담 센터 제주 EV 콜센터(1899-8852)로 문의해 주시면 됩니다.
+                            </li>
+                        </ul>
+                   </li>
+				    </p>
+				  </div>
+				  
+				  <!-- 6.월렌트 -->
+				  <div class="tab-pane fade" id="nav6">
+				    <p><ul>
+				    <li class="menu">
+                        <a>Q1. 연장이 가능한가요?</a>
+                        <ul class="hide">
+                            <li>
+                            이용중인 내역에 들어가셔서 ‘연장하기’를 선택해주세요. 연장 시 원하시는 반납일만 선택해주시면 됩니다.<br>
+                            <hr>★ 월렌트 연장의 경우, 15일 이상부터 가능하며 보증금은 따로 추가되지 않습니다.<br>
+                            ★ 월렌트 이용 후 14일 이내 연장은 업체와 직접 협의 후 현장 결제 해주시면 됩니다.<br>
+                            <hr>월렌트 연장은 반납일 기준 3일 전까지 가능합니다. 3일 이내로 연장 원하실 경우, 카모아 고객센터로 연락주시면 빠르게 연장 여부 확인 도와드리겠습니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q2.약정주행거리 조건이 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            약정주행거리는 업체마다 기준이 상이합니다. 계약서 작성 시 주행거리와 주행거리당 추가요금을 확인해주세요.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q3. 월렌트를 시작 한 뒤에 차량을 반납할 수 있나요? 얼마나 환불 받을 수 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            <strong>대여기간, 사용일수에 따라서 환불 수수료 %</strong>가 달라집니다.&nbsp;<br><br>
+                            <img class="w-100" src="https://s3.ap-northeast-2.amazonaws.com/carmore-common/faq/img/img_1587370941778_489.png" 
+                            alt=""><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (사용일수에 따른 대여료 지불 %)
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q4.예약 취소는 어떻게 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            <strong>마이페이지(My) 에서 취소 가능</strong>합니다.
+                            <br>(마이페이지(My) &gt; 대여차량 정보 &gt; 상세내역 보기 &gt; 하단으로 이동 &gt; 예약취소)<br>
+                            <hr>★ 단, 결제 이후 예약취소 수수료가 부과될 수 있으니 유의하시기 바랍니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q5. 예약취소시 수수료가 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            1. 대여시간 7일 전 : 100% 취소<br>2. 대여시간 7일 이내 : 95% 환불(5% 취소수수료 부과)
+                            <br>3. 대여시간 3일 이내 : 90% 환불(10% 취소수수료 부과)<br><br>
+                            <span style="font-size: 18px;"><strong>[대여 조건 미달 시 현장 취소 수수료]</strong>
+                            </span><br>1. 90% 환불<br>- 현장 배차 시, 대여 조건에 맞지 않는 경우 위와 같은 수수료가 발생합니다.
+                            <br>* 여기서 대여 조건이란? : 운전자 나이 만 21세 또는 만 26세 이상, 면허 취득일 1년 이상, 차량 대여 시 실물 한국면허증 소지, 렌트카 업체의 대여 규정 준수 (외국인 대여/낚시용품 지참/반려동물 동반 가능 여부, 주행거리제한 규정 등)
+                            <br>*&nbsp;월렌트는 업체, 차량마다 대여조건 상이합니다. 꼭 확인해주세요 !
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>6. 차량 대여자격 조건이 어떻게 되나요?</a>
+                        <ul class="hide">
+                            <li>
+                            기본적으로 운전경력 1년이상의 경우 월렌트 이용이 가능하지만 업체, 차종마다 운전경력 조건 (예시: 만 21세 또는 만 26세 이상, 운전경력 2-3년 이상) 은 상이합니다.&nbsp;<br>확인한 후 예약 진행해주세요.<br><hr>★ 차량마다 대여조건이 다르므로 대여조건을 꼭 확인해 주세요.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q7. 보증금은 대여료에 포함되어 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            보증금은 대여료에 포함되어 있지 않습니다. 보증금이 있는 차량의 경우, 현장에서 차량을 대여 받으실 때 현금으로 납부하시면 됩니다. (업체와 상의 후, 계좌이체도 가능합니다.)
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q8. 보증금 결제는 어떻게 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            보증금은 현장에서 차량을 대여 받으실 때, 현금결제하시면 됩니다. (업체와 상의 후, 계좌이체도 가능합니다.)
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q9. 보증금이 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            보증금의 유무는 업체마다 다릅니다. 예약할 때 결제 정보에서 확인 가능합니다.
+                            <br>보증금이 있을 시 현금 결제만 가능합니다.<br><hr>★ 단, 이용을 연장하실 경우 보증금은 추가로 결제되지 않습니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q10. 사용 도중 차량 문제 발생 혹은 사고 발생 시 어떻게 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            차량에 이상이 있으시거나 사고 발생 시, 대여한 렌트카 업체에 연락주세요. 가입한 자차보험과 차량의 대인/대물/자손 보험으로 처리가 가능합니다.
+							사고 발생 시, 현장에 머물면서 차량 사진(피해차량과 가해차량 모두)을 찍어서 증거를 확보해 주세요. 과실에 따라 처리 내용이 달라질 수 있습니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q11. 사고 발생시 보험처리가 되나요?</a>
+                        <ul class="hide">
+                            <li>
+                            예약하실 때 가입한 자차보험과 차량의 대인/대물/자손 보험으로 처리가 가능합니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q12. 사고 발생시 보상한도는 어떻게 되나요?</a>
+                        <ul class="hide">
+                            <li>
+                           업체와 차량마다 보상한도는 다릅니다. 예약하실 때, 차량의 대인/대물/자손 보험 내용과 자차보험 내용을 확인하실 수 있습니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q13. 결제는 카드만 가능한가요?</a>
+                        <ul class="hide">
+                            <li>
+                           단기렌트, 월렌트 대여 모두 카드, 네이버페이, TOSS, 계좌이체를 통한 결제가 가능합니다. 법인의 경우 기명 법인카드로도 결제 가능합니다.
+							단, 아이폰의 경우 앱에서 계좌이체가 불가합니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q14. 조기반납은 어떻게 하나요?</a>
+                        <ul class="hide">
+                            <li>
+                            카모아 앱에서 이용하고 있는 내역을 선택 후 조기반납 신청하기를 선택해주세요. 
+                            원하시는 반납 날짜와 함께 신청해주시면 업체와 협의 후 카모아가 연락 드리겠습니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q15. 운전자 추가 가능한가요?</a>
+                        <ul class="hide">
+                            <li>
+                            네, <strong>제 2 운전자까지 추가 가능</strong>합니다.
+                            <br><hr>★단, 제2운전자&nbsp;분도&nbsp; 차량 대여할 때&nbsp; 계약서 작성 시 운전자 등록과 서명을 하셔야 자차보험 적용이 가능하니 이 점 참고 바랍니다. 
+                            <strong>(면허증 필수지참)</strong>
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q16. 연장예약시 취소가 가능한가요?</a>
+                        <ul class="hide">
+                            <li>
+                            네, 취소 가능합니다. <br><br>연장예약 취소시 ,<br>1. 7일 전 : 100% 취소<br>2. 7일 이내 : 95% 환불<br>3. 3일 이내 : 90% 환불
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q17. 신용등급심사가 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            아니요, 신용등급심사는 필요하지 않습니다.
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q18. 월렌트 기간이 정해져 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            15일부터 30일까지 입니다. 2달이나 3달 대여를 원하실 경우 1달 예약 후 연장하기를 통해 추가 결제를 하시면 됩니다
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q19. 현장에서 배차가 거부될 수 있나요?</a>
+                        <ul class="hide">
+                            <li>
+                            네, 아래 같은 요건에 해당되면 차량 배차가 어려울 수 있으며, 카모아는 업체 규정에 따르고 있습니다.<br>
+                            <br>- 신원 확인 불가능
+                            <br>- 면허증 조회 불가(미지참)
+                            <br>- 신용 관련 기준 미충족
+                            <br>- 연령 미충족, 운전조건 미달
+                            <br>- 기타 업체가 정하는 기준 미달 시 배차 거부
+                            <br>- 보험 관련 기준 미충족
+                            </li>
+                        </ul>
+                   </li>
+                   <hr>
+                   
+                   <li class="menu">
+                        <a>Q20. 전기차 월렌트 충전료가 궁금합니다.</a>
+                        <ul class="hide">
+                            <li>
+                            전기차 월렌트는 충전카드 미포함입니다. 업체의 안내에 따라 개인 카드 또는 업체 충전카드로 충전하시면 됩니다.
+                            </li>
+                        </ul>
+                   </li> </p>
+				  </div>
+				</div>
+            
+          
+		
+
+
+            
+			
+			</main>
+			<!-- ========== FOOTER ==========-->
+	<footer class="dc-none dc-lg-block mt-auto" id="global_footer"><!-- Copyright-->
+		<div class="bg-white">
+			<div class="container space-2">
+				<div class="global-footer-section-web-only row">
+					<div class="col-sm-8">
+						<ul class="nav mx-n15px">
+							<li class="nav-item">
+								<a class="nav-link text-secondary text-12" href="http://teamo2.kr/" target="_blank">토르카 회사소개</a>
+							</li>
+							<li class="nav-item">
+								<a class="pc-footer-btn-privacy-policy nav-link text-secondary text-12 clickable">개인정보처리방침</a>
+							</li>
+							<li class="nav-item">
+								<a class="pc-footer-btn-use-policy nav-link text-secondary text-12 clickable">이용약관</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-secondary text-12 clickable js-btn-go-help" href="javascript:void(0)">자주묻는질문</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-sm-4">
+						<ul class="nav justify-content-end">
+							<li class="nav-item">
+								<a class="nav-link px-1" href="https://www.instagram.com" target="_blank">
+								<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI2IDI2Ij4KICA8cGF0aCBmaWxsPSIjRDRENEQ0IiBkPSJNNCwxMiBMNCwyMiBMMjIsMjIgTDIyLDEyIEwxOC45MTcwNDE2LDEyIEMxOC45NzE2MDEyLDEyLjMyNTIwODUgMTksMTIuNjU5Mjg3OCAxOSwxMyBDMTksMTYuMzEzNzA4NSAxNi4zMTM3MDg1LDE5IDEzLDE5IEM5LjY4NjI5MTUsMTkgNywxNi4zMTM3MDg1IDcsMTMgQzcsMTIuNjU5Mjg3OCA3LjAyODM5ODgsMTIuMzI1MjA4NSA3LjA4Mjk1ODQ0LDEyIEw0LDEyIFogTTMsMiBMMjMsMiBDMjMuNTUyMjg0NywyIDI0LDIuNDQ3NzE1MjUgMjQsMyBMMjQsMjMgQzI0LDIzLjU1MjI4NDcgMjMuNTUyMjg0NywyNCAyMywyNCBMMywyNCBDMi40NDc3MTUyNSwyNCAyLDIzLjU1MjI4NDcgMiwyMyBMMiwzIEMyLDIuNDQ3NzE1MjUgMi40NDc3MTUyNSwyIDMsMiBaIE0xOCw1IEMxNy40NDc3MTUzLDUgMTcsNS40NDc3MTUyNSAxNyw2IEwxNyw4IEMxNyw4LjU1MjI4NDc1IDE3LjQ0NzcxNTMsOSAxOCw5IEwyMCw5IEMyMC41NTIyODQ3LDkgMjEsOC41NTIyODQ3NSAyMSw4IEwyMSw2IEMyMSw1LjQ0NzcxNTI1IDIwLjU1MjI4NDcsNSAyMCw1IEwxOCw1IFogTTEzLDE3IEMxNS4yMDkxMzksMTcgMTcsMTUuMjA5MTM5IDE3LDEzIEMxNywxMC43OTA4NjEgMTUuMjA5MTM5LDkgMTMsOSBDMTAuNzkwODYxLDkgOSwxMC43OTA4NjEgOSwxMyBDOSwxNS4yMDkxMzkgMTAuNzkwODYxLDE3IDEzLDE3IFoiLz4KPC9zdmc+Cg==">
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link px-1" href="https://www.facebook.com" target="_blank">
+								<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI2IDI2Ij4KICA8cGF0aCBmaWxsPSIjRDRENEQ0IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMC4yNDA1Mjc3LDIgTDUuNzU5NjMzMzQsMiBDMy42ODMwNjQ1MSwyIDIsMy42ODMwNjQ1MSAyLDUuNzU5NjMzMzQgTDIsMjAuMjQwMzY2NyBDMiwyMi4zMTY3NzQ0IDMuNjgzMDY0NTEsMjQgNS43NTk2MzMzNCwyNCBMMTMuNjk1NTk5LDI0IEwxMy42OTU1OTksMTUuNTUzNTkwMSBMMTAuODUzNjA1NSwxNS41NTM1OTAxIEwxMC44NTM2MDU1LDEyLjI2MTcxNjMgTDEzLjY5NTU5OSwxMi4yNjE3MTYzIEwxMy42OTU1OTksOS44MzQxNjY3NyBDMTMuNjk1NTk5LDcuMDE2OTc4NjkgMTUuNDE2NTE2LDUuNDgyOTA3ODMgMTcuOTI5MTEyNyw1LjQ4MjkwNzgzIEMxOS4xMzM0NjQ2LDUuNDgyOTA3ODMgMjAuMTY3ODgzMyw1LjU3MjQ2NTA5IDIwLjQ2OTU3NTMsNS42MTI1NzI1NyBMMjAuNDY5NTc1Myw4LjU1NjY4NzE0IEwxOC43MjY0MzAxLDguNTU3NDkyNTEgQzE3LjM1OTU1NDMsOC41NTc0OTI1MSAxNy4wOTUyMzE1LDkuMjA2OTQzNzYgMTcuMDk1MjMxNSwxMC4xNTk2OTc4IEwxNy4wOTUyMzE1LDEyLjI2MTcxNjMgTDIwLjM1NDg5MDQsMTIuMjYxNzE2MyBMMTkuOTMwMjk4OCwxNS41NTM1OTAxIEwxNy4wOTUyMzE1LDE1LjU1MzU5MDEgTDE3LjA5NTIzMTUsMjQgTDIwLjI0MDUyNzcsMjQgQzIyLjMxNjkzNTUsMjQgMjQsMjIuMzE2Nzc0NCAyNCwyMC4yNDAzNjY3IEwyNCw1Ljc1OTYzMzM0IEMyNCwzLjY4MzA2NDUxIDIyLjMxNjkzNTUsMiAyMC4yNDA1Mjc3LDIiLz4KPC9zdmc+Cg==">
+								</a>
+							</li>
+							<li class="nav-item"><a class="nav-link px-1" href="https://blog.naver.com" target="_blank">
+								<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI2IDI2Ij4KICA8cGF0aCBmaWxsPSIjRDRENEQ0IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMy4zNDc1MjMyLDE0LjI4NTYyMjkgTDIzLjM0NzUyMzIsNi44ODAyMTQ4MSBDMjMuMzQ3NTIzMiw1LjE1NjE4Mzc2IDIxLjk1NDQ3MjksMy43NTg1ODcwMiAyMC4yMzY4Njc3LDMuNzU4NTg3MDIgTDYuNzYyOTg3MzksMy43NTg1ODcwMiBDNS4wNDQ4MDI2OCwzLjc1ODU4NzAyIDMuNjUyNDA0NCw1LjE1NjE4Mzc2IDMuNjUyNDA0NCw2Ljg4MDIxNDgxIEwzLjY1MjQwNDQsMTQuMjg1NjIyOSBDMy42NTI0MDQ0LDE2LjAwOTcyNjQgNS4wNDQ4MDI2OCwxNy40MDczMjMyIDYuNzYyOTg3MzksMTcuNDA3MzIzMiBMMTEuNDA0MDQ5NCwxNy40MDczMjMyIEwxMi45ODgxMzc5LDE5Ljk4NjE5NzggQzEyLjk4ODEzNzksMTkuOTg2MTk3OCAxMy4wMDUwOTAxLDIwLjAxNjc2OTMgMTMuMDM5NjQ2NSwyMC4wNTk1MTE1IEMxMy4xMzIxNTkxLDIwLjIxODE2NDYgMTMuMzAyOTEyNiwyMC4zMjYzMjQxIDEzLjQ5OTYwMTYsMjAuMzI2MzI0MSBDMTMuNjk1NzEwOSwyMC4zMjYzMjQxIDEzLjg2NTE2MDQsMjAuMjE5NzU4NCAxMy45NTgzMjUxLDIwLjA2Mjc3MTUgQzEzLjk5ODA5NzUsMjAuMDE2MTg5NyAxNC4wMTE3ODk3LDE5Ljk4NTkwOCAxNC4wMTE3ODk3LDE5Ljk4NTkwOCBMMTUuNTk1NzMzMywxNy40MDczMjMyIEwyMC4yMzY4Njc3LDE3LjQwNzMyMzIgQzIxLjk1NDQ3MjksMTcuNDA3MzIzMiAyMy4zNDc1MjMyLDE2LjAwOTcyNjQgMjMuMzQ3NTIzMiwxNC4yODU2MjI5IFogTTIwLjM5OTIxNzYsMiBDMjIuOTQxMDMyNywyIDI1LDQuMDU5NjY1ODEgMjUsNi42MDA0MzQ2NyBMMjUsMjAuNDAwNTc5NiBDMjUsMjIuOTQwNDA2NiAyMi45NDEwMzI3LDI1IDIwLjM5OTIxNzYsMjUgTDYuNTk5NDc4MzksMjUgQzQuMDU5NjE5MzIsMjUgMiwyMi45NDA0MDY2IDIsMjAuNDAwNTc5NiBMMiw2LjYwMDQzNDY3IEMyLDQuMDU5NjY1ODEgNC4wNTk2MTkzMiwyIDYuNTk5NDc4MzksMiBMMjAuMzk5MjE3NiwyIFogTTguMDAwMjk0OTIsMTEuOTcwMjU3MiBDOC40MzU2NzA1NywxMS45NzAyNTcyIDguNzg4NzYzNTUsMTEuNjMzMjkzOSA4Ljc4ODc2MzU1LDExLjIxNzY4MjUgQzguNzg4NzYzNTUsMTAuODAyMjExNyA4LjQzNTY3MDU3LDEwLjQ2NTMxODggOC4wMDAyOTQ5MiwxMC40NjUzMTg4IEM3LjU2NDk5MywxMC40NjUzMTg4IDcuMjExNTMxMzcsMTAuODAyMjExNyA3LjIxMTUzMTM3LDExLjIxNzY4MjUgQzcuMjExNTMxMzcsMTEuNjMzMjkzOSA3LjU2NDk5MywxMS45NzAyNTcyIDguMDAwMjk0OTIsMTEuOTcwMjU3MiBaIE04LjI3MDUxNTM3LDkuMzk1NzU5NDcgQzkuOTM2Mjk3MjgsOS4zOTU3NTk0NyAxMCwxMS4xNzk2OTUgMTAsMTEuMTc5Njk1IEMxMCwxMi45MzkyMiA4LjI3MDUxNTM3LDEzIDguMjcwNTE1MzcsMTMgQzcuNTMyNDc4MDcsMTMgNy4yMzk5OTExNSwxMi40OTYwMzI0IDcuMjM5OTkxMTUsMTIuNDk2MDMyNCBMNy4yMzk5OTExNSwxMi44NzgxNTg2IEw2LDEyLjg3ODE1ODYgTDYsOCBMNy4yMjc0NTcwNSw4IEw3LjIyNzQ1NzA1LDkuODU2Njc0NTUgQzcuNzIzNDM4NzcsOS4zOTU3NTk0NyA4LjI3MDUxNTM3LDkuMzk1NzU5NDcgOC4yNzA1MTUzNyw5LjM5NTc1OTQ3IFogTTEwLDggQzEyLjA1Nzk1ODIsOCAxMS45OTk4MzM4LDkuODM3MjY4NjggMTEuOTk5ODMzOCw5LjgzNzI2ODY4IEwxMS45OTk4MzM4LDEzIEwxMC42NDI1ODMyLDEzIEwxMC42NDI1ODMyLDEwLjEwNDk4NDggQzEwLjY0MjU4MzIsOS4xMDcxODUxNyAxMCw5LjEzMTU4NzExIDEwLDkuMTMxNTg3MTEgTDEwLDggWiBNMTQuOTc3NTI5LDExLjg1MjM0OTEgQzE1LjQwMTk3NywxMS44NTIzNDkxIDE1Ljc0NjMzNzcsMTEuNDc2ODAyOCAxNS43NDYzMzc3LDExLjAxMzYwMjggQzE1Ljc0NjMzNzcsMTAuNTUwNTU5NiAxNS40MDE5NzcsMTAuMTc1MDkxNiAxNC45Nzc1MjksMTAuMTc1MDkxNiBDMTQuNTUzMDA5MiwxMC4xNzUwOTE2IDE0LjIwODQzMjgsMTAuNTUwNTU5NiAxNC4yMDg0MzI4LDExLjAxMzYwMjggQzE0LjIwODQzMjgsMTEuNDc2ODAyOCAxNC41NTMwMDkyLDExLjg1MjM0OTEgMTQuOTc3NTI5LDExLjg1MjM0OTEgWiBNMTQuOTc3MTY5Niw5IEMxNy4wNjU2OTIxLDkgMTYuOTk5NzY3NSwxMS4wMTM2MDI4IDE2Ljk5OTc2NzUsMTEuMDEzNjAyOCBDMTYuOTk5NzY3NSwxMi45OTY3ODU1IDE0Ljk3NzE2OTYsMTMgMTQuOTc3MTY5NiwxMyBDMTIuOTM2MjM5MiwxMyAxMy4wMDAyMjI3LDExLjAxMzYwMjggMTMuMDAwMjIyNywxMS4wMTM2MDI4IEMxMy4wMDAyMjI3LDkuMDAwMzEzNjEgMTQuOTc3MTY5Niw5IDE0Ljk3NzE2OTYsOSBaIE0xOS4wNTM5MTE2LDExLjQzNzA2NTIgQzE5LjQ5MzgxLDExLjQzNzA2NTIgMTkuODUwNzA1OSwxMS4xMTYyMzg3IDE5Ljg1MDcwNTksMTAuNzIwNTMwMyBDMTkuODUwNzA1OSwxMC4zMjQ5NTU5IDE5LjQ5MzgxLDEwLjAwNDE5NjQgMTkuMDUzOTExNiwxMC4wMDQxOTY0IEMxOC42MTM3MTUyLDEwLjAwNDE5NjQgMTguMjU3MTkxOSwxMC4zMjQ5NTU5IDE4LjI1NzE5MTksMTAuNzIwNTMwMyBDMTguMjU3MTkxOSwxMS4xMTYyMzg3IDE4LjYxMzcxNTIsMTEuNDM3MDY1MiAxOS4wNTM5MTE2LDExLjQzNzA2NTIgWiBNMTkuNzk1MDQ4LDkuMTEyOTgxODUgTDIxLDkuMTEyOTgxODUgTDIxLDEyLjI1ODQyMTIgQzIxLDE0LjAxNzQwNzggMTkuMTg3OTUyNSwxMy45OTk5OTM0IDE5LjE4Nzk1MjUsMTMuOTk5OTkzNCBMMTguNzA2MTA1OCwxMy45OTk5OTM0IEwxOC43MDYxMDU4LDEzLjAxMjM5NyBMMTkuMDA0NzM2LDEzLjAxMjM5NyBDMTkuODgyMjIzLDEzLjAxMjM5NyAxOS43OTUwNDgsMTIuMTk3ODcyNyAxOS43OTUwNDgsMTIuMTk3ODcyNyBMMTkuNzk1MDQ4LDExLjkzNzY2MTcgQzE5LjQwOTc2NDQsMTIuMzg4MjI1MyAxOC43MDYxMDU4LDEyLjM2MjMwNDcgMTguNzA2MTA1OCwxMi4zNjIzMDQ3IEMxNi45ODA1NjI3LDEyLjM2MjMwNDcgMTcuMDAwMDA5NCwxMC43MDg3NDIxIDE3LjAwMDAwOTQsMTAuNzA4NzQyMSBDMTcuMDAwMDA5NCw4LjkzMzc0NzY3IDE4Ljc1NDM4NzMsOS4wMDAzMjQxOSAxOC43NTQzODczLDkuMDAwMzI0MTkgQzE5LjQzODU5OTIsOS4wMDAzMjQxOSAxOS43OTUwNDgsOS40MjQ2OTkzIDE5Ljc5NTA0OCw5LjQyNDY5OTMgTDE5Ljc5NTA0OCw5LjExMjk4MTg1IFoiLz4KPC9zdmc+Cg=="></a></li><li class="nav-item">
+								<a class="nav-link px-1" href="https://post.naver.com/my.nhn?memberNo=31892661" target="_blank">
+								<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjYiIGhlaWdodD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgMlYxNS42Mjk4SDE5LjYyOThWMkg2Wk0xNS43Mjk4IDExLjM5NDhIMTMuNzg2NUwxMS44Mjk5IDkuMTI5ODVWMTEuMzk0OEg5Ljg4NjU3VjYuMjIxNjJIMTIuMDQ0M0wxMy43NzMxIDguNDk5OTZWNi4yMjE2MkgxNS43Mjk4VjExLjM5NDhaIiBmaWxsPSIjRDRENEQ0Ii8+CjxwYXRoIGQ9Ik02IDE2LjgwOTFIMTkuNjI5OEwxNi4zODY1IDIwLjQ2NzlIOS4xODk2N0w2IDE2LjgwOTFaIiBmaWxsPSIjRDRENEQ0Ii8+CjxwYXRoIGQ9Ik0xMi42NjA4IDI0LjY2MjdMOS45NDAxOSAyMS43Njc5SDE1LjY3NjJMMTIuODA4MiAyNC42NjI3SDEyLjY2MDhaIiBmaWxsPSIjRDRENEQ0Ii8+Cjwvc3ZnPgo=">
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link px-1" href="https://www.youtube.com" target="_blank">
+								<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjYiIGhlaWdodD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMi4zNzY0IDUuNTA0NTVDMjMuNDA4NiA1Ljc4MjczIDI0LjIyMjcgNi42MDA5MSAyNC40OTgyIDcuNjRDMjUgOS41MjQ1NSAyNSAxMy40NTQ1IDI1IDEzLjQ1NDVDMjUgMTMuNDU0NSAyNSAxNy4zODQ1IDI0LjQ5ODIgMTkuMjY5MUMyNC4yMjI3IDIwLjMwODIgMjMuNDA4NiAyMS4xMjY0IDIyLjM3NjQgMjEuNDA0NUMyMC41MDU1IDIxLjkwOTEgMTMgMjEuOTA5MSAxMyAyMS45MDkxQzEzIDIxLjkwOTEgNS40OTQ1NSAyMS45MDkxIDMuNjIzNjQgMjEuNDA0NUMyLjU5MTM2IDIxLjEyNjQgMS43NzcyNyAyMC4zMDgyIDEuNTAxODIgMTkuMjY5MUMxIDE3LjM4NDUgMSAxMy40NTQ1IDEgMTMuNDU0NUMxIDEzLjQ1NDUgMSA5LjUyNDU1IDEuNTAxODIgNy42NEMxLjc3NzI3IDYuNjAwOTEgMi41OTEzNiA1Ljc4MjczIDMuNjIzNjQgNS41MDQ1NUM1LjQ5NDU1IDUgMTMgNSAxMyA1QzEzIDUgMjAuNTA1NSA1IDIyLjM3NjQgNS41MDQ1NVpNMTYuODE4MSAxMy40NTQ1TDEwLjU0NTQgMTcuMDIzMlY5Ljg4NTkxTDE2LjgxODEgMTMuNDU0NVoiIGZpbGw9IiNENEQ0RDQiLz4KPC9zdmc+Cg==">
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<hr class="mt-1 mb-5">
+				<div class="row">
+					<div class="col-lg-8">
+						<a class="d-inline-flex align-items-center mb-3 js-btn-navbar-brand">
+						<img class="js-svg-injector fill-primary" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTUiIGhlaWdodD0iMTkiIHZpZXdCb3g9IjAgMCA5NSAxOSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC42MTQ1IDMuMDMwNTVDMTQuODcwNSAyLjc4MDcyIDE1IDIuNDYwNjIgMTUgMi4wNzg1OUMxNSAxLjY5NjE0IDE0Ljg3MDUgMS4zNzYwNSAxNC42MTUgMS4xMjY2M0MxNC4zNTg2IDAuODc2NzkgMTQuMDMwNiAwLjc1IDEzLjYzOTIgMC43NUgxLjM2MTI0QzAuOTcwMjQzIDAuNzUgMC42NDE4NTkgMC44NzY3OSAwLjM4NjMwOCAxLjEyNjYzQzAuMTI5OTA1IDEuMzc2NDcgMCAxLjY5Njk3IDAgMi4wNzg1OUMwIDIuNDU5NzkgMC4xMjk5MDUgMi43ODAzIDAuMzg2MzA4IDMuMDMwNTVDMC42NDE4NTkgMy4yODA4MSAwLjk3MDI0MyAzLjQwNzE4IDEuMzYxMjQgMy40MDcxOEg2LjA1ODI3VjE3LjMzMkM2LjA1ODI3IDE3LjcyODIgNi4yMDAxIDE4LjA2NzggNi40NzkwNyAxOC4zNDA1QzYuNzU4MDUgMTguNjEyNCA3LjEwNTE3IDE4Ljc1IDcuNTExNSAxOC43NUM3LjkxNzgzIDE4Ljc1IDguMjY1OCAxOC42MTI0IDguNTQ0MzUgMTguMzQwNUM4LjgyMjkgMTguMDY4MiA4Ljk2NDMxIDE3LjcyODYgOC45NjQzMSAxNy4zMzJWMy40MDcxOEgxMy42MzkyQzE0LjAzMDYgMy40MDcxOCAxNC4zNTg2IDMuMjgwODEgMTQuNjE0NSAzLjAzMDU1WiIgZmlsbD0iIzk5OTk5OSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIyLjQxNjkgMTAuOTk0MkgxNS42NDI0QzE1LjgzNiAxMC4xODggMTYuMjE1MiA5LjUyODkxIDE2Ljc3MjcgOS4wMzE0M0MxNy4zOTQ1IDguNDc2MzEgMTguMjIyMiA4LjE5NTIgMTkuMjMyNSA4LjE5NTJDMjAuMTQ3OSA4LjE5NTIgMjAuODY2MiA4LjQ2NTQ1IDIxLjQyODMgOS4wMjIyNEMyMS45MzE2IDkuNTIwOTcgMjIuMjYzNSAxMC4xODM0IDIyLjQxNjkgMTAuOTk0MlpNMjIuMzA4NyA2LjU1MjRDMjEuNDQ2IDYuMDE5ODMgMjAuNDEwNiA1Ljc1IDE5LjIzMjUgNS43NUMxOC4wNDEzIDUuNzUgMTYuOTU5OCA2LjAyOTg2IDE2LjAxNyA2LjU4MjQ3QzE1LjA3MiA3LjEzNzE3IDE0LjMyNDEgNy45MjAzNiAxMy43OTQ4IDguOTEwM0MxMy4yNjc3IDkuODk2OSAxMyAxMS4wMjQzIDEzIDEyLjI2MTVDMTMgMTMuNTAxNiAxMy4yODMzIDE0LjYyNzMgMTMuODQyMSAxNS42MDc3QzE0LjQwMjYgMTYuNTg5NyAxNS4xOTE3IDE3LjM2NzQgMTYuMTg4IDE3LjkyQzE3LjE4MDcgMTguNDcxIDE4LjMxNjggMTguNzUgMTkuNTY1MiAxOC43NUMyMC4yNjk2IDE4Ljc1IDIxLjAxNTUgMTguNjE3MiAyMS43ODM2IDE4LjM1NDRDMjIuNTUzNCAxOC4wOTA1IDIzLjIwODQgMTcuNzQyOSAyMy43MjUzIDE3LjMyNjVDMjQuMDIzIDE3LjA5OTcgMjQuMTgwNSAxNi43OTYgMjQuMTgwNSAxNi40NDgxQzI0LjE4MDUgMTYuMDg0MyAyNC4wMTYgMTUuNzYwNSAyMy42OTkgMTUuNDkzMkMyMy40ODkzIDE1LjMwMTEgMjMuMjA5MiAxNS4yMDI5IDIyLjg2NjMgMTUuMjAyOUMyMi41Mjk5IDE1LjIwMjkgMjIuMjMyMiAxNS4zMDQgMjEuOTgyNiAxNS41MDI0QzIxLjY5NiAxNS43MjQ2IDIxLjMyMTQgMTUuOTE1OSAyMC44Njk1IDE2LjA3MTdDMjAuNDE2OCAxNi4yMjcxIDE5Ljk3OCAxNi4zMDYxIDE5LjU2NTIgMTYuMzA2MUMxOC41MDc2IDE2LjMwNjEgMTcuNjAzNCAxNS45OTkgMTYuODc2OCAxNS4zOTU1QzE2LjIxNzYgMTQuODQ3NSAxNS44MDIzIDE0LjE2MDggMTUuNjEzMiAxMy4zMDMySDIzLjczMDZDMjQuMDkxNyAxMy4zMDMyIDI0LjM5NiAxMy4xODQ2IDI0LjYzNTMgMTIuOTUxNUMyNC44NzcxIDEyLjcxNTEgMjUgMTIuNDE0OCAyNSAxMi4wNTg1QzI1IDEwLjg0MDEgMjQuNzY3NyA5Ljc0MjM1IDI0LjMxIDguNzk1NDNDMjMuODQ3OCA3Ljg0MDk5IDIzLjE3NTEgNy4wODY2MyAyMi4zMDg3IDYuNTUyNFoiIGZpbGw9IiM5OTk5OTkiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zNy4yNjY0IDEyLjI2MTVDMzcuMjY2NCAxMy4wMDk2IDM3LjEwMTEgMTMuNjkyMSAzNi43NzYgMTQuMjg5NEMzNi40NTIxIDE0Ljg4MzggMzUuOTk5MSAxNS4zNTg3IDM1LjQyOTYgMTUuNzAwOEMzNC44NjEzIDE2LjA0MjUgMzQuMjE2MSAxNi4yMTU4IDMzLjUxMDcgMTYuMjE1OEMzMi44MDYyIDE2LjIxNTggMzIuMTYxIDE2LjA0MjUgMzEuNTkyNyAxNS43MDA4QzMxLjAyMTkgMTUuMzU3OSAzMC41NjQ3IDE0Ljg4MjEgMzAuMjMzNyAxNC4yODc3QzI5LjkwMTggMTMuNjkxNyAyOS43MzM2IDEzLjAxIDI5LjczMzYgMTIuMjYxNUMyOS43MzM2IDExLjUxMjEgMjkuOTAxOCAxMC44MjU5IDMwLjIzNDUgMTAuMjIyN0MzMC41NjU2IDkuNjIwOCAzMS4wMjI4IDkuMTQxMjkgMzEuNTkyMyA4Ljc5OTE5QzMyLjE2MSA4LjQ1NzkzIDMyLjgwNjYgOC4yODQ1OSAzMy41MTA3IDguMjg0NTlDMzQuMjE1MyA4LjI4NDU5IDM0Ljg2MDkgOC40NTc5MyAzNS40Mjk2IDguNzk4NzdDMzUuOTk4MyA5LjE0MDg3IDM2LjQ1MTcgOS42MTk1NSAzNi43NzU2IDEwLjIyMDZDMzcuMTAwNyAxMC44MjU0IDM3LjI2NjQgMTEuNTEyNiAzNy4yNjY0IDEyLjI2MTVaTTM2LjgwMjEgNi42MDYyOEMzNS44MjEyIDYuMDM4MjEgMzQuNzE0MSA1Ljc1IDMzLjUxMDcgNS43NUMzMi4zMDkgNS43NSAzMS4xOTQ4IDYuMDM3NzkgMzAuMTk5NiA2LjYwNTAzQzI5LjIwNDUgNy4xNzI2OCAyOC40MTM3IDcuOTYyMTMgMjcuODQ5MiA4Ljk1MTIzQzI3LjI4NTYgOS45MzgyNSAyNyAxMS4wNTE4IDI3IDEyLjI2MTVDMjcgMTMuNDY5IDI3LjI2NSAxNC41ODA1IDI3Ljc4ODcgMTUuNTY0NkMyOC4zMTQ0IDE2LjU1MzcgMjkuMDQ3MSAxNy4zNDAzIDI5Ljk2NjYgMTcuOTAxN0MzMC44ODYxIDE4LjQ2NDcgMzEuOTI2MyAxOC43NSAzMy4wNTc3IDE4Ljc1QzMzLjk2ODggMTguNzUgMzQuODI5OCAxOC41NTk5IDM1LjYxNjggMTguMTg1M0MzNi4xOTg1IDE3LjkwNzUgMzYuNzIwNSAxNy41NDQ1IDM3LjE3NTYgMTcuMTAzNFYxNy4yODAxQzM3LjE3NTYgMTcuNjc5NCAzNy4zMTE0IDE4LjAxNjEgMzcuNTc4OSAxOC4yODA5QzM3Ljg0NiAxOC41NDc0IDM4LjE4NTkgMTguNjgyOCAzOC41ODggMTguNjgyOEMzOC45ODkzIDE4LjY4MjggMzkuMzI3OSAxOC41NDc4IDM5LjU5NTggMTguMjgxOEMzOS44NjQxIDE4LjAxNjEgNDAgMTcuNjc5NCA0MCAxNy4yODAxVjEyLjI2MTVDNDAgMTEuMDUyNyAzOS43MTA2IDkuOTM4MjUgMzkuMTM5IDguOTQ5OThDMzguNTY3NCA3Ljk2MjU0IDM3Ljc4MTIgNy4xNzQzNSAzNi44MDIxIDYuNjA2MjhaIiBmaWxsPSIjOTk5OTk5Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNjAuNzEzNyA3LjExNzY1QzU5Ljg1NjIgNi4yMTAyMSA1OC43MTg1IDUuNzUgNTcuMzMxOCA1Ljc1QzU2LjQ2NDIgNS43NSA1NS42NjIgNS45MTc2NiA1NC45NDg4IDYuMjQ3OTRDNTQuMzM4MiA2LjUzMTY5IDUzLjgwODEgNi45MTIyNyA1My4zNjg4IDcuMzgxNzFDNTIuOTgyMyA2LjkwMDk1IDUyLjUwODQgNi41MTc4NiA1MS45NTYgNi4yNDAzOUM1MS4zMDkgNS45MTUxNCA1MC41Njk3IDUuNzUgNDkuNzU5NSA1Ljc1QzQ5LjA5MjcgNS43NSA0OC40NjM5IDUuODY2NTIgNDcuODkgNi4wOTU3OUM0Ny40NjU5IDYuMjY1OTYgNDcuMDgwNiA2LjQ4ODEgNDYuNzQwOSA2Ljc1OTdDNDYuNjcwNCA2LjU2OSA0Ni41NjExIDYuNDAzMDIgNDYuNDEzNCA2LjI2MjE5QzQ2LjE1MjYgNi4wMTE5NiA0NS44MTcxIDUuODg1OCA0NS40MTY3IDUuODg1OEM0NS4wMTYyIDUuODg1OCA0NC42NzY5IDYuMDE1NzMgNDQuNDA4MSA2LjI3MzA4QzQ0LjEzNzIgNi41MzI1MyA0NCA2Ljg3NTgxIDQ0IDcuMjkyNDNWMTcuMzQyNUM0NCAxNy43NDMyIDQ0LjEzNjMgMTguMDgxNSA0NC40MDUxIDE4LjM0NzJDNDQuNjczNSAxOC42MTQ2IDQ1LjAxNDEgMTguNzUgNDUuNDE2NyAxOC43NUM0NS44MzU3IDE4Ljc1IDQ2LjE4MDkgMTguNjEzNCA0Ni40NDM0IDE4LjM0MzlDNDYuNzAyMSAxOC4wNzc3IDQ2LjgzMzMgMTcuNzQwNyA0Ni44MzMzIDE3LjM0MjVWMTAuOTc0MUM0Ni44MzMzIDEwLjE5MDggNDcuMDYwMyA5LjU2NzkzIDQ3LjUyNjIgOS4wN0M0Ny45ODc5IDguNTc3OTMgNDguNTY5NCA4LjMzOTAyIDQ5LjMwNSA4LjMzOTAyQzUwLjAxMjIgOC4zMzkwMiA1MC41NTgzIDguNTQ2MDcgNTAuOTczNiA4Ljk3MjM0QzUxLjM4NTggOS4zOTU2NyA1MS41OTQ3IDEwLjAzODYgNTEuNTk0NyAxMC44ODM2VjE3LjM0MjVDNTEuNTk0NyAxNy43NDMyIDUxLjczMSAxOC4wODExIDUxLjk5OTkgMTguMzQ3MkM1Mi4yNjc4IDE4LjYxNDYgNTIuNjA4NCAxOC43NSA1My4wMTE0IDE4Ljc1QzUzLjQzIDE4Ljc1IDUzLjc3NTYgMTguNjEzNCA1NC4wMzczIDE4LjM0NDdDNTQuMjk2NCAxOC4wNzg1IDU0LjQyNzYgMTcuNzQyIDU0LjQyNzYgMTcuMzQyNVYxMC45NzQxQzU0LjQyNzYgMTAuMTkwOCA1NC42NTQ3IDkuNTY3OTMgNTUuMTIwMSA5LjA3QzU1LjU4MTggOC41Nzc5MyA1Ni4xNTY2IDguMzM5MDIgNTYuODc2NSA4LjMzOTAyQzU3LjU4MzggOC4zMzkwMiA1OC4xMjk4IDguNTQ2MDcgNTguNTQ1MSA4Ljk3Mjc2QzU4Ljk1NzQgOS4zOTQ4MyA1OS4xNjYzIDEwLjAzODIgNTkuMTY2MyAxMC44ODM2VjE3LjM0MjVDNTkuMTY2MyAxNy43NDMyIDU5LjMwMjYgMTguMDgxMSA1OS41NzE0IDE4LjM0NzJDNTkuODM5OCAxOC42MTQ2IDYwLjE3OTUgMTguNzUgNjAuNTgyOSAxOC43NUM2MS4wMDI0IDE4Ljc1IDYxLjM0NzYgMTguNjEzNCA2MS42MDk2IDE4LjM0NDNDNjEuODY4OCAxOC4wNzgxIDYyIDE3Ljc0MTEgNjIgMTcuMzQyNVYxMC44ODM2QzYyIDkuMjg4NzkgNjEuNTY3IDguMDIxNzMgNjAuNzEzNyA3LjExNzY1WiIgZmlsbD0iIzk5OTk5OSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTczLjIyNDIgMTguNzVDNjguNDU4MSAxOC43NSA2NSAxNC45NzQzIDY1IDkuNzcxNTVDNjUgNC42MDk2OCA2OC40NjE5IDAuODIyNTEgNzMuMjM3MiAwLjc1NDMwNUM3My41NTIxIDAuNzQwODI4IDc1LjAwOTcgMC43MTkxODIgNzYuNjA5MyAxLjM3NDY4Qzc3LjM3MjMgMS42ODc1MiA3Ny43MjkzIDIuNTQwMjcgNzcuNDA2IDMuMjc4NjhDNzcuMDgzMSA0LjAxNzQ5IDc2LjIwMTMgNC4zNjI1OSA3NS40NDA1IDQuMDUwOThDNzQuMzg3MSAzLjYxODQ3IDczLjM4ODEgMy42NTY4NiA3My4zNzg0IDMuNjU2ODZDNzMuMzUzMSAzLjY1ODUgNzMuMzI3NCAzLjY1OTMxIDczLjMwMTcgMy42NjAxM0M2OS42NTg2IDMuNjk5MzQgNjcuOTk5MSA2Ljg1NTUyIDY3Ljk5OTEgOS43NzE1NUM2Ny45OTkxIDEyLjc5MzggNjkuNjE0NyAxNS44NDQyIDczLjIyNDIgMTUuODQ0MkM3Ni40NDQ1IDE1Ljg0NDIgNzcuNzIzIDE1LjA2OTggNzguNDc4OCAxMC43MjMxTDc5LjA5MzcgNy4zNDcyNEM3OS45NDYgMy4yOTc4NyA4Mi45NDg1IDAuOTk2OSA4Ny4zMzkgMC45OTY5QzkwLjg5MTUgMC45OTY5IDk0LjczOTUgMy42NDUwMiA5NC44NzQgOC41NTI0NUM5NC44NzY1IDguNTg1OTQgOTUuMDQ4NSAxMi42NzgyIDkxLjY3NjQgMTUuNjM5Mkg5My41MDA3Qzk0LjMyODUgMTUuNjM5MiA5NSAxNi4yODk3IDk1IDE3LjA5MTlDOTUgMTcuODk0NCA5NC4zMjg1IDE4LjU0NSA5My41MDA3IDE4LjU0NUg4My44OTUyQzgzLjA5NTIgMTguNTQ1IDgyLjQzNTUgMTcuOTM1NiA4Mi4zOTcyIDE3LjE2MTNDODIuMzU5MiAxNi4zODY5IDgyLjk1NjEgMTUuNzE5MiA4My43NTI3IDE1LjY0NTNDODcuMjc3IDE1LjMxOTQgODkuNzA2NiAxNC4wNjE5IDkwLjk3MzMgMTEuOTA4M0M5MS45MzM1IDEwLjI3NjggOTEuODc3OCA4LjY3NzQzIDkxLjg3NyA4LjY2MTA5QzkxLjc5MDYgNS41MjczNyA4OS41Mjk2IDMuOTAzMTMgODcuMzM5IDMuOTAzMTNDODQuMzgwNCAzLjkwMzEzIDgyLjU5NzggNS4yNDUxNiA4Mi4wNDA2IDcuODg5NjFMODEuNDM0OCAxMS4yMTY5QzgwLjQ5MjMgMTYuNjM0OSA3OC4xODk2IDE4Ljc1IDczLjIyNDIgMTguNzVaIiBmaWxsPSIjOTk5OTk5Ii8+Cjwvc3ZnPgo=">
+						</a>
+						<p class="mb-0 small text-muted">주식회사 토르카 | 대표자: 황태용 | 사업자등록번호: 286-88-00238
+							<a class="js-global-footer-business-license-link" href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2868800238&amp;apv_perm_no=" target="_blank">사업자정보확인</a><br>
+							주소: 서울특별시 강남구 테헤란로 124 4층 |<br>
+							통신판매업신고: 제2019-서울강남-04914호 | 개인정보보호책임자: 황태용
+						</p>
+						<p class="small text-muted">Copyright TeamO2 Co., Ltd. All rights reserved.</p>
+						<p class="small text-muted mt-4 mb-0">주식회사 토르카는 통신판매중개자로서 토르카의 거래당사자가 아니며 상품정보, 거래조건 및 거래에 관련한 의무와 책임은 각 판매자에게 있습니다.</p>
+					</div>
+					<div class="col-lg-3 offset-lg-1">
+						<div class="text-14 text-muted mt-5 mt-lg-0">고객센터</div>
+						<h4 class="js-global-footer-btn-custom-cs-tel js-txt-custom-cs-tel dc-inline-block color-blue font-weight-bold my-3" role="button">010-4045-2764</h4>
+						<div class="small text-muted">매일(공휴일 포함) 오전 9시 ~ 오후 6시<br>점심시간 오후 12시30분 ~ 1시30분 (1시간)</div>
+						<div class="small text-muted">이메일 hwangty@nate.com</div>
+					</div>
+				</div>
+				<hr class="my-5">
+				<div class="row">
+					<div class="col">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>

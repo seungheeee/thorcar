@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html>
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>ThorCar</title>
+
+<script type="text/javascript">
+
+function sendIt() {
+	
+	big.src='images/kukto1.jpeg'
+	
+	return submit
+}
+
+function sendIt2() {
+	
+	big.src='images/kukto.jpg'
+	
+	return submit
+}
+
+</script>
+
+
+
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+<link rel="stylesheet" type="text/css" href="https://korean.visitkorea.or.kr/resources/css/common.css?v=20201027ea6f920e-adeb-4ae8-b89f-74092461750d"/>
+<link rel="stylesheet" type="text/css" href="https://korean.visitkorea.or.kr/resources/css/content.css?v=2020102768829544-8e4d-4d1a-843d-3da115d835f8"/>
+
+
+
+
+
+
+</head>
+<body>
+<main id="content" role="main">
+
+	<!-- 맨위상단메뉴고정 -->
+	<div class="main-contents">
+		<nav class="navbar navbar-expand-lg navbar-light bg-white dc-none dc-lg-block border-bottom fixed-top header-pc" id="container_pc_navbar" style="display: flex;">
+			<div class="container">
+				<a class="js-btn-navbar-brand navbar-brand clickable" style="font-size: initial;" href="main.action">
+					<img class="js-img-header-logo h-100" src="logoimages/logo.png" style="height: 78px !important;"></a>
+						
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mr-auto">
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="0" href="/main.action">홈</a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="1">단기렌트<span class="sr-only"></span></a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="2">월구독</a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="3" href="/searchCar.action">차량검색</a>
+								</li>
+								<li class="nav-item container-pc-header-menu">
+									<a class="nav-link pc-header-menu clickable" data-mt="3" href="/charging.action">전기차충전소</a>
+								</li>
+								<li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="4" href="/travel.action">여행지검색</a></li>
+								
+								<li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="5" href="/cscenter.action">고객센터</a></li>
+								<li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="6" href="/mypage.action">마이페이지</a></li>
+							</ul>
+							
+							<div th:if="${session.loginDTO== null}">
+    							
+    							<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/login.action'">로그인</button>
+								<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/signup.action'">회원가입</button>
+    
+							</div>
+							<div th:unless="${session.loginDTO== null}">
+    							
+    							
+    							<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" 
+    							type="button"  th:text="|${session.loginDTO.id} 님 반가워요|"></button>
+    							
+    							<button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/logout.action'">로그아웃</button>
+    							
+    			
+							</div>
+						</div>
+			</div>
+		</nav>
+	</div>
+	
+	
+	<header id="common_header" class="main_gnb sub"></header>
+
+	<!-- contents -->
+	<div id="contents">
+
+		<div class="tit_cont position">
+			<div class="area_tag">
+				<span class="name1"><span class="ico">All</span>인기</span>
+			</div>
+			<h2 class="tag">#서울</h2>
+		</div>
+			
+		<div style="position: relative; float: left; margin: 22px 0 0 33px; width: 520px;">
+			<span>
+				<input type="text" placeholder="지역명" id="inp_search" style="padding: 0 50px 0 20px; height: 45px; line-height: 45px; border: 0; width: 100%; font-size: 16px; box-sizing: border-box; background: #eef0f2; outline: none; border-radius: 10px;"/>
+				<a href="" style="overflow: hidden; text-indent: -9999px; position: absolute;    top: 11px;    right: 20px;    width: 24px;    height: 24px;    background: url(https://cdn.visitkorea.or.kr/resources/images/common/btn_gnb_search.png) 0 0 no-repeat;">검색</a>
+			</span>
+		</div>
+		
+
+	
+		<!-- 썸네일 리스트(추후 API로 리스트 나열)-->
+		<div class="box_leftType1" style="margin-top: 30px !important;">
+			<div class="total_check">
+				<strong>총<span id="totalCnt">3,497</span>건</strong>
+			</div>
+			<ul class="list_thumType flnon">
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							
+							onmouseover="sendIt();" 
+							onmouseout="sendIt2();">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+					
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+					<div>
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb"  alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					
+					</div>
+					
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="this.src='images/kukto1.jpeg'" 
+							onmouseout="this.src='images/kukto.jpg'">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+			</ul>
+			
+			<!-- paging -->
+			<div class="page_box">
+				<a class="on" href="javascript:" id="1">1</a> 
+				<a href="" id="2">2</a>  
+				<a href="" id="3">3</a>  
+				<a href="" id="4">4</a>  
+				<a href="" id="5">5</a>  
+				<a href="" class="btn_next ico" id="6">다음</a>
+				<a class="btn_last ico" href="" id="350">끝</a>
+			</div>
+				<!-- //paging -->
+		</div>
+		
+		
+		<div class="box_rightType1" style="margin-top: 30px !important;">
+				<li class="bdr_nor">
+					<div class="photo">
+						<a href="" onclick="">
+							<img name="big" src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&amp;id=b7f8788c-8d79-49c7-877c-3afaa988ec40&amp;thumb" alt="국토발전전시관"
+							onmouseover="sendIt();" 
+							onmouseout="sendIt2();">
+						</a>
+					</div>
+					<div class="area_txt">
+						<div class="tit">
+							<a href="" onclick="">국토발전전시관</a>
+						</div>	
+						<p>서울 중구</p>	
+						<p>02-3425-8900</p>	
+						<p class="tag">
+							<span>#문화시설</span>	
+						</p>
+					</div>
+				</li>
+		</div>
+</div>
+</main>
+</body>
+	

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ThorCar</title>
+
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?8341415e5d1784eb0583"/>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?6cf12188f920809f5aa6"/>
+<script type="text/javascript" src="js/slideshow1.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
+<style>
+#modal {
+  display : none;
+  position:relative;
+  width:100%;
+  height:100%;
+ 
+}
+
+ 
+.ui-datepicker{ font-size: 15px; width: 250px; background:white; }
+.ui-widget-header{background:salmon}
+.ui-datepicker-title{color:white}
+.ui-datepicker select.ui-datepicker-month{ width:30%; font-size: 11px; }
+.ui-datepicker select.ui-datepicker-year{ width:40%; font-size: 11px; }
+
+}
+
+</style>
+</head>
+
+<body>
+<main id="content" role="main">
+   <!-- 맨위상단메뉴고정 -->
+   <div class="main-contents">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white dc-none dc-lg-block border-bottom fixed-top header-pc" id="container_pc_navbar" style="display: flex;">
+         <div class="container">
+            <a class="js-btn-navbar-brand navbar-brand clickable" style="font-size: initial;" href="main.action">
+               <img class="js-img-header-logo h-100" src="logoimages/logo.png" style="height: 78px !important;"></a>
+                  
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="0" href="main.action">홈</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="1" href="/carInfo.action">단기렌트<span class="sr-only"></span></a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="2">월구독</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="3">차량검색</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="3" href="/charging.action">전기차충전소</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="4" href="/travel.action">여행지검색</a></li>
+                        
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="5">고객센터</a></li>
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="6">마이페이지</a></li>
+                     </ul>
+                     
+                     <div th:if="${session.loginDTO== null}">
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/login.action'">로그인</button>
+                        <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/signup.action'">회원가입</button>
+                     </div>
+                     <div th:unless="${session.loginDTO== null}">
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" 
+                         type="button"  th:text="|${session.loginDTO.id} 님 반가워요|"></button>
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/logout.action'">로그아웃</button>
+                     </div>
+                  </div>
+         </div>
+      </nav>
+   </div>
+   
+   
+   <div class="pc-mobile-header-container index-page">
+      <!--중간 큰 사진 부분 추후에 부트스트랩으로 수정예정  -->
+      <section class="index-container-first-section opacity-0 animated-fadein" id="js_section_main_banner" >
+         <div class="slideshow-container">
+
+               <!-- Full-width images with number and caption text -->
+              <div class="mySlides fade">
+                 <img src="mainimages/main_ev6_kv_pc.jpg" style="width: 100%">
+               </div>
+
+               <div class="mySlides fade">
+                    <img src="mainimages/main_k8_210408_w.jpg" style="width: 100%">
+               </div>
+
+               <div class="mySlides fade">
+                    <img src="mainimages/main_Stinger_kv_pc.jpg" style="width: 100%">
+               </div>
+      
+             <div class="mySlides fade">
+                    <img src="mainimages/main_the_all_new_sportage_kv_pc_20210716.jpg" style="width: 100%">
+             </div>
+         
+               <div class="mySlides fade">
+                    <img src="mainimages/Main-KV_K9.jpg" style="width: 100%">
+             </div>
+         
+               <div class="mySlides fade">
+                 <img src="mainimages/Main-KV.jpg" style="width:100%">
+               </div>
+         
+               <!-- Next and previous buttons -->
+               <a class="prev" onclick="moveSlides(-1)">&#10094;</a>
+               <a class="next" onclick="moveSlides(1)">&#10095;</a>
+             </div>
+             <br/>
+         
+             <!-- The dots/circles -->
+             <div style="text-align:center">
+               <span class="dot" onclick="currentSlide(0)"></span>
+               <span class="dot" onclick="currentSlide(1)"></span>
+               <span class="dot" onclick="currentSlide(2)"></span>
+               <span class="dot" onclick="currentSlide(3)"></span>
+               <span class="dot" onclick="currentSlide(4)"></span>
+               <span class="dot" onclick="currentSlide(5)"></span>
+             </div>
+      </section>   
+      
+            
+      <!--중간 큰 사진 부분 아래 차량검색부분  -->
+      <form id="dateForm" action="searchCar_ok.action" method="post">
+      <section class="index-container-search opacity-0 animated-fadein" id="js_index_section_search" style="display: block; top: 290px; !important">         
+         <div class="d-flex justify-content-center">
+            <div class="index-box-search">
+               <div class="row mt-3">
+                  <div class="col-lg-6">
+                     <div class="form-group mb-0">
+                        <div class="dc-flex align-items-center justify-content-start mb-2">
+                           <img class="icon mr-2" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI1IDI1Ij4KICA8ZyBmaWxsPSIjRDRENEQ0Ij4KICAgIDxwYXRoIGQ9Ik0xNy40NjQ2NTUsMTkuNjYxNjgyNSBDMTYuNDk2NjUyLDIwLjY0NzYxMTUgMTUuNDYyMzQwNCwyMS41NDU4Mjk1IDE0LjQyNzcxNzksMjIuMzQwNzg3OSBDMTQuMDY1MDI4NiwyMi42MTk0NjI1IDEzLjcyNzU2NSwyMi44NjU3NjY5IDEzLjQyMzU5ODgsMjMuMDc3NTk1MiBDMTMuMjM4MzYyOCwyMy4yMDY2ODI2IDEzLjEwMzM4ODEsMjMuMjk2ODg1IDEzLjAyNjk2NTIsMjMuMzQ2MDQ2IEMxMi43MDc4NjA3LDIzLjU1MTMxNzggMTIuMjkyMTM5MywyMy41NTEzMTc4IDExLjk3MzAzNDgsMjMuMzQ2MDQ2IEMxMS44OTY2MTE5LDIzLjI5Njg4NSAxMS43NjE2MzcyLDIzLjIwNjY4MjYgMTEuNTc2NDAxMiwyMy4wNzc1OTUyIEMxMS4yNzI0MzUsMjIuODY1NzY2OSAxMC45MzQ5NzE0LDIyLjYxOTQ2MjUgMTAuNTcyMjgyMSwyMi4zNDA3ODc5IEM5LjUzNzY1OTYzLDIxLjU0NTgyOTUgOC41MDMzNDgwMSwyMC42NDc2MTE1IDcuNTM1MzQ0OTUsMTkuNjYxNjgyNSBDNC43MTIyODE0OSwxNi43ODYzNDAxIDMsMTMuNzU3MzA0MSAzLDEwLjY2NjY2NjUgQzMuMDAwMDAwMDgsNS42MDQwNTYzOCA3LjI1MzI5NDkzLDEuNSAxMi41LDEuNSBDMTcuNzQ2NzA1MSwxLjUgMjEuOTk5OTk5OSw1LjYwNDA1NjM4IDIyLDEwLjY2NjY2NjUgQzIyLDEzLjc1NzMwNDEgMjAuMjg3NzE4NSwxNi43ODYzNDAxIDE3LjQ2NDY1NSwxOS42NjE2ODI1IFogTTEzLjI0NDE1NzEsMjAuOTA2NjA3NyBDMTQuMjEzNDQwOSwyMC4xNjE4NTI1IDE1LjE4MzAzNTUsMTkuMzE5ODM2MiAxNi4wODUzNDUsMTguNDAwODE3MyBDMTguNjA2MDMxNSwxNS44MzM0NTE0IDIwLjEsMTMuMTkwNjEyMyAyMC4xLDEwLjY2NjY2NjUgQzIwLjA5OTk5OTksNi42MTY1Nzg0MyAxNi42OTczNjQxLDMuMzMzMzMzMzMgMTIuNSwzLjMzMzMzMzMzIEM4LjMwMjYzNTk1LDMuMzMzMzMzMzMgNC45MDAwMDAwNiw2LjYxNjU3ODQzIDQuOSwxMC42NjY2NjY1IEM0LjksMTMuMTkwNjEyMyA2LjM5Mzk2ODUxLDE1LjgzMzQ1MTQgOC45MTQ2NTUwNSwxOC40MDA4MTczIEM5LjgxNjk2NDQ5LDE5LjMxOTgzNjIgMTAuNzg2NTU5MSwyMC4xNjE4NTI1IDExLjc1NTg0MjksMjAuOTA2NjA3NyBDMTIuMDIwNDEyNSwyMS4xMDk4OTEzIDEyLjI2OTgwNCwyMS4yOTQxNDI2IDEyLjUsMjEuNDU4MjMxOSBDMTIuNzMwMTk2LDIxLjI5NDE0MjYgMTIuOTc5NTg3NSwyMS4xMDk4OTEzIDEzLjI0NDE1NzEsMjAuOTA2NjA3NyBaIi8+CiAgICA8cGF0aCBkPSJNMTIuNSwxNC41IEMxMS4zNDIxOTA3LDE0LjUgMTAuMjYyMTYzOCwxNC4wMDQwMTkyIDkuNTA4NDY1MzYsMTMuMTU1MzY4NiBDOC44NjMyOTc5OSwxMi40Mjg5MjIxIDguNSwxMS40OTEzNjUgOC41LDEwLjUgQzguNSw4LjI5MDg2MSAxMC4yOTA4NjEsNi41IDEyLjUsNi41IEMxNC43MDkxMzksNi41IDE2LjUsOC4yOTA4NjEgMTYuNSwxMC41IEMxNi41LDEyLjcwOTEzOSAxNC43MDkxMzksMTQuNSAxMi41LDE0LjUgWiBNMTIuNSwxMi41IEMxMy42MDQ1Njk1LDEyLjUgMTQuNSwxMS42MDQ1Njk1IDE0LjUsMTAuNSBDMTQuNSw5LjM5NTQzMDUgMTMuNjA0NTY5NSw4LjUgMTIuNSw4LjUgQzExLjM5NTQzMDUsOC41IDEwLjUsOS4zOTU0MzA1IDEwLjUsMTAuNSBDMTAuNSwxMC45OTcwNzY2IDEwLjY4MDcwNzUsMTEuNDYzNDI1NSAxMS4wMDM4NTkyLDExLjgyNzI4ODQgQzExLjM4MTkwMTIsMTIuMjUyOTU2NiAxMS45MTk4NTI0LDEyLjUgMTIuNSwxMi41IFoiLz4KICA8L2c+Cjwvc3ZnPgo=">
+                           <label class="text-14 color-grey-5 mb-0">지역</label>
+                        </div>
+                        <div class="index-search-selected-box index-search-selected-box-location text-20 font-weight-bold clickable" 
+                           id="modal_opne_btn" data-type="location">
+                           아이티윌
+                        </div>
+                        <div class="color-grey-5 line-height-1">
+                           <span class="stay_date"></span>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  
+                  
+                  <div class="col-lg-6">
+                     <div class="form-group mb-0">
+                        <div class="dc-flex align-items-center justify-content-start mb-2">
+                           <img class="icon mr-2" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI2IDI2Ij4KICA8cGF0aCBmaWxsPSIjRDRENEQ0IiBkPSJNMTMuNSwyNCBDNy43MDEwMTAxMywyNCAzLDE5LjI5ODk4OTkgMywxMy41IEMzLDcuNzAxMDEwMTMgNy43MDEwMTAxMywzIDEzLjUsMyBDMTkuMjk4OTg5OSwzIDI0LDcuNzAxMDEwMTMgMjQsMTMuNSBDMjQsMTkuMjk4OTg5OSAxOS4yOTg5ODk5LDI0IDEzLjUsMjQgWiBNMTMuNSwyMiBDMTguMTk0NDIwNCwyMiAyMiwxOC4xOTQ0MjA0IDIyLDEzLjUgQzIyLDguODA1NTc5NjMgMTguMTk0NDIwNCw1IDEzLjUsNSBDOC44MDU1Nzk2Myw1IDUsOC44MDU1Nzk2MyA1LDEzLjUgQzUsMTguMTk0NDIwNCA4LjgwNTU3OTYzLDIyIDEzLjUsMjIgWiBNMTcuOTAzODk0NiwxMi44ODc2NTI1IEMxOC40NTYxNzk0LDEyLjg4NzY1MjUgMTguOTAzODk0NiwxMy4zMzUzNjc3IDE4LjkwMzg5NDYsMTMuODg3NjUyNSBDMTguOTAzODk0NiwxNC40Mzk5MzcyIDE4LjQ1NjE3OTQsMTQuODg3NjUyNSAxNy45MDM4OTQ2LDE0Ljg4NzY1MjUgTDEzLjUsMTQuODg3NjUyNSBDMTIuOTQ3NzE1MywxNC44ODc2NTI1IDEyLjUsMTQuNDM5OTM3MiAxMi41LDEzLjg4NzY1MjUgTDEyLjUsNy44MzMyMjQ5NyBDMTIuNSw3LjI4MDk0MDIyIDEyLjk0NzcxNTMsNi44MzMyMjQ5NyAxMy41LDYuODMzMjI0OTcgQzE0LjA1MjI4NDcsNi44MzMyMjQ5NyAxNC41LDcuMjgwOTQwMjIgMTQuNSw3LjgzMzIyNDk3IEwxNC41LDEyLjg4NzY1MjUgTDE3LjkwMzg5NDYsMTIuODg3NjUyNSBaIi8+Cjwvc3ZnPgo=">
+                           
+                           <label class="text-14 color-grey-5 mb-0">날짜 및 시간</label>
+                        </div>
+                        <input class="custom-select border-radius-none" type="text" name="checkin" id="checkin_date" readonly="readonly">
+                        
+                        <div class="align-self-center text-center">
+                           <img class="icon-25" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjYiIGhlaWdodD0iMjYiIHZpZXdCb3g9IjAgMCAyNiAyNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNy44MzEgNy4yNTY3MUMxOC4yNDE1IDYuODg3MjUgMTguODczOCA2LjkyMDUzIDE5LjI0MzMgNy4zMzEwNEwyMy43NDMzIDEyLjMzMUMyNC4wODU2IDEyLjcxMTMgMjQuMDg1NiAxMy4yODg3IDIzLjc0MzMgMTMuNjY5TDE5LjI0MzMgMTguNjY5QzE4Ljg3MzggMTkuMDc5NSAxOC4yNDE1IDE5LjExMjggMTcuODMxIDE4Ljc0MzNDMTcuNDIwNSAxOC4zNzM4IDE3LjM4NzIgMTcuNzQxNSAxNy43NTY3IDE3LjMzMUwyMC43NTQ2IDE0SDNDMi40NDc3MiAxNCAyIDEzLjU1MjMgMiAxM0MyIDEyLjQ0NzcgMi40NDc3MiAxMiAzIDEySDIwLjc1NDZMMTcuNzU2NyA4LjY2ODk3QzE3LjM4NzIgOC4yNTg0NiAxNy40MjA1IDcuNjI2MTcgMTcuODMxIDcuMjU2NzFaIiBmaWxsPSIjRDRENEQ0Ii8+Cjwvc3ZnPgo=">
+                        </div>
+                        <input class="custom-select border-radius-none" type="text" name="checkout" id="checkout_date" readonly="readonly">
+                        
+                     </div>
+                  </div>
+               </div>
+            </div>
+            
+            <a class="js-index-btn-search ml-2 dc-lg-block dc-none text-decoration-none clickable" onclick="searchCar();">
+               <div class="index-btn-search dc-flex flex-column justify-content-center align-items-center">
+                  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDQwIDQwIj4KICAgIDxwYXRoIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjMuNDE1IiBkPSJNMjUuNjYzIDI1LjI4NmwxMi4wMiAxMS4yMTkiLz4KICAgIDxwYXRoIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIzLjQxNSIgZD0iTTE2LjczNCAyOC4wNTNjNy4wNzEgMCAxMi44MDQtNS4zODUgMTIuODA0LTEyLjAyN0MyOS41MzggOS4zODQgMjMuODA1IDQgMTYuNzM0IDQgOS42NjIgNCAzLjkyOSA5LjM4NCAzLjkyOSAxNi4wMjZjMCA2LjY0MiA1LjczMyAxMi4wMjcgMTIuODA1IDEyLjAyN3oiLz4KPC9zdmc+Cg==">
+                     <div class="text-16 font-weight-bold mt-2">차량 검색</div>
+               </div>
+            </a>
+            
+         </div>
+         
+      </section>
+      </form>
+      
+      
+      <!-- 모달 시작이다!!!!!!!!!!!!!!!!!!!!! -->
+      <div class = "contents-modal" id="modal">
+         <div class="modal fade pr-0 show" id="modal_select_area" style="padding-right: 17px; display: block; animation-duration: 0.33s; !important">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable stretched-modal">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title line-height-1 text-16 color-grey-3" id="modal_common_popup_txt_title">지역선택</h5>
+                     <button class="btn btn-xs btn-icon btn-soft-secondary right-auto" type="button" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true"  id = "modal_close_btn" width="16" height="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                     <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"></path></svg></button>
+                  </div>         
+                  
+                  <div class="container-as-bottom-bar is-pc-modal" id="js_csabb_container_bottom_info">
+                           <div class="box-round-address-info container pt-3" id="js_csabb_card_bottom_info">
+                              <div class="pb-3 clickable" id="js_csabb_btn_address_search">
+                                 <div class="container-input-common-search in-bottom-bar box-round-gray">
+                                    <span class="icon mr-2 line-height-1">
+                                       <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNBQUI0QzYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTYuMjE4IDExLjg0MUMzLjMzNiAxMS44NDEgMSA5LjQxNCAxIDYuNDIxIDEgMy40MjcgMy4zMzYgMSA2LjIxOCAxczUuMjE4IDIuNDI3IDUuMjE4IDUuNDJjMCAuOTc0LS4yNDcgMS44ODctLjY3OSAyLjY3Ni4wNjMuMDQuMTIyLjA5LjE3Ny4xNDZsMy43NzggMy45MjVjLjM4My4zOTguMzgzIDEuMDQzIDAgMS40NDFsLS4wODkuMDkyYy0uMzgzLjM5OC0xLjAwNC4zOTgtMS4zODcgMGwtMy43NzgtMy45MjVjLS4wMi0uMDItLjAzNy0uMDQtLjA1NC0uMDYtLjg4Mi43MDYtMS45ODcgMS4xMjYtMy4xODYgMS4xMjZ6bTAtMi4xNjhjMS43MyAwIDMuMTMxLTEuNDU2IDMuMTMxLTMuMjUyIDAtMS43OTctMS40MDItMy4yNTMtMy4xMy0zLjI1My0xLjczIDAtMy4xMzIgMS40NTYtMy4xMzIgMy4yNTMgMCAxLjc5NiAxLjQwMiAzLjI1MiAzLjEzMSAzLjI1MnoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                    </span>
+                                    <input class="span-txt text-16 color-grey-4" placeholder="지역이나 역, 건물 이름으로 검색"></input>
+                                 </div>
+                              </div>
+                              <div class="pb-2 dc-none" id="js_csabb_container_btn_ok" style="display: none;">
+                                 <button class="btn btn-primary btn-block btn-border-10 text-18 font-weight-bold" id="js_csabb_btn_ok">대여장소로 정하기</button>
+                              </div>
+                           </div>
+                        </div>
+                  <div class="modal-body">
+                     <div class="container-as-contents is-exist-tab" id="js_vsas_container_area">
+                        <div class="" id="js_vsas_container_area_s_kor" style="display: block;">
+                           <div class="dc-flex">
+                              <div class="container-left-menu">
+                                 <div class="inner-scroll-y" style="height: 634.719px; padding-bottom: 84px;">
+                                    <div id="js_container_vsa_kor_left_sido_menu">
+                                       <div class="js-btn-left-menu btn-left-menu text-14 clickable">서울</div>
+                                       <div class="js-btn-left-menu btn-left-menu text-14 clickable">인천</div>
+                                       <div class="js-btn-left-menu btn-left-menu text-14 clickable">강원</div>
+                                       <div class="js-btn-left-menu btn-left-menu text-14 clickable">제주</div>
+                                       <div class="js-btn-left-menu btn-left-menu text-14 clickable">부산</div>
+                                       <div class="js-btn-left-menu btn-left-menu text-14 clickable">대구</div>
+                                       <div class="js-btn-left-menu btn-left-menu text-14 clickable">광주</div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="container-right-menu">
+                                 <div class="inner-scroll-y" style="height: 634.719px; padding-bottom: 84px;">
+                                    <div id="js_vsa_container_kor_right_menu">
+                                    <!-- 동찬이 지도 삽입 -->
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="5">제주국제공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="7">김포국제공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="2">김해국제공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="4">청주국제공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="12">광주공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="9">대구국제공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="15">울산공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="3">여수공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="1">인천국제공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="17">사천공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="14">포항공항</div>
+                                       <div class="js-btn-right-menu btn-right-menu px-4 text-14 clickable" data-t="0" data-c="10">양양국제공항</div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        
+                     </div>
+                  </div>
+               </div>               
+            </div>
+         </div>
+      </div>
+      
+      
+      <!-- 토르카 추천 여행지  -->
+      <section class="index-container-search opacity-0 animated-fadein" id="sectoin_main_recommend_location_pc" style="display: block; top: 800px; !important">
+         <div class="container">
+            <div class="mb-2 js-main-search-history clickable" style="width:30%; margin-left: auto; margin-right: auto;">
+               <div class="index-box-search-history p-3 card-shadow" >
+                  <div class="d-flex justify-content-between" >
+                        <div class="ml-2" >
+                           <div class="js-index-txt-rent-history-area text-32 font-weight-bold color-grey-4" >&nbsp;&nbsp;&nbsp;토르카 추천 여행지</div>
+                           <div class="d-flex text-12 color-grey-5">
+                              <div class="js-index-txt-rent-history-period ml-1 font-weight-bold" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              이번엔 여기로 떠나볼까요?</div>
+                           </div>
+                        </div>
+                  </div>
+               </div>
+            </div>
+               <div class="mt-5">
+                  <div class="js-index-loading-recommend-location container-loading-dot" style="display: none;">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                  </div>
+               </div>
+                  
+
+               <div id="js_index_pc_flicking_recommend_location">
+                  <div class="eg-flick-viewport" style="position: relative; z-index: 100; overflow: hidden; min-height: 100%; width: 100%; touch-action: pan-y; user-select: none; -webkit-user-drag: none; height: 218px;">
+                     <div class="eg-flick-camera" style="width: 100%; height: 100%; will-change: transform; transform: translate(0px, 0px);">
+                        <a class="js-index-recommend-location text-decoration-none clickable eg-flick-panel" id="js_index_recommend_location_0" data-title="제주도" data-i="0" style="position: absolute; left: 0px;">
+                           <div class="index-wrapper-box-recommend-location-pc">
+                              <div class="index-box-recommend-location">
+                                 <div class="index-box-recommend-location-up js-main-img-recommend-location" style="background-image: url(&quot;https://s3.ap-northeast-2.amazonaws.com/carmoreweb/index/rloc/rloc_6_1581563026894_602.jpg&quot;);"></div>
+                                 <div class="index-box-recommend-location-down text-center">
+                                    <div class="js-index-recommend-loc-title text-20 font-weight-bold color-grey-3 mt-2">제주도</div>
+                                    <div class="js-index-recommend-loc-desc text-12 color-grey-5">보랏빛이 유혹한 석양 명소</div>
+                                 </div>
+                              </div>
+                           </div>
+                        </a>
+                        <a class="js-index-recommend-location text-decoration-none clickable eg-flick-panel" id="js_index_recommend_location_1" data-title="울릉도" data-i="1" style="position: absolute; left: 186px;">
+                           <div class="index-wrapper-box-recommend-location-pc">
+                              <div class="index-box-recommend-location">
+                                 <div class="index-box-recommend-location-up js-main-img-recommend-location" style="background-image: url(&quot;https://s3.ap-northeast-2.amazonaws.com/carmoreweb/index/rloc/rloc_4_1581563284855_304.jpg&quot;);"></div>
+                                    <div class="index-box-recommend-location-down text-center">
+                                       <div class="js-index-recommend-loc-title text-20 font-weight-bold color-grey-3 mt-2">울릉도</div>
+                                       <div class="js-index-recommend-loc-desc text-12 color-grey-5">나의 인생 버킷리스트</div>
+                                    </div>
+                              </div>
+                           </div>
+                        </a>
+                        <a class="js-index-recommend-location text-decoration-none clickable eg-flick-panel" id="js_index_recommend_location_2" data-title="여수" data-i="2" style="position: absolute; left: 372px;">
+                           <div class="index-wrapper-box-recommend-location-pc">
+                              <div class="index-box-recommend-location">
+                                 <div class="index-box-recommend-location-up js-main-img-recommend-location" style="background-image: url(&quot;https://s3.ap-northeast-2.amazonaws.com/carmoreweb/index/rloc/rloc_7_1581563056368_795.jpg&quot;);"></div>
+                                 <div class="index-box-recommend-location-down text-center">
+                                    <div class="js-index-recommend-loc-title text-20 font-weight-bold color-grey-3 mt-2">여수</div>
+                                    <div class="js-index-recommend-loc-desc text-12 color-grey-5">감성 충전 밤바다</div>
+                                 </div>
+                              </div>
+                           </div>
+                        </a>
+                        <a class="js-index-recommend-location text-decoration-none clickable eg-flick-panel" id="js_index_recommend_location_3" data-title="부산" data-i="3" style="position: absolute; left: 558px;">
+                           <div class="index-wrapper-box-recommend-location-pc">
+                              <div class="index-box-recommend-location">
+                                 <div class="index-box-recommend-location-up js-main-img-recommend-location" style="background-image: url(&quot;https://s3.ap-northeast-2.amazonaws.com/carmoreweb/index/rloc/rloc_2_1581563104989_615.jpg&quot;);"></div>
+                                 <div class="index-box-recommend-location-down text-center">
+                                    <div class="js-index-recommend-loc-title text-20 font-weight-bold color-grey-3 mt-2">부산</div>
+                                    <div class="js-index-recommend-loc-desc text-12 color-grey-5">살아있는 한국 제2의 수도</div>
+                                 </div>
+                              </div>
+                           </div>
+                        </a>
+                        <a class="js-index-recommend-location text-decoration-none clickable eg-flick-panel" id="js_index_recommend_location_4" data-title="서울" data-i="4" style="position: absolute; left: 744px;">
+                           <div class="index-wrapper-box-recommend-location-pc">
+                              <div class="index-box-recommend-location">
+                                 <div class="index-box-recommend-location-up js-main-img-recommend-location" style="background-image: url(&quot;https://s3.ap-northeast-2.amazonaws.com/carmoreweb/index/rloc/rloc_8_1581563079560_507.jpg&quot;);"></div>
+                                 <div class="index-box-recommend-location-down text-center">
+                                    <div class="js-index-recommend-loc-title text-20 font-weight-bold color-grey-3 mt-2">서울</div>
+                                    <div class="js-index-recommend-loc-desc text-12 color-grey-5">유니크한 매력의 도시 여행</div>
+                                 </div>
+                              </div>
+                           </div>
+                        </a>
+                        <a class="js-index-recommend-location text-decoration-none clickable eg-flick-panel" id="js_index_recommend_location_5" data-title="강릉" data-i="5" style="position: absolute; left: 930px;">
+                           <div class="index-wrapper-box-recommend-location-pc">
+                              <div class="index-box-recommend-location">
+                                 <div class="index-box-recommend-location-up js-main-img-recommend-location" style="background-image: url(&quot;https://s3.ap-northeast-2.amazonaws.com/carmoreweb/index/rloc/rloc_10_1581568823489_213.jpg&quot;);"></div>
+                                    <div class="index-box-recommend-location-down text-center">
+                                       <div class="js-index-recommend-loc-title text-20 font-weight-bold color-grey-3 mt-2">강릉</div>
+                                       <div class="js-index-recommend-loc-desc text-12 color-grey-5">문득문득 그리운 바다 도시</div>
+                                    </div>
+                              </div>
+                           </div>
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+      </section>
+      
+      <!-- 토르카 고객리뷰  -->
+      <div class="is-only-none-member">
+         <section class="bg-color-very-very-light-blue index-section-padding is-only-none-member opacity-0 animated-fadein" id="js_section_main_reviews">
+            <div class="container">
+               <div class="text-center">
+                  <div class="text-32 font-weight-bold color-grey-2">토르카 고객 리뷰</div>
+                  <div class="text-16 color-grey-4">카모아는 이미 전국의 고객들로부터 사랑받고 있습니다.</div>
+               </div>
+               <div class="row mt-5">
+                  <div class="col">
+                     <div class="flicking-root" id="js_index_review_flicking_root">
+                        <div id="js_index_review_flicking">
+                           <div class="eg-flick-viewport" style="position: relative; z-index: 100; overflow: hidden; min-height: 100%; width: 100%; touch-action: pan-y; user-select: none; -webkit-user-drag: none; height: 363px;">
+                              <div class="eg-flick-camera" style="width: 100%; height: 100%; will-change: transform; transform: translate(0px, 0px);">
+                                 <div class="index-box-review eg-flick-panel" style="position: absolute; left: 0px;">
+                                    <div class="text-center">
+                                       <div class="text-40 font-weight-bold text-primary">5.0</div>
+                                       <div class="index-box-review-container-rate d-flex justify-content-center">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                       </div>
+                                       <div class="mt-3">
+                                          <div class="text-16 text-left">
+                                             <span class="index-txt-review-highlighter">카모아의 편리함도, 업체의 대응이나 친절도</span>
+                                             <span>도 마음에 들었습니다. 차량 상태도 좋았고요,&nbsp;</span>
+                                             <span class="index-txt-review-highlighter">사후 문제 대응도 탁월</span>
+                                             <span>하다는 생각이 들었습니다.<br>다음에도 또 같은 곳에서 빌리고 싶다는 생각이 들었어요!</span>
+                                          </div>
+                                       </div>
+                                       <div class="index-box-review-bottom-box text-left">
+                                          <div class="index-txt-review-bottom-box-top text-14">제주에서 1일 렌트하신</div>
+                                          <div class="text-16-b text-white">염승희 고객님</div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="index-box-review eg-flick-panel" style="position: absolute; left: 370px;">
+                                    <div class="text-center">
+                                       <div class="text-40 font-weight-bold text-primary">4.9</div>
+                                       <div class="index-box-review-container-rate d-flex justify-content-center">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                       </div>
+                                       <div class="mt-3">
+                                          <div class="text-16 text-left">
+                                             <span>카쉐어링만 하다가 일반 렌터카 이용해봤는데요.<br>직원분들도&nbsp;</span>
+                                             <span class="index-txt-review-highlighter">친절하고 차상태도 괜찮고</span>
+                                             <span>&nbsp;시외 첫 장거리운전 해봤는데 사고없이 안전운전 했습니다.</span>
+                                          </div>
+                                       </div>
+                                       <div class="index-box-review-bottom-box text-left">
+                                          <div class="index-txt-review-bottom-box-top text-14">부산에서 1일 렌트하신</div>
+                                          <div class="text-16-b text-white">임승현 고객님</div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="index-box-review eg-flick-panel" style="position: absolute; left: 740px;">
+                                    <div class="text-center">
+                                       <div class="text-40 font-weight-bold text-primary">5.0</div>
+                                       <div class="index-box-review-container-rate d-flex justify-content-center">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                          <img class="index-box-review-img-rate-star" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDEzIDEzIj4KICAgIDxwYXRoIGZpbGw9IiMwRDZGRkMiIGQ9Ik0zLjg4NyAxMS40NjVhLjU0Mi41NDIgMCAwIDEtLjc4Ni0uNTdMMy42IDcuOTgzbC0yLjExNC0yLjA2YS41NDIuNTQyIDAgMCAxIC4zLS45MjVsMi45MjItLjQyNCAxLjMwNi0yLjY0OGEuNTQyLjU0MiAwIDAgMSAuOTcyIDBsMS4zMDYgMi42NDggMi45MjIuNDI0Yy40NDUuMDY1LjYyMi42MS4zLjkyNEw5LjQgNy45ODRsLjUgMi45MWEuNTQyLjU0MiAwIDAgMS0uNzg3LjU3MUw2LjUgMTAuMDkxbC0yLjYxMyAxLjM3NHoiLz4KPC9zdmc+Cg==">
+                                       </div>
+                                       <div class="mt-3">
+                                          <div class="text-16 text-left">
+                                             <span class="index-txt-review-highlighter">픽업 서비스</span>
+                                             <span>도 좋았고요! 차량 상태에 대해 잘 이야기해주시고 계약하면서 어려운 부분도 잘 알려주셔서 감사했습니다.</span><span class="index-txt-review-highlighter">업체도 친절</span><span>&nbsp;하고 대응 잘해주셔서 편하게 렌트했습니다.<br>크게 불편한 점도 없었구요. 앞으로도 사업 번창하세요. :)!</span>
+                                          </div>
+                                       </div>
+                                       <div class="index-box-review-bottom-box text-left">
+                                          <div class="index-txt-review-bottom-box-top text-14">제주에서 1일 렌트하신</div>
+                                          <div class="text-16-b text-white">박광천 고객님</div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+
+      <div class="is-only-none-member">
+         <section class="bg-white index-section-padding opacity-0 animated-fadein" id="js_section_main_faq">
+            <div class="container">
+               <div class="text-center">
+                  <div class="text-32 font-weight-bold color-grey-2">자주 묻는 질문</div>
+                  <div class="text-16 color-grey-5">이것만 알고 가도 든든해요!</div>
+               </div>
+               <div class="row mt-5">
+                  <div class="col-lg-6 mt-3">
+                     <div class="index-box-faq clickable" data-toggle="collapse" data-target="#index_faq_1">
+                        <div class="dc-flex justify-content-between">
+                           <div class="text-16 color-grey-2">Q1. 주행요금이 별도로 발생하나요?</div>
+                           <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDI1IDI1Ij4KICAgIDxwYXRoIGZpbGw9IiM2NjYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTE0IDVoLTJ2Nkg2djJoNnY2aDJ2LTZoNnYtMmgtNlY1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+                        </div>
+                     </div>
+                     <div class="js-index-faq-collapse collapse mt-3" id="index_faq_1" data-idx="1">
+                        <div class="text-16 color-grey-4">아니요. 렌트카는 주행요금이 별도로 발생하지 않습니다.</div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6 mt-3">
+                     <div class="index-box-faq clickable" data-toggle="collapse" data-target="#index_faq_2">
+                        <div class="dc-flex justify-content-between">
+                           <div class="text-16 color-grey-2">Q2. 예약하면, 예약 확정되는 건가요?</div>
+                              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDI1IDI1Ij4KICAgIDxwYXRoIGZpbGw9IiM2NjYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTE0IDVoLTJ2Nkg2djJoNnY2aDJ2LTZoNnYtMmgtNlY1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+                        </div>
+                     </div>
+                     <div class="js-index-faq-collapse collapse mt-3" id="index_faq_2" data-idx="2">
+                        <div class="text-16 color-grey-4">네, 결제와 동시에 예약이 확정됩니다. 카모아는 실시간 예약서비스를 제공합니다.</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-6 mt-3">
+                     <div class="index-box-faq clickable" data-toggle="collapse" data-target="#index_faq_3">
+                        <div class="dc-flex justify-content-between">
+                           <div class="text-16 color-grey-2">Q3. 좋은 렌트카 업체는 어떻게 고르나요?</div>
+                           <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDI1IDI1Ij4KICAgIDxwYXRoIGZpbGw9IiM2NjYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTE0IDVoLTJ2Nkg2djJoNnY2aDJ2LTZoNnYtMmgtNlY1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+                        </div>
+                     </div>
+                     <div class="js-index-faq-collapse collapse mt-3" id="index_faq_3" data-idx="3">
+                        <div class="text-16 color-grey-4">실사용자가 작성한 업체별 평점과 리뷰를 통해 자신에게 맞는 업체를 선택할 수 있습니다.</div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6 mt-3">
+                     <div class="index-box-faq clickable" data-toggle="collapse" data-target="#index_faq_4">
+                        <div class="dc-flex justify-content-between">
+                           <div class="text-16 color-grey-2">Q4. 예약 후 꼭 알아야 할 게 있다면 알려주세요!</div>
+                           <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDI1IDI1Ij4KICAgIDxwYXRoIGZpbGw9IiM2NjYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTE0IDVoLTJ2Nkg2djJoNnY2aDJ2LTZoNnYtMmgtNlY1eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+Cjwvc3ZnPgo=">
+                        </div>
+                     </div>
+                     <div class="js-index-faq-collapse collapse mt-3" id="index_faq_4" data-idx="4">
+                        <div class="text-16 color-grey-4">아래 4가지만 알고 가도 든든해요!<br><br>1. 차량 대여 장소<br>2. 대여할 때 차량 내외관 촬영하기<br>3. 기름은 쓴 만큼 채우기<br>4. 영업시간 외 대여/반납이라면 업체와 확인하기</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="mt-5 text-center">
+                  <button class="js-main-btn-help js-btn-go-help btn btn-grey-7 px-6 py-2">실시간 채팅으로 질문하기</button>
+               </div>
+            </div>
+         </section>
+      </div>
+   </div>
+   
+</main>
+
+<script>
+    document.getElementById("modal_opne_btn").onclick = function() {
+        document.getElementById("modal").style.display="block";
+    }
+   
+    document.getElementById("modal_close_btn").onclick = function() {
+        document.getElementById("modal").style.display="none";
+    }   
+ 
+ 
+  //데이트피커
+$.datepicker.regional['ko'] = {
+    changeMonth: false, 
+     dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
+     dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+     monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+     monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    dateFormat: "yy/mm/dd",
+    minDate:1,
+     maxDate:31,
+};
+  
+$.datepicker.setDefaults($.datepicker.regional['ko']);
+var currentDate = new Date();
+currentDate.setDate(currentDate.getDate()+1);
+$('#checkin_date').datepicker();
+$("#checkout_date").datepicker( "option", "minDate", 31 );
+$('#checkin_date').datepicker("option", "onClose", function ( selectedDate ) {
+$("#checkout_date").datepicker( "option", "minDate", selectedDate );
+});
+$( "#checkin_date" ).datepicker( "setDate", currentDate);
+
+$('#checkout_date').datepicker();
+$('#checkout_date').datepicker("option", "minDate", $("#checkin_date").val());
+$('#checkout_date').datepicker("option", "onClose", function ( selectedDate ) {
+      
+   $("#checkin_date").datepicker( "option", "maxDate", selectedDate );
+});
+$( "#checkout_date" ).datepicker( "setDate", 2);
+
+//머무르는 기간 함수
+function staydate(){
+   
+   
+   var checkin_month=$('#checkin_date').val().substring(5,7);
+   var checkin_day=$('#checkin_date').val().substring(8,10);
+   var checkout_month=$('#checkout_date').val().substring(5,7);
+   var checkout_day=$('#checkout_date').val().substring(8,10);
+   var imsi= Number(checkout_day); //형변환 임시변수
+   var leftmargin=0; //슬라이드 마진 변수
+   
+   if(checkin_month!=checkout_month){
+      if(checkin_month=='01'||checkin_month=='03'){
+         return 31-checkin_day+imsi;
+      }else if(checkin_month=='02'){
+         if($('#checkin_date').val().substring(0,4)%400==0){
+            return 29-checkin_day+imsi;
+         }else{
+            return 28-checkin_day+imsi;
+         }
+      }else{
+         return 30-checkin_day+imsi;
+      }
+   }else{
+      return checkout_day-checkin_day;
+   }
+
+   
+}
+
+
+var $input = $("#checkin_date");
+$("#checkin_date").on('input', function() {
+    carcur();
+   
+});
+
+var $input = $("#checkout_date");
+$("#checkout_date").on('input', function() {
+    carcur();
+    
+});
+
+(function ($) {
+    var originalVal = $.fn.val;
+    $.fn.val = function (value) {
+        var res = originalVal.apply(this, arguments);
+ 
+        if (this.is('input:text') && arguments.length >= 1) {
+            // this is input type=text setter
+            this.trigger("input");
+        }
+ 
+        return res;
+    };
+})(jQuery);
+
+
+
+
+
+
+ ///계산기 기능
+function carcur(){
+   var days=staydate();
+   if(days==0)
+      days=1;
+   $('.stay_date').text("대여기간 : "+ days + "일");
+}
+
+
+
+/*
+function showDays() {
+    var start = $('#checkin_date').datepicker();
+    var end   = $('#checkout_date').datepicker();
+    if(!start || !end)
+        return;
+    var days = (end - start)/1000/60/60/24;
+    $('#num_nights').val(days);  
+    
+}
+*/
+
+</script>
+
+
+<script type="text/javascript">
+
+function searchCar(){
+   document.getElementById('dateForm').submit()
+}
+
+
+</script>
+
+</body>
+</html>

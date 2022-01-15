@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>로그인</title>
+
+<script type="text/javascript">
+
+function sendIt() {
+	
+	var f = document.myForm;
+	
+	if(!f.id.value){
+		alert("아이디를 입력하세요!");
+		f.userId.focus();
+		return;
+	}
+
+	
+	if(!f.pwd.value){
+		alert("패스워드를 입력하세요!");
+		f.userPwd.focus();
+		return;
+	}
+
+	f.action = "/login_ok.action";
+	f.submit();
+}
+
+</script>
+
+<style>
+
+.fuSBOR {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 50
+px
+;
+    position: relative;
+    font-size: 16px;
+}
+
+</style>
+<link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/login.css?2021104221413" type="text/css"/>
+<link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/common.css?2021104221413" type="text/css"/>
+</head>
+<body class="vsc-initialized">
+	<div class="musinsa-wrapper wrapper-member devicePC">
+	
+		<div id="commonLayoutHeader">
+			<header data-system="CCommonAppbar" class="common-layout__sc-1q47zu5-0 lbAVMi">
+					<div class="common-layout__sc-1q47zu5-1 fhWAHi">
+						<h2 class="common-layout__sc-wllrag-0 fuSBOR">로그인</h2>
+					</div>
+			</header>
+		</div>
+		
+		<div class="n-member-area">
+			<nav class="MCommonTabUnderline">
+                <div id="login-tab" class="MCommonTabUnderline__button MCommonTabUnderline__button--active"></div>
+            </nav>
+            <form name="myForm" class="login-form" action="">
+                <input type="text" name="id" class="n-input" title="아이디" value="" placeholder="아이디를 입력해 주세요.">
+                <input type="password" name="pwd" class="n-input" title="패스워드" value="" placeholder="비밀번호를 입력해 주세요.">
+                
+                <button type="submit" class="n-btn btn-primary" onclick="sendIt();">로그인</button>
+                <div class="login-help-feature">
+                    <div class="login-util">
+                        <a id="id-search" class="gtm-catch-click" href="/searchId.action">아이디 찾기</a>
+                        <span></span>
+                        <a id="pw-search" class="gtm-catch-click" href="/searchPwd.action">비밀번호 찾기</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

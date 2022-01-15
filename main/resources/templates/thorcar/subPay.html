@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+
+<title>ThorCar</title>
+<script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.1.min.js" type="application/javascript"></script>
+<link rel="stylesheet" type="text/css" href="https://carmore.kr/home/css/styles.bundle.css?da88f0b72db384d6084d"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+   $(document).ready(function() {
+      $("#sublevel").html("Basic");
+      $("#subprice").html("590,000원");
+      $("#subprice2").html("590,000원");
+      $("#subprice3").html("590,000원");
+      $('select').on('change',function(){
+         var level = $(this).val();
+         if(level=="Basic"){
+            $("#sublevel").html("Basic");
+            var lev = 'Basic';
+            $('input[name=sublevel]').attr('value',lev);
+            var price = '590000';
+            $('input[name=subprice]').attr('value',price);
+            $("#subprice").html("590,000원");
+            $("#subprice2").html("590,000원");
+            $("#subprice3").html("590,000원");
+         }else{
+            var lev = 'Premium';
+             $('input[name=sublevel]').attr('value',lev);
+             var price = '990000';
+             $('input[name=subprice]').attr('value',price);
+            $("#sublevel").html("Premium");
+            $("#subprice").html("990,000원");
+            $("#subprice2").html("990,000원");
+            $("#subprice3").html("990,000원");
+         }
+      });
+      
+   });
+</script>
+
+
+
+</head>
+
+<body>
+<main id="content" role="main"></main>
+
+   <!-- 맨위상단메뉴고정 -->
+   
+   <div class="main-contents">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white dc-none dc-lg-block border-bottom fixed-top header-pc" id="container_pc_navbar" style="display: flex;">
+         <div class="container">
+            <a class="js-btn-navbar-brand navbar-brand clickable" style="font-size: initial;" href="main.action">
+               <img class="js-img-header-logo h-100" src="logoimages/logo.png" style="height: 78px !important;"></a>
+                  
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="0" href="/main.action">홈</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="1" href="/carInfo.action">단기렌트<span class="sr-only"></span></a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="2" href="/subInfo.action">월구독</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="3" href="/searchCar.action">차량검색</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu">
+                           <a class="nav-link pc-header-menu clickable" data-mt="3" href="/charging.action">전기차충전소</a>
+                        </li>
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="4" href="/travel.action">여행지검색</a></li>
+                        
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="5" href="/cscenter.action">고객센터</a></li>
+                        <li class="nav-item container-pc-header-menu"><a class="nav-link pc-header-menu clickable" data-mt="6" href="/mypage.action">마이페이지</a></li>
+                     </ul>
+                     
+                     <div th:if="${session.loginDTO== null}">
+                         
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/login.action'">로그인</button>
+                        <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/signup.action'">회원가입</button>
+    
+                     </div>
+                     <div th:unless="${session.loginDTO== null}">
+                         
+                         
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" 
+                         type="button"  th:text="|${session.loginDTO.id} 님 반가워요|"></button>
+                         
+                         <button class="js-pc-header-btn-login btn color-blue my-2 my-sm-0" type="button" onclick="location.href='/logout.action'">로그아웃</button>
+                         
+             
+                     </div>
+                  </div>
+         </div>
+      </nav>
+   </div>
+   
+   <!--  상단 결제정보 -->
+   <div class="pc-mobile-header-container" id="page-reservation">
+      <div class="pc-header space-2 text-center dc-none dc-lg-block">
+         <div class="container">
+            <h2 class="text-grey-3 underline-bg dc-inline-block">결 제 정 보</h2>
+         </div>
+      </div>
+   </div>
+   
+   
+   <div class="container p-0">
+      <div class="row my-lg-5 reservation-row">
+         <!-- 오른쪽 박스 -->
+         <div class="col-lg-7 cm-lg-rounded">
+            <div class="mx-n15px mx-lg-0">
+               <section class="carmore-section px-3 pb-0 mt-lg-3">
+                  <div id="js_vreserv_container_car_period">
+                     
+                  <div class="js-cpi-txt-car-model text-20 font-weight-bold color-grey-3 mb-0">구독멤버십 결제</div>
+                  <div class="text-12 color-grey-5">매월 자동 재결제됩니다.</div>
+                     <div class="js-cpi-container-branch-info pt-1">
+                        <div class="dc-flex align-items-center">
+                        </div>
+                     </div>
+                     <hr class="mb-2">
+                        <div class="js-cpi-container-rent-period">
+                           <div class="dc-flex justify-content-around align-items-center">
+                              <div class="text-12 color-grey-5">구독시작일</div>
+                              <div class="text-center">
+                                 <div class="text-16-b color-grey-3">
+                                    <span class="txt-rent-start-date mr-1" th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"></span>
+                                 </div>
+                              </div>
+                              <span class="badge badge-pill badge-bluegreylight color-light-purple text-12 font-weight-normal">
+                                 <span class="txt-rent-period-day">정기</span>
+                                 <span class="txt-rent-period-day-unit">결제</span>
+                              </span>
+                              <div class="text-center">
+                                 <div class="text-16-b color-grey-3">
+                                    <span class="txt-rent-end-date mr-1" th:text="|매월 ${#calendars.format(#calendars.createNow(), 'dd')} 일|"></span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                  </div>
+                   
+                </section>   
+             </div>
+             <div class="js-show-devide-elmt" data-sde-s="1" data-sde-m="1" data-sde-g="0" style="display: block;">
+                <section class="carmore-section px-3 is-only-reservation is-label-form">
+                   <h3>멤버십 선택</h3>
+                      <select class="custom-select border-radius-none hasDatepicker" style="width: 50%;">
+                         <option value="Basic">Basic</option>
+                         <option value="Premium">Premium</option>
+                      </select>
+                   </section>
+                </div>      
+                <div class="js-show-devide-elmt" data-sde-s="1" data-sde-m="1" data-sde-g="0" style="display: block;">
+                   <section class="carmore-section px-3 is-only-reservation is-label-form">
+                      <h3>운전자 정보</h3>
+                   
+                            <div class="form-group my-2">
+                               <label class="text-12 color-grey-3" for="vreserv_input_driver_name" >이름</label>
+                                 <div class="position-relative w-60">
+                                    <input class="js-input-deletable js-require-pay border-radius-none form-control form-control-sm vreserv-save-last-booking mb-0" id="name" th:value="${session.loginDTO.name}">
+                                    <div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_name">
+                                       <div class="wrapper">
+                                          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                       </div>
+                                    </div>
+                                    <div class="invalid-feedback">이름을 입력해 주세요</div>
+                                 </div>
+                            </div>
+                            <div class="form-group my-2">
+                               <label class="text-12 color-grey-3" for="vreserv_input_driver_birth_f">생년월일</label>
+                            <div class="dc-flex align-items-center">
+                               <div class="position-relative w-60">
+                                  <input class="js-input-deletable js-require-pay border-radius-none form-control form-control-sm vreserv-save-last-booking mb-0" id="birth" th:value="${session.loginDTO.birth}">
+                                    <div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_birth_f">
+                                       <div class="wrapper">
+                                          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                       </div>
+                                    </div>
+                               </div>
+                               
+                            </div>
+                            </div>
+                            <div class="form-group my-2">
+                               <label class="text-12 color-grey-3" for="vreserv_input_driver_contact">휴대폰 번호</label>
+                               <div class="dc-flex">
+                                  <div class="position-relative w-60">
+                                     <input class="js-input-deletable js-require-pay border-radius-none form-control form-control-sm mb-0" id="tel" th:value="${session.loginDTO.tel}">
+                                     <div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_contact">
+                                        <div class="wrapper">
+                                           <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                            
+                            <div class="form-group my-2">
+                            <label class="text-12 color-grey-3" for="vreserv_input_driver_email">운전면허 번호</label>
+                            <div class="position-relative w-60">
+                               <input class="js-input-deletable js-require-pay js-input-auto-complete-email border-radius-none form-control form-control-sm vreserv-save-last-booking mb-0" id="vreserv_input_driver_email" th:value="${session.loginDTO.li_num}">
+                                  <div class="js-btn-delete-input btn-input-close-sm clickable" data-input="vreserv_input_driver_email">
+                                     <div class="wrapper">
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNDNEM0QzQiIGQ9Ik04IDE1YzMuODY2IDAgNy0zLjEzNCA3LTdzLTMuMTM0LTctNy03LTcgMy4xMzQtNyA3IDMuMTM0IDcgNyA3eiIvPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNy4yOTMgOGwtMi4xMjEgMi4xMjIuNzA3LjcwN0w4IDguNzA3bDIuMTIyIDIuMTIyLjcwNy0uNzA3TDguNzA3IDggMTAuODMgNS44OGwtLjcwNy0uNzA3TDggNy4yOTMgNS44OCA1LjE3MmwtLjcwNy43MDdMNy4yOTMgOHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K">
+                                     </div>
+                                  </div>
+                               <div class="dropdown-menu" id="vreserv_dropdown_driver_email_auto"></div>
+                            </div>
+                            </div>
+                            
+                            <div class="box-round-grey-7-border dc-flex flex-column justify-content-center align-items-center mt-3 py-4 px-3">
+                               <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NyIgaGVpZ2h0PSIzNSIgZmlsbD0ibm9uZSIgdmlld0JveD0iMCAwIDk3IDM1Ij4KICAgIDxyZWN0IHdpZHRoPSI2IiBoZWlnaHQ9IjgiIHg9IjY3LjM3NSIgeT0iMTEiIGZpbGw9IiMwRDZGRkMiIHJ4PSIxIi8+CiAgICA8cmVjdCB3aWR0aD0iMTAiIGhlaWdodD0iMyIgeD0iNzUuMzc1IiB5PSIxMSIgZmlsbD0iIzQ5NDk0OSIgcng9IjEiLz4KICAgIDxyZWN0IHdpZHRoPSIxNSIgaGVpZ2h0PSIzIiB4PSI3NS4zNzUiIHk9IjE2IiBmaWxsPSIjNDk0OTQ5IiByeD0iMSIvPgogICAgPHJlY3Qgd2lkdGg9IjMwIiBoZWlnaHQ9IjIxIiB4PSI2NCIgeT0iNi41IiBzdHJva2U9IiM0OTQ5NDkiIHN0cm9rZS13aWR0aD0iMyIgcng9IjEuNSIvPgogICAgPHBhdGggZmlsbD0iIzQ5NDk0OSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTIuNDMgOC40NTVjMCA0LjExNyAzLjMzOCA3LjQ1NSA3LjQ1NiA3LjQ1NSA0LjExNyAwIDcuNDU0LTMuMzM4IDcuNDU0LTcuNDU1UzI0LjAwMyAxIDE5Ljg4NiAxYy00LjExOCAwLTcuNDU1IDMuMzM4LTcuNDU1IDcuNDU1em0xMS45MjggMGMwIDIuNDctMi4wMDIgNC40NzMtNC40NzMgNC40NzMtMi40NyAwLTQuNDcyLTIuMDAzLTQuNDcyLTQuNDczIDAtMi40NyAyLjAwMi00LjQ3MyA0LjQ3My00LjQ3MyAyLjQ3IDAgNC40NzMgMi4wMDMgNC40NzMgNC40NzN6TTE1LjQxNiAxNy40YzEuMDg4Ljc2NiAxLjk4MSAxLjc5IDIuNTkgMi45ODJoOS44NDdjMS42NDcgMCAyLjk4MiAxLjMzNSAyLjk4MiAyLjk4MnY1Ljk2M2MwIC44MjQuNjY4IDEuNDkyIDEuNDkxIDEuNDkyLjgyNCAwIDEuNDkxLS42NjggMS40OTEtMS40OTJ2LTUuOTYzYzAtMy4yOTQtMi42Ny01Ljk2NC01Ljk2NC01Ljk2NEgxNS40MTZ6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz4KICAgIDxjaXJjbGUgY3g9IjEwLjciIGN5PSIyNC4xMSIgcj0iOC4yIiBzdHJva2U9IiMwRDZGRkMiIHN0cm9rZS13aWR0aD0iMi45ODIiLz4KICAgIDxwYXRoIHN0cm9rZT0iIzBENkZGQyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIyLjk4MiIgZD0iTTE0LjgwMSAyMi43NDRjLTIuNTM0IDMuMDkyLTMuNDY5IDQuODgzLTQuMSA4LjItLjcwNi0zLjY3MS0xLjYwNi01LjQ2Ni00LjEtOC4yTTIuNSAyNC4xMDljNi40ODQtMS45MzIgMTAuMDcyLTEuOTkgMTYuNCAwIi8+CiAgICA8cmVjdCB3aWR0aD0iMyIgaGVpZ2h0PSIxMSIgeD0iNTMuNSIgeT0iMTUiIGZpbGw9IiM0OTQ5NDkiIHJ4PSIxLjUiIHRyYW5zZm9ybT0icm90YXRlKDkwIDUzLjUgMTUpIi8+CiAgICA8cmVjdCB3aWR0aD0iMyIgaGVpZ2h0PSIxMSIgeD0iNDYuNSIgeT0iMTEiIGZpbGw9IiMwRDZGRkMiIHJ4PSIxLjUiLz4KPC9zdmc+Cg==">
+                               <div class="text-14 color-grey-4 font-weight-bold mt-1">
+                                  차량 대여 시, 운전자는 운전면허증을 꼭 지참해주세요.
+                               </div>
+                               <div class="text-12 color-grey-4 mt-1">
+                                  면허증 확인 및 계약서 작성이 꼭 필요합니다.
+                               </div>
+                            </div>
+                   </section>
+                </div>
+                
+          </div>
+             
+          <!-- 왼쪽 박스 -->
+          <div class="col-lg-5 dc-none dc-lg-block">
+             <div class="cm-rounded bg-shadow bg-white sticky mx-n15px mx-lg-0 sticky-pc-menu-top">
+                <section class="mt-3 p-3">
+                   <div class="container">
+                      <div class="row section-title">
+                         <div class="col">
+                            <h3 class="h6 mb-4 border-bottom-thick pb-2">결제 정보</h3>
+                         </div>
+                      </div>
+                      <form method="post" action="/kakaoPay">
+                      <div class="row">
+                         <div class="col">
+                            <ul class="list-group list-group-flush" id="vreserv_container_pay_info_desc">
+                               <li class="bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall bg-lg-none">
+                                  <span class="js-vreserv-txt-rent-price-label">선택한 구독멤버십</span>
+                                  <div class="text-right">
+                                     <span class="vreserv-txt-rent-price" id="sublevel"></span>
+                                     <input type="hidden" name="sublevel">
+                                  </div>
+                               </li>
+                               <li class="js-verserv-container-insurance-price bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall bg-lg-none">
+                                  구독료
+                                  <div class="text-right">
+                                     <span class="vreserv-txt-insurance-price" id="subprice">
+                                     </span>
+                                     <input type="hidden" name="subprice">
+                                  </div>
+                               </li>
+                               
+                               
+                            
+                               <li class="bg-white list-group-item dc-flex justify-content-between align-items-center color-grey-3 px-0 wordbreak-keepall text-14">
+                                  총 결제금액
+                                  <div class="text-right text-20">
+                                     <span class="vreserv-txt-total-price" id="subprice2"></span>
+                                  </div>
+                               </li>
+                               <li class="bg-white list-group-item text-14 color-grey-3 text-center mt-3">
+                                  위 내용을 모두 확인하였으며, 결제에 동의합니다
+                               </li>
+                               <li class="bg-white list-group-item px-0">
+                                     
+                                     <button class="js-vcd-btn-go-reservation btn btn-primary btn-block btn-lg mb-2 btn-border-10 mt-3" style="height: 50px !important;">
+                                       <div class="text-18 font-weight-bold text-white line-height-1">
+                                          <span class="js-vcd-txt-expected-price" id="subprice3"></span>
+                                          &nbsp;바로 결제하기
+                                       </div>
+                                    </button>
+                                    <input type="hidden" name="cus_num" value="${session.ThorClientDTO.num}">
+                                    <input type="hidden" name="car_num" value="${session.ThorCarDTO.num}">
+                                    
+                               </li>
+                            </ul>
+                         </div>
+                      </div>
+                      </form>
+                   </div>
+                </section>
+             </div>
+          </div>
+       </div>
+    </div>
+          
+             </body>
+             
+             
+                
+
+
+</html>

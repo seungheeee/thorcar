@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>회원가입</title>
+
+<link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/common.css?2021104221413" type="text/css"/>
+<link rel="stylesheet" href="https://static.msscdn.net/ui/build/m/css/login.css?2021104221413" type="text/css"/>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+
+<style type="text/css">
+
+.lbAVMi {
+    height: 50
+px
+;
+}
+
+.wrapper-member .common-layout__sc-1q47zu5-1 {
+    max-width: 385
+px
+;
+    margin: 0
+px
+ auto;
+}
+
+.wrapper-member.devicePC .common-layout__sc-1q47zu5-1 {
+    position: relative;
+}
+
+.fhWAHi {
+    position: fixed;
+    left: 0
+px
+;
+    right: 0
+px
+;
+    top: 0
+px
+;
+    height: 50
+px
+;
+    background-color: rgb(255, 255, 255);
+    z-index: 510;
+}
+
+
+</style>
+
+<script type="text/javascript">
+
+
+
+$(document).ready(function(){
+	$('#id').blur(function(){
+		$.ajax({
+			type: 'POST', 
+			url: '/idCheck.action',
+			data: { 
+				"id" : $('#id').val() 
+			},
+			success: function(data){
+				if(data ==0){
+					$('#checkMsg').html('<p style="color:blue">사용가능한 아이디입니다.</p>');
+				}
+				else{
+					$('#checkMsg').html('<p style="color:red">이미 사용중인 아이디입니다.</p>');
+				}
+			} 
+		}); //end ajax
+	}); //end on
+});
+
+$(document).ready(function(){
+	$('#tel').blur(function(){
+		$.ajax({
+			type: 'POST', 
+			url: '/telCheck.action',
+			data: { 
+				"tel" : $('#tel').val() 
+			},
+			success: function(data){
+				if(data ==0){
+					$('#checkMsg2').html('<p style="color:blue">확인되었습니다.</p>');
+				}
+				else{
+					$('#checkMsg2').html('<p style="color:red">이미 사용중인 번호입니다.</p>');
+				}
+			} 
+		}); //end ajax
+	}); //end on
+});
+
+$(document).ready(function(){
+   
+    $("#submit").on("click", function(){
+      if($("#id").val()==""){
+        alert("아이디를 입력해주세요.");
+        $("#id").val("").focus();
+        return false;
+      }
+      if($("#pwd").val()==""){
+        alert("비밀번호를 입력해주세요.");
+        $("#password").focus();
+        return false;
+      }
+      if($("#pwd2").val()==""){
+          alert("비밀번호를 확인해주세요.");
+          $("#pwd2").focus();
+          return false;
+      }
+      if($("#pwd").val() != $("#pwd2").val()){
+          alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); 
+          $("#pwd").focus();
+          return false; 
+      }
+      if ($("#pwd").val().length < 8) {
+          alert("비밀번호는 8자 이상으로 설정해야 합니다.");
+          $("#pwd").val("").focus();
+          return false;
+      }
+      if($("#name").val()==""){
+        alert("이름을 입력해주세요.");
+        $("#name").focus();
+        return false;
+      }
+      if($("#tel").val()==""){
+          alert("휴대폰번호를 입력해주세요.");
+          $("#tel").val("").focus();
+          return false;
+        }
+      if($("#birth").val()==""){
+          alert("생년월일을 입력해주세요.");
+          $("#birth").focus();
+          return false;
+        }
+      if($("#li_num").val()==""){
+          alert("면허번호를 입력해주세요.");
+          $("#li_num").focus();
+          return false;
+        }
+      
+
+    });
+  })	
+
+   $(function() {
+    //입력값 검증 정규표현식
+    const getPwCheck= RegExp(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
+    
+    //패스워드 입력값 검증.
+    $('#pwd').on('keyup', function() {
+       if(!getPwCheck.test($("#pwd").val()) || $("#pwd").val().length < 8){
+            $('#pwChk').html('<b style="font-size:14px;color:red;">특수문자 포함 8자이상 입력해주세요.</b>');
+        } else {
+          $('#pwChk').html('');
+        }
+        
+    });
+    
+    //패스워드 확인란 입력값 검증.
+    $('#pwd2').on('keyup', function() {
+        //비밀번호 확인란 공백 확인
+       if($("#pwd").val()!=$("#pwd2").val()){
+            $('#pwChk2').html('<b style="font-size:14px;color:red;">비밀번호가 일치하지 않습니다.</b>');
+        } else {
+          $('#pwChk2').html('');
+        }
+        
+    });
+});
+
+
+
+
+
+
+
+</script>
+
+</head>
+<body class="vsc-initialized">
+	<div class="musinsa-wrapper wrapper-member devicePC">
+		<div class="n-member-area form-area">
+
+            <form action='signup.action' method="post">
+                <input type="hidden" name="checkId" value="0">
+                <input type="hidden" name="checkPassword" value="0">
+                <input type="hidden" name="checkConfirmPassword" value="0">
+                <input type="hidden" name="checkEmail" value="0">
+                <input type="hidden" name="checkRecommendMemberId" value="0">
+                <input type="hidden" name="checkPhoneNumber" value="0">
+                <input type="hidden" id="joinToken" name="joinToken" value="9ced5aff0a9e2e4f83c8a766129f664c90a19d44">
+                <input type="hidden" id="referer" name="referer" value="https://store.musinsa.com">
+                <input type="hidden" name="eventToken" value="">
+                <input type="hidden" name="snsToken" value="">
+                <input type="hidden" id="partnerCode" name="partnerCode" value="">
+                <input type="hidden" name="eventPage" value="">
+                <input type="hidden" name="eventCode" value="">
+                <input type="hidden" name="returnUrl" value="">
+
+                <!-- Header -->
+                <header class="member-header">
+                    
+                    
+                        <div class="logo">
+                            <img style="height: 170px !important;" src="logoimages/thorcar.png" alt="무신사로고">
+                        </div>
+                    
+                        <p class="text-kakao font-mss">회원가입</p>
+                    
+                </header>
+                <!-- //Header -->
+
+                <!-- Join Form -->
+                <div class="join-form">
+                    <div class="n-form-set">
+                        <label for="id" class="n-form-label">아이디 </label>
+                        <input type="text" class="n-input input" id="id" name="id" placeholder="아이디 입력(5~11자)">
+                    	<span id="checkMsg"></span>
+                    </div>
+                    <div class="n-form-set">
+                        <label for="password" class="n-form-label">비밀번호</label>
+                        <div class="n-form-icon">
+                            <input type="password" class="n-input input" id="pwd" name="pwd" placeholder="비밀번호(숫자,영문,특수문자 조합 최소8자)">
+                            <span id="pwChk"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="n-form-set">
+                        <label for="password" class="n-form-label">비밀번호 확인</label>
+                        <div class="n-form-icon">
+                            <input type="password" class="n-input input" id="pwd2" name="pwd2" placeholder="비밀번호 확인">
+                            <span id="pwChk2"></span>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="n-form-set">
+                        <label for="email" class="n-form-label">이름</label>
+                        <div class="n-form-layer" id="emailFromLayer">
+                            <input type="text" class="n-input input" id="name" name="name" placeholder="이름 입력" value="">
+                        </div>
+                    </div>
+                    
+                    <div class="n-form-set">
+                        <label for="email" class="n-form-label">휴대전화</label>
+                        <div class="n-form-layer" id="emailFromLayer">
+                            <input type="text" class="n-input input" id="tel" name="tel" placeholder="-없이 입력" >
+                            <span id="checkMsg2"></span>
+                            
+                        </div>
+                    </div>
+                    <div class="n-form-set">
+                        <label for="email" class="n-form-label">생년월일</label>
+                        <div class="n-form-layer" id="emailFromLayer">
+                            <input type="text" class="n-input input" id="birth" name="birth" placeholder="yyyy-mm-dd" value="">
+                        </div>
+                    </div>
+                    <div class="n-form-set">
+                        <label for="email" class="n-form-label">면허번호</label>
+                        <div class="n-form-layer" id="emailFromLayer">
+                            <input type="text" class="n-input input" id="li_num" name="li_num" placeholder="-없이 입력" autocomplete="off" value="">
+                        </div>
+                    </div>
+                   
+                    <div class="member-btn">
+                
+	                	<button type="submit" id="submit" class="n-btn btn-primary">회원가입</button>
+            		
+            		</div>
+
+                    
+                </div>
+            </form>
+        </div>
+	
+	
+	</div>
+</body>
+</html>
